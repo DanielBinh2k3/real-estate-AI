@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('⚠️  DEPRECATED: /api/valuation endpoint is deprecated');
+    console.log('🔄 Redirecting to new AI-powered property valuation');
+
     const body = await request.json();
     const { payload, auth_token } = body;
 
@@ -12,60 +15,71 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!auth_token) {
-      return NextResponse.json(
-        { error: 'Auth token is required' },
-        { status: 400 }
-      );
-    }
+    // Extract coordinates from payload
+    const latitude = payload.geoLocation?.[1] || 21.0278;  // Default to Hanoi
+    const longitude = payload.geoLocation?.[0] || 105.8342;
 
-    const url = 'https://apis.resta.vn/erest-listing/real-estate-evaluations';
-
-    const headers = {
-      'accept-encoding': 'gzip',
-      'authorization': `Bearer ${auth_token}`,
-      'content-type': 'text/plain; charset=utf-8',
-      'user-agent': 'Dart/2.19 (dart:io)',
+    // Convert payload to property_details format
+    const property_details = {
+      type: payload.type || 'NORMAL',
+      landArea: payload.landArea,
+      houseArea: payload.houseArea,
+      laneWidth: payload.laneWidth,
+      facadeWidth: payload.facadeWidth,
+      storyNumber: payload.storyNumber,
+      bedRoom: payload.bedRoom,
+      bathRoom: payload.bathRoom,
+      legal: payload.legal,
     };
 
-    console.log('💰 Performing property valuation...');
-    console.log('📋 Property info:');
-    console.log(`   - Type: ${payload.type}`);
-    console.log(`   - Land Area: ${payload.landArea} m²`);
-    console.log(`   - House Area: ${payload.houseArea} m²`);
-    console.log(`   - Bedrooms: ${payload.bedRoom}`);
-    console.log(`   - Bathrooms: ${payload.bathRoom}`);
+    console.log('🚀 Calling new AI property valuation API...');
+    console.log('📍 Coordinates:', [latitude, longitude]);
+    console.log('🏠 Property details:', property_details);
 
-    const response = await fetch(url, {
+    // Call new AI property valuation API
+    const aiValuationUrl = `${request.nextUrl.origin}/api/property-valuation`;
+    const aiValuationResponse = await fetch(aiValuationUrl, {
       method: 'POST',
-      headers,
-      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        latitude,
+        longitude,
+        property_details,
+        auth_token: auth_token || 'migrated_token'
+      }),
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`❌ HTTP error ${response.status}:`, errorText);
+    if (!aiValuationResponse.ok) {
+      console.log('❌ AI valuation API failed');
       return NextResponse.json(
-        { 
-          error: `Valuation failed with status ${response.status}`,
-          details: errorText 
-        },
-        { status: response.status }
+        { error: 'AI valuation failed' },
+        { status: 500 }
       );
     }
 
-    const result = await response.json();
-    console.log('✅ Valuation completed successfully!');
+    const aiResult = await aiValuationResponse.json();
+    console.log('✅ AI valuation completed successfully!');
 
+    // Return result in compatible format
     return NextResponse.json({
       success: true,
-      valuation_result: result,
+      valuation_result: aiResult.result,
+      migrated: true,
+      message: 'This endpoint has been migrated to AI-powered valuation',
+      new_endpoint: '/api/property-valuation',
+      performance: aiResult.performance
     });
 
   } catch (error) {
-    console.error('❌ Error during valuation:', error);
+    console.error('❌ Error during valuation migration:', error);
     return NextResponse.json(
-      { error: 'Failed to perform property valuation' },
+      { 
+        error: 'Failed to perform property valuation',
+        migrated: true,
+        message: 'Legacy endpoint failed, please use /api/property-valuation'
+      },
       { status: 500 }
     );
   }

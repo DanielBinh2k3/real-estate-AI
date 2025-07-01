@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 import { propertyValuationRange } from '@/ai/flows/property-valuation';
-import { propertySummary } from '@/ai/flows/property-summary';
+import { propertySummary } from '@/ai/flows/property-analysis';
 import type { CombinedResult, PropertyInputSchema, ApiValuationResult } from '@/lib/types';
 import { config } from '@/lib/config';
 

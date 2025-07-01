@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { propertyValuationRange } from '@/ai/flows/property-valuation';
+import { propertyAnalysis } from '@/ai/flows/property-analysis';
 
 // Helper function to format market data for AI prompt
 function formatMarketDataForAI(priceTrendData: any): string {
@@ -26,7 +26,6 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
 - Giá mới nhất (${latest.month}): ${latest.price} triệu VND/m²
 - Số lượng giao dịch trung bình: ${(data.reduce((sum: number, item: any) => sum + item.count, 0) / data.length).toFixed(0)} giao dịch/tháng
 - Nguồn dữ liệu: ${priceTrendData.source || 'API'}
-- Chi tiết từng tháng: ${data.map((item: any) => `${item.month}: ${item.price}M VND/m²`).join(', ')}
 `.trim();
 }
 
@@ -34,9 +33,9 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
   
   try {
-    console.log('\n💰 =================');
-    console.log('💰 PROPERTY VALUATION AI');
-    console.log('💰 =================');
+    console.log('\n🧠 =================');
+    console.log('🧠 PROPERTY ANALYSIS AI');
+    console.log('🧠 =================');
 
     const body = await request.json();
     console.log('📥 Input received:', JSON.stringify(body, null, 2));
@@ -181,7 +180,6 @@ export async function POST(request: NextRequest) {
       const priceTrendData = await priceTrendResponse.json();
       marketData = formatMarketDataForAI(priceTrendData);
       console.log('✅ Market data received');
-      console.log('📊 Market data summary:', priceTrendData);
     } else {
       console.log('⚠️  Using fallback market data');
     }
@@ -189,7 +187,7 @@ export async function POST(request: NextRequest) {
     console.log(`⏱️  Step 2 time: ${Date.now() - step2Start}ms`);
 
     // Step 3: Prepare AI input
-    console.log('\n🤖 STEP 3: Preparing AI valuation input...');
+    console.log('\n🤖 STEP 3: Preparing AI analysis input...');
     const step3Start = Date.now();
 
     const aiInput = {
@@ -203,63 +201,36 @@ export async function POST(request: NextRequest) {
       bedrooms: valuationPayload.bedRoom || 2,
       bathrooms: valuationPayload.bathRoom || 2,
       lotSize: valuationPayload.landArea || 45,
+      landArea: valuationPayload.landArea || 45,
+      houseArea: valuationPayload.houseArea || 45,
+      laneWidth: valuationPayload.laneWidth || 3,
+      facadeWidth: valuationPayload.facadeWidth || 3,
+      storyNumber: valuationPayload.storyNumber || 3,
+      legal: valuationPayload.legal || 'contract',
       marketData: marketData,
     };
 
     console.log('📊 AI Input:', JSON.stringify(aiInput, null, 2));
     console.log(`⏱️  Step 3 time: ${Date.now() - step3Start}ms`);
 
-    // Step 4: Call AI valuation
-    console.log('\n💰 STEP 4: Running AI property valuation...');
+    // Step 4: Call AI analysis
+    console.log('\n🧠 STEP 4: Running AI property analysis...');
     const step4Start = Date.now();
 
-    const aiResult = await propertyValuationRange(aiInput);
+    const aiResult = await propertyAnalysis(aiInput);
     
-    console.log('✅ AI Valuation completed');
-    console.log('💰 AI Output:', JSON.stringify(aiResult, null, 2));
+    console.log('✅ AI Analysis completed');
+    console.log('🎯 AI Output:', JSON.stringify(aiResult, null, 2));
     console.log(`⏱️  Step 4 time: ${Date.now() - step4Start}ms`);
-
-    // Step 5: Format result with additional info
-    console.log('\n📋 STEP 5: Formatting final result...');
-    const step5Start = Date.now();
-
-    const formattedResult = {
-      valuation: aiResult,
-      property_info: {
-        address: parsedAddress.formatted_address,
-        location: {
-          city: parsedAddress.city,
-          district: parsedAddress.district,
-          ward: parsedAddress.ward,
-        },
-        specifications: {
-          type: valuationPayload.type,
-          land_area: valuationPayload.landArea,
-          house_area: valuationPayload.houseArea,
-          bedrooms: valuationPayload.bedRoom,
-          bathrooms: valuationPayload.bathRoom,
-          lane_width: valuationPayload.laneWidth,
-          facade_width: valuationPayload.facadeWidth,
-          story_number: valuationPayload.storyNumber,
-          legal: valuationPayload.legal,
-        }
-      },
-      market_context: {
-        category: category,
-        data_source: priceTrendResponse.ok ? 'API' : 'fallback',
-      }
-    };
-
-    console.log(`⏱️  Step 5 time: ${Date.now() - step5Start}ms`);
 
     // Final result
     const totalTime = Date.now() - startTime;
     console.log(`\n⏱️  Total execution time: ${totalTime}ms`);
-    console.log('💰 =================');
+    console.log('🧠 =================');
 
     return NextResponse.json({
       success: true,
-      result: formattedResult,
+      result: aiResult,
       input_data: {
         coordinates: [latitude, longitude],
         property_details: property_details,
@@ -273,15 +244,14 @@ export async function POST(request: NextRequest) {
           location_data: Date.now() - step1Start,
           market_data: Date.now() - step2Start, 
           ai_preparation: Date.now() - step3Start,
-          ai_valuation: Date.now() - step4Start,
-          formatting: Date.now() - step5Start
+          ai_analysis: Date.now() - step4Start
         }
       }
     });
 
   } catch (error) {
     const totalTime = Date.now() - startTime;
-    console.error('❌ Property Valuation API Error:', error);
+    console.error('❌ Property Analysis API Error:', error);
     console.log(`⏱️  Error after: ${totalTime}ms`);
     
     return NextResponse.json(

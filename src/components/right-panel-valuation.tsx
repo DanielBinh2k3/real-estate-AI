@@ -11,14 +11,14 @@ type RightPanelValuationProps = {
 
 const formatCurrency = (value: number) => {
   if (value >= 1000000000) {
-    const billions = Math.round(value / 1000000000);
-    return `${billions} đ`;
+    const billions = (value / 1000000000).toFixed(1);
+    return `${billions} Tỷ`;
   } else if (value >= 1000000) {
-    const millions = Math.round(value / 1000000);
-    return `${millions} đ`;
+    const millions = (value / 1000000).toFixed(0);
+    return `${millions} Triệu`;
   } else if (value >= 1000) {
-    const thousands = Math.round(value / 1000);
-    return `${thousands} đ`;
+    const thousands = (value / 1000).toFixed(0);
+    return `${thousands}K`;
   }
   return `${Math.round(value)} đ`;
 };
@@ -33,26 +33,36 @@ export function RightPanelValuation({ result }: RightPanelValuationProps) {
   // Check if it's API result or old format
   const isApiResult = 'valuation_result' in result;
   
-  // Use AI valuation data if available, otherwise fallback to original logic
-  const hasAIValuation = isApiResult && result.ai_valuation?.success && result.ai_valuation.data;
+  // Detect AI valuation data under either .data or .result.valuation
+  const aiValuationData = result.ai_valuation?.data ?? result.ai_valuation?.result?.valuation;
+  const hasAIValuation = isApiResult && result.ai_valuation?.success && aiValuationData;
+  
+  // Safe access to valuation_result.evaluation
+  const hasValidationResult = isApiResult && result.valuation_result?.evaluation;
   
   const lowValue = hasAIValuation
-    ? result.ai_valuation.data.lowValue
-    : isApiResult 
+    ? aiValuationData.lowValue
+    : hasValidationResult 
       ? Math.round(result.valuation_result.evaluation.totalPrice * 0.9) // 90% of total price
-      : result.valuation.lowValue;
+      : isApiResult
+        ? 0 // fallback for API result without valuation_result
+        : result.valuation.lowValue;
     
   const reasonableValue = hasAIValuation
-    ? result.ai_valuation.data.reasonableValue
-    : isApiResult
+    ? aiValuationData.reasonableValue
+    : hasValidationResult
       ? result.valuation_result.evaluation.totalPrice // Use total price as reasonable value
-      : result.valuation.reasonableValue;
+      : isApiResult
+        ? 0 // fallback for API result without valuation_result
+        : result.valuation.reasonableValue;
     
   const highValue = hasAIValuation
-    ? result.ai_valuation.data.highValue
-    : isApiResult
+    ? aiValuationData.highValue
+    : hasValidationResult
       ? Math.round(result.valuation_result.evaluation.totalPrice * 1.1) // 110% of total price
-      : result.valuation.highValue;
+      : isApiResult
+        ? 0 // fallback for API result without valuation_result
+        : result.valuation.highValue;
 
   return (
     <Card className="professional-card bg-gradient-to-br from-emerald-50 via-white to-blue-50 border-emerald-200 shadow-lg hover:shadow-xl transition-all duration-300">
@@ -80,22 +90,22 @@ export function RightPanelValuation({ result }: RightPanelValuationProps) {
               <TrendingDown className="h-4 w-4 text-orange-600" />
               <h4 className="text-sm font-semibold text-slate-700">Thấp nhất</h4>
             </div>
-            <p className="text-2xl font-bold text-orange-600">
+            <p className="text-2xl font-bold text-orange-600 drop-shadow-sm">
               {isMounted ? formatCurrency(lowValue) : '...'}
             </p>
-            <p className="text-xs text-orange-500 font-medium">Bán nhanh</p>
+            <p className="text-xs text-orange-600 font-semibold bg-orange-50 px-2 py-1 rounded-full border border-orange-200">Bán nhanh</p>
           </div>
           
-          <div className="flex flex-col items-center gap-2 px-4 py-4 bg-gradient-to-b from-yellow-50 to-amber-50 mx-1 rounded-lg">
+          <div className="flex flex-col items-center gap-2 px-4 py-4 bg-gradient-to-b from-amber-50 to-orange-50 mx-1 rounded-lg border border-amber-200 shadow-sm">
             <div className="flex items-center gap-2 mb-1">
               <DollarSign className="h-5 w-5 text-amber-600" />
-              <h4 className="text-base font-bold text-slate-750">Phù hợp</h4>
+              <h4 className="text-base font-bold text-slate-800">Phù hợp</h4>
             </div>
-            <p className="text-3xl font-black text-amber-700 tracking-tight">
+            <p className="text-3xl font-black text-amber-700 tracking-tight drop-shadow-sm">
               {isMounted ? formatCurrency(reasonableValue) : '...'}
             </p>
-            <p className="text-xs text-amber-600 font-semibold">
-              {hasAIValuation ? 'Đề xuất AI' : 'Phù hợp nhất'}
+            <p className="text-xs text-amber-700 font-bold bg-amber-100 px-3 py-1.5 rounded-full border-2 border-amber-300">
+              {hasAIValuation ? 'Đề xuất AI ⭐' : 'Phù hợp nhất'}
             </p>
           </div>
           
@@ -104,10 +114,10 @@ export function RightPanelValuation({ result }: RightPanelValuationProps) {
               <TrendingUp className="h-4 w-4 text-blue-600" />
               <h4 className="text-sm font-semibold text-slate-700">Cao nhất</h4>
             </div>
-            <p className="text-2xl font-bold text-blue-600">
+            <p className="text-2xl font-bold text-blue-600 drop-shadow-sm">
               {isMounted ? formatCurrency(highValue) : '...'}
             </p>
-            <p className="text-xs text-blue-500 font-medium">Thời điểm tốt</p>
+            <p className="text-xs text-blue-600 font-semibold bg-blue-50 px-2 py-1 rounded-full border border-blue-200">Thời điểm tốt</p>
           </div>
         </div>
       </CardContent>

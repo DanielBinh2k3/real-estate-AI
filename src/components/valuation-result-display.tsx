@@ -35,14 +35,53 @@ interface ValuationResultProps {
 }
 
 export function ValuationResultDisplay({ data }: ValuationResultProps) {
-  if (!data?.valuation_result?.evaluation) {
-    return null;
-  }
+  const hasEvaluation = !!data?.valuation_result?.evaluation;
 
-  const result = data.valuation_result.evaluation;
-  const address = result.address;
-  const radarScore = result.radarScore;
-  const isMockData = data.error && data.error.includes('mock');
+  let result: any = null;
+  let address: any = null;
+  let radarScore: any = null;
+  let isMockData = false;
+  let isAIEnhanced = false;
+
+  if (hasEvaluation) {
+    result = data.valuation_result.evaluation;
+    address = result.address;
+    radarScore = result.radarScore;
+    isMockData = data.error && data.error.includes('mock');
+  } else {
+    // Fallback to AI valuation & analysis
+    const aiValuationData = data.ai_valuation?.result?.valuation ?? data.ai_valuation?.data;
+    const propertyInfo = data.ai_valuation?.result?.property_info;
+    const radar = data.ai_analysis?.result?.radarScore ?? data.ai_analysis?.data?.radarScore;
+
+    if (!aiValuationData) {
+      return null; // no data to render
+    }
+
+    isAIEnhanced = true;
+
+    result = {
+      totalPrice: aiValuationData.reasonableValue,
+      housePrice: aiValuationData.price_house,
+      landArea: propertyInfo?.specifications?.land_area ?? 0,
+      type: propertyInfo?.specifications?.type ?? 'lane_house'
+    };
+
+    address = {
+      city: propertyInfo?.location?.city ?? '',
+      district: propertyInfo?.location?.district ?? '',
+      ward: propertyInfo?.location?.ward ?? '',
+    };
+
+    radarScore = radar ?? {
+      locationScore: 0,
+      legalityScore: 0,
+      liquidityScore: 0,
+      evaluationScore: 0,
+      dividendScore: 0,
+      descriptions: []
+    };
+  }
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('vi-VN', {
@@ -51,8 +90,6 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
       maximumFractionDigits: 0,
     }).format(value);
   };
-
-
 
   // Tính khoảng giá +/- 10%
   const calculatePriceRange = (basePrice: number) => {
@@ -184,7 +221,7 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
               <div>
                 <span className="text-slate-600">Giá theo m²: </span>
                 <span className="font-semibold text-emerald-600">
-                  {formatCurrency(Math.round(result.totalPrice / result.landArea))}
+                  {result.landArea ? formatCurrency(Math.round(result.totalPrice / result.landArea)) : 'N/A'}
                 </span>
               </div>
               <div>
@@ -196,45 +233,7 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
             </div>
           </div>
 
-          {/* AI Valuation Range Display */}
-          {data.ai_valuation?.success && data.ai_valuation.data && (
-            <div className="mt-6 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-200">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="flex items-center justify-center w-6 h-6 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full">
-                  <span className="text-white text-xs font-bold">AI</span>
-                </div>
-                <h4 className="text-sm font-semibold text-indigo-900">Định giá nâng cao bởi AI</h4>
-                <Badge variant="outline" className="text-xs bg-indigo-100 text-indigo-700 border-indigo-300">
-                  AI_ENHANCED
-                </Badge>
-              </div>
-              
-              <div className="grid grid-cols-3 gap-3 text-center">
-                <div className="bg-white/70 rounded-lg p-3 border border-indigo-100">
-                  <p className="text-xs text-slate-600 mb-1">Giá thấp nhất</p>
-                  <p className="text-sm font-bold text-emerald-600">
-                    {formatCurrency(data.ai_valuation.data.lowValue)}
-                  </p>
-                </div>
-                <div className="bg-white/70 rounded-lg p-3 border-2 border-indigo-300">
-                  <p className="text-xs text-slate-600 mb-1">Giá hợp lý</p>
-                  <p className="text-sm font-bold text-indigo-600">
-                    {formatCurrency(data.ai_valuation.data.reasonableValue)}
-                  </p>
-                </div>
-                <div className="bg-white/70 rounded-lg p-3 border border-indigo-100">
-                  <p className="text-xs text-slate-600 mb-1">Giá cao nhất</p>
-                  <p className="text-sm font-bold text-amber-600">
-                    {formatCurrency(data.ai_valuation.data.highValue)}
-                  </p>
-                </div>
-              </div>
-              
-              <div className="mt-3 text-xs text-indigo-700 text-center">
-                <span>AI đã phân tích dữ liệu thị trường và đưa ra khoảng giá phù hợp nhất</span>
-              </div>
-            </div>
-          )}
+
 
         </CardContent>
       </Card>
@@ -242,91 +241,72 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
       {/* Gợi ý giá bán - Sử dụng AI Valuation nếu có */}
       {(() => {
         // Use AI valuation range if available, otherwise fallback to calculated range
-        const priceRange = (data.ai_valuation?.success && data.ai_valuation.data) ? {
-          minPrice: data.ai_valuation.data.lowValue,
-          basePrice: data.ai_valuation.data.reasonableValue,
-          maxPrice: data.ai_valuation.data.highValue
+        const aiVal = data.ai_valuation?.result?.valuation ?? data.ai_valuation?.data;
+
+        const priceRange = (isAIEnhanced && aiVal) ? {
+          minPrice: aiVal.lowValue,
+          basePrice: aiVal.reasonableValue,
+          maxPrice: aiVal.highValue
         } : calculatePriceRange(result.totalPrice);
         
-        const isAIEnhanced = data.ai_valuation?.success && data.ai_valuation.data;
-        
         return (
-          <Card className={`professional-card ${isAIEnhanced ? 'bg-gradient-to-br from-indigo-900 to-purple-900' : 'bg-gradient-to-br from-slate-900 to-blue-900'} text-white`}>
+          <Card className="professional-card bg-gradient-to-br from-blue-900 to-blue-700 text-white">
             <CardContent className="p-8">
               <div className="flex items-center gap-3 mb-6">
-                <div className="flex items-center justify-center w-8 h-8 bg-white/20 rounded-lg">
-                  {isAIEnhanced ? (
-                    <span className="text-white text-xs font-bold">AI</span>
-                  ) : (
-                    <Target className="h-4 w-4 text-white" />
-                  )}
+                <div className="flex items-center justify-center w-8 h-8 bg-orange-500 rounded-lg">
+                  <span className="text-white text-xs font-bold">💰</span>
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white">
-                    {isAIEnhanced ? 'Gợi ý giá bán từ AI' : 'Gợi ý giá bán'}
+                    Gợi ý giá bán
                   </h3>
-                  {isAIEnhanced && (
-                    <p className="text-xs text-white/70">Được phân tích bởi trí tuệ nhân tạo</p>
-                  )}
                 </div>
               </div>
 
                 {/* Price Range Labels */}
                 <div className="flex justify-between items-center mb-4">
                   <div className="text-center">
-                    <p className="text-lg font-bold text-white">
+                    <p className="text-lg font-bold text-white"> 
                       {formatPriceRange(priceRange.minPrice)}
-                    </p>
-                    <p className="text-xs text-white/70 mt-1">
-                      {isAIEnhanced ? 'Bán nhanh' : 'Giá thấp'}
                     </p>
                   </div>
                   <div className="text-center">
                     <p className="text-lg font-bold text-white">
                       {formatPriceRange(priceRange.maxPrice)}
                     </p>
-                    <p className="text-xs text-white/70 mt-1">
-                      {isAIEnhanced ? 'Tối ưu lợi nhuận' : 'Giá cao'}
-                    </p>
                   </div>
                 </div>
 
                 {/* Price Range Bar */}
-                <div className="relative mb-4">
-                  <div className={`h-3 ${isAIEnhanced ? 'bg-gradient-to-r from-emerald-400/60 via-indigo-400/60 to-amber-400/60' : 'bg-gradient-to-r from-emerald-400/60 to-red-400/60'} rounded-full`}>
+                <div className="relative mb-6">
+                  <div className="h-3 bg-gradient-to-r from-emerald-500 to-red-500 rounded-full">
                   </div>
                   {/* Center point indicator */}
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <div className={`w-4 h-4 ${isAIEnhanced ? 'bg-indigo-300' : 'bg-white'} rounded-full border-2 border-slate-900 shadow-lg`}></div>
+                    <div className="w-4 h-4 bg-white rounded-full border-2 border-gray-400 shadow-lg"></div>
                   </div>
                   {/* Center price label */}
                   <div className="absolute -top-8 left-1/2 transform -translate-x-1/2">
-                    <div className={`${isAIEnhanced ? 'bg-indigo-100 text-indigo-900' : 'bg-white text-slate-900'} px-3 py-1 rounded-lg text-sm font-semibold shadow-lg whitespace-nowrap`}>
+                    <div className="bg-white text-gray-800 px-3 py-1 rounded-lg text-sm font-semibold shadow-lg whitespace-nowrap">
                       {formatPriceRange(priceRange.basePrice)}
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Legend */}
-                <div className="space-y-2 mt-4">
+                <div className="space-y-2 text-white">
                   <div className="flex items-center gap-3">
-                    <div className="w-4 h-4 bg-emerald-400 rounded-full"></div>
-                    <span className="text-sm text-white/90">
-                      {isAIEnhanced ? 'Giá bán nhanh - thanh khoản cao' : 'Khoảng giá giúp bạn bán nhanh hơn'}
+                    <div className="w-4 h-4 bg-emerald-500 rounded-full"></div>
+                    <span className="text-sm">
+                      Khoảng giá giúp bạn bán nhanh hơn
                     </span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className={`w-4 h-4 ${isAIEnhanced ? 'bg-amber-400' : 'bg-red-400'} rounded-full`}></div>
-                    <span className="text-sm text-white/90">
-                      {isAIEnhanced ? 'Giá tối ưu lợi nhuận - có thể bán chậm hơn' : 'Khoảng giá giúp bạn bán với giá tốt nhất nhưng có thể sẽ chậm hơn đôi chút'}
+                    <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+                    <span className="text-sm">
+                      Khoảng giá giúp bạn bán với giá tốt nhất nhưng có thể sẽ chậm hơn đôi chút
                     </span>
                   </div>
-                  {isAIEnhanced && (
-                    <div className="flex items-center gap-3">
-                      <div className="w-4 h-4 bg-indigo-400 rounded-full"></div>
-                      <span className="text-sm text-white/90">Giá hợp lý nhất được AI đề xuất</span>
-                    </div>
-                  )}
                 </div>
               </CardContent>
             </Card>
@@ -361,15 +341,15 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
             <div className="space-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Thành phố:</span>
-                <Badge variant="secondary">{getCityName(address.city)}</Badge>
+                <Badge variant="secondary">{getCityName(address.city || '')}</Badge>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Quận/Huyện:</span>
-                <Badge variant="secondary">{getDistrictName(address.district)}</Badge>
+                <Badge variant="secondary">{getDistrictName(address.district || '')}</Badge>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Phường/Xã:</span>
-                <Badge variant="outline">{address.ward.replace('_', ' ')}</Badge>
+                <Badge variant="outline">{address.ward ? address.ward.replace('_', ' ') : '—'}</Badge>
               </div>
             </div>
             
@@ -378,11 +358,15 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
             <div className="space-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Khoảng cách trung tâm TP:</span>
-                <span className="font-medium">{result.cityCenterDistance.toFixed(1)} km</span>
+                <span className="font-semibold text-emerald-600">
+                  {result.cityCenterDistance ? result.cityCenterDistance.toFixed(1) + ' km' : '—'}
+                </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Khoảng cách trung tâm quận:</span>
-                <span className="font-medium">{result.districtCenterDistance.toFixed(1)} km</span>
+                <span className="font-semibold text-emerald-600">
+                  {result.districtCenterDistance ? result.districtCenterDistance.toFixed(1) + ' km' : '—'}
+                </span>
               </div>
             </div>
           </CardContent>

@@ -280,7 +280,36 @@ export function PropertyInputForm({
       const result = await response.json();
 
       if (result.success) {
+        // Check if AI valuation failed
+        if (result.error) {
+          setError(result.error);
+          toast({
+            title: "❌ Lỗi AI",
+            description: result.error,
+            variant: "destructive",
+          });
+          return;
+        }
+        
+        // Check if AI valuation is missing or failed
+        if (!result.ai_valuation?.success) {
+          const aiError = result.ai_valuation?.error || 'AI Valuation failed';
+          setError(aiError);
+          toast({
+            title: "❌ Lỗi định giá AI",
+            description: aiError,
+            variant: "destructive",
+          });
+          return;
+        }
+        
         setResult(result as CombinedResult);
+        
+        // Success notifications
+        toast({
+          title: "✅ Định giá thành công",
+          description: "Phân tích AI hoàn tất",
+        });
         
         if (result.error && result.error.includes('mock')) {
           toast({
@@ -291,6 +320,11 @@ export function PropertyInputForm({
         }
       } else {
         setError(result.error || 'Định giá thất bại');
+        toast({
+          title: "❌ Lỗi",
+          description: result.error || 'Định giá thất bại',
+          variant: "destructive",
+        });
       }
     } catch (error) {
       setError('Đã xảy ra lỗi không mong muốn. Vui lòng thử lại sau.');

@@ -30,13 +30,37 @@ export function RightPanelRadarChart({ result }: RightPanelRadarChartProps) {
   
   let chartData: { criterion: string; score: number; color: string }[] = [];
   
-  if (isApiResult && result.valuation_result.evaluation.radarScore) {
+  // Extract radarScore from ai_analysis
+  const radarScoreAI = isApiResult && result.ai_analysis?.success ? (
+    result.ai_analysis.data?.radarScore ?? result.ai_analysis.result?.radarScore
+  ) : null;
+  
+  // Check for AI analysis data first, then valuation_result
+  if (radarScoreAI) {
+    const radarScore = radarScoreAI;
+    chartData = [
+      { criterion: 'Vị trí', score: radarScore.locationScore, color: '#10b981' },
+      { criterion: 'Pháp lý', score: radarScore.legalityScore, color: '#3b82f6' },
+      { criterion: 'Thanh khoản', score: radarScore.liquidityScore, color: '#f59e0b' },
+      { criterion: 'Thẩm định', score: radarScore.evaluationScore, color: '#8b5cf6' },
+      { criterion: 'Sinh lời', score: radarScore.dividendScore, color: '#ef4444' },
+    ];
+  } else if (isApiResult && result.valuation_result?.evaluation?.radarScore) {
     const radarScore = result.valuation_result.evaluation.radarScore;
     chartData = [
       { criterion: 'Vị trí', score: radarScore.locationScore, color: '#10b981' },
       { criterion: 'Pháp lý', score: radarScore.legalityScore, color: '#3b82f6' },
       { criterion: 'Thanh khoản', score: radarScore.liquidityScore, color: '#f59e0b' },
       { criterion: 'Sinh lời', score: radarScore.dividendScore, color: '#ef4444' },
+    ];
+  } else if (!isApiResult && result.summary) {
+    // Fallback to old format
+    chartData = [
+      { criterion: 'Vị trí', score: result.summaryDetails?.location?.score || 7, color: '#10b981' },
+      { criterion: 'Pháp lý', score: result.summaryDetails?.legal?.score || 8, color: '#3b82f6' },
+      { criterion: 'Thanh khoản', score: result.summaryDetails?.utilities?.score || 6, color: '#f59e0b' },
+      { criterion: 'Chất lượng', score: result.summaryDetails?.quality?.score || 7, color: '#8b5cf6' },
+      { criterion: 'Quy hoạch', score: result.summaryDetails?.planning?.score || 8, color: '#ef4444' },
     ];
   }
 
@@ -46,10 +70,34 @@ export function RightPanelRadarChart({ result }: RightPanelRadarChartProps) {
     : 0;
 
   const getPerformanceLevel = (score: number) => {
-    if (score >= 8) return { level: 'Xuất sắc', color: 'emerald', icon: Award };
-    if (score >= 6.5) return { level: 'Tốt', color: 'blue', icon: Target };
-    if (score >= 5) return { level: 'Trung bình', color: 'yellow', icon: BarChart3 };
-    return { level: 'Cần cải thiện', color: 'red', icon: BarChart3 };
+    if (score >= 8) return { 
+      level: 'Xuất sắc', 
+      color: 'emerald', 
+      icon: Award,
+      badgeClass: 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg border-emerald-300',
+      textClass: 'text-emerald-600'
+    };
+    if (score >= 6.5) return { 
+      level: 'Tốt', 
+      color: 'blue', 
+      icon: Target,
+      badgeClass: 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg border-blue-300',
+      textClass: 'text-blue-600'
+    };
+    if (score >= 5) return { 
+      level: 'Trung bình', 
+      color: 'yellow', 
+      icon: BarChart3,
+      badgeClass: 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg border-amber-300',
+      textClass: 'text-amber-600'
+    };
+    return { 
+      level: 'Cần cải thiện', 
+      color: 'red', 
+      icon: BarChart3,
+      badgeClass: 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg border-red-300',
+      textClass: 'text-red-600'
+    };
   };
 
   const getScoreColor = (score: number) => {
@@ -122,17 +170,16 @@ export function RightPanelRadarChart({ result }: RightPanelRadarChartProps) {
             {/* Overall Score Display */}
             <div className={`relative p-6 rounded-2xl border-2 ${getScoreBg(overallScore)} shadow-inner`}>
               <div className="absolute -top-3 left-6">
-                <Badge className={`bg-gradient-to-r from-${performance.color}-500 to-${performance.color}-600 text-white shadow-lg`}>
-                  <PerformanceIcon className="h-3 w-3 mr-1" />
+                <Badge className={`${performance.badgeClass} font-bold text-sm px-3 py-1.5 border-2`}>
+                  <PerformanceIcon className="h-3.5 w-3.5 mr-1.5" />
                   {performance.level.toUpperCase()}
                 </Badge>
               </div>
               <div className="text-center pt-2">
                 <p className="text-sm text-slate-600 font-medium mb-2">Điểm tổng hợp</p>
-                <p className={`text-4xl font-black tracking-tight ${getScoreColor(overallScore)}`}>
+                <p className={`text-4xl font-black tracking-tight ${performance.textClass} drop-shadow-sm`}>
                   {overallScore.toFixed(1)}/10
                 </p>
-
               </div>
             </div>
 
@@ -211,21 +258,21 @@ export function RightPanelRadarChart({ result }: RightPanelRadarChartProps) {
                 {chartData.map((item, index) => (
                   <div 
                     key={index} 
-                    className={`p-4 rounded-xl border transition-all hover:scale-105 ${getScoreBg(item.score)}`}
+                    className={`p-4 rounded-xl border-2 transition-all hover:scale-105 hover:shadow-md ${getScoreBg(item.score)} shadow-sm`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <p className="text-sm font-medium text-slate-700">{item.criterion}</p>
+                      <p className="text-sm font-semibold text-slate-700">{item.criterion}</p>
                       <div 
-                        className="w-3 h-3 rounded-full"
+                        className="w-3.5 h-3.5 rounded-full shadow-sm border border-white"
                         style={{ backgroundColor: item.color }}
                       ></div>
                     </div>
-                    <p className={`text-xl font-bold ${getScoreColor(item.score)}`}>
+                    <p className={`text-xl font-black ${getScoreColor(item.score)} drop-shadow-sm`}>
                       {item.score.toFixed(1)}
                     </p>
-                    <div className="mt-2 bg-slate-200 rounded-full h-1.5">
+                    <div className="mt-3 bg-slate-200 rounded-full h-2 shadow-inner">
                       <div 
-                        className="h-1.5 rounded-full transition-all duration-500"
+                        className="h-2 rounded-full transition-all duration-500 shadow-sm"
                         style={{ 
                           width: `${(item.score/10)*100}%`,
                           backgroundColor: item.color 

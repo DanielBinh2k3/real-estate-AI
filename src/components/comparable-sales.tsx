@@ -74,9 +74,9 @@ export function ComparableSales({ result }: ComparableSalesProps) {
     setIsMounted(true);
   }, []);
 
-  // Get real estates data from API result
-  const realEstates = result && 'valuation_result' in result 
-    ? result.valuation_result.realEstates?.slice(0, 3) || []
+  // Get real estates data from API result with proper null checking
+  const realEstates = result && 'valuation_result' in result && result.valuation_result?.realEstates
+    ? result.valuation_result.realEstates.slice(0, 3)
     : [];
 
   // Demo images for properties (to avoid hostname configuration issues)
@@ -224,11 +224,11 @@ export function ComparableSales({ result }: ComparableSalesProps) {
             <p className="text-sm font-semibold text-slate-700 mb-2">Giá trung bình thị trường</p>
             <p className="text-xl font-bold text-orange-700">
               {isMounted && comparableProperties.length > 0 ? formatCurrency(
-                comparableProperties.reduce((sum: number, prop: TransformedProperty) => sum + prop.price, 0) / comparableProperties.length
+                comparableProperties.reduce((sum: number, prop: TransformedProperty) => sum + prop.pricePerM2, 0) / comparableProperties.length
               ) : '...'}
             </p>
             <p className="text-xs text-slate-600 mt-1">
-              Dựa trên {comparableProperties.length} BDS tương đương
+              Giá/m² từ {comparableProperties.length} BDS tương đương
             </p>
           </div>
         </div>

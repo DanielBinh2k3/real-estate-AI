@@ -1,8 +1,8 @@
 import { type propertyValuationRange } from '@/ai/flows/property-valuation';
-import { type propertySummary } from '@/ai/flows/property-summary';
+import { type propertyAnalysis } from '@/ai/flows/property-analysis';
 
 export type ValuationResult = Awaited<ReturnType<typeof propertyValuationRange>>;
-export type SummaryResult = Awaited<ReturnType<typeof propertySummary>>;
+export type SummaryResult = Awaited<ReturnType<typeof propertyAnalysis>>;
 
 export type PropertyInputSchema = {
   address: string;
@@ -67,7 +67,7 @@ export type RealEstate = {
 
 // API Response types for new format
 export type ApiValuationResult = {
-  valuation_result: {
+  valuation_result?: {
     realEstates?: RealEstate[];
     evaluation: {
       address: {
@@ -113,11 +113,49 @@ export type ApiValuationResult = {
       year: number;
     };
   };
+  ai_valuation?: {
+    success: boolean;
+    data: {
+      lowValue: number;
+      reasonableValue: number;
+      highValue: number;
+      price_house: number;
+    };
+    error?: string;
+  };
+  ai_analysis?: {
+    success: boolean;
+    data: {
+      radarScore: {
+        legalityScore: number;
+        liquidityScore: number;
+        locationScore: number;
+        evaluationScore: number;
+        dividendScore: number;
+        descriptions: string[];
+      };
+    };
+    error?: string;
+  };
   utilities?: {
     total: number;
     data: Utility[];
     groupedData: Record<UtilityType, Utility[]>;
   };
+  price_trend?: {
+    success: boolean;
+    data: Array<{
+      month: string;
+      price: number;
+      count: number;
+      minPrice?: number;
+      maxPrice?: number;
+    }>;
+    source?: string;
+    error?: string;
+  };
+  success: boolean;
+  error?: string | null;
   [key: string]: any;
 };
 

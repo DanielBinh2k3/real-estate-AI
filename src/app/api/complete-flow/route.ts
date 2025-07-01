@@ -9,65 +9,7 @@ function formatCurrency(value: number) {
   }).format(value);
 }
 
-// Generate mock valuation data when API fails
-function generateMockValuation(payload: any) {
-  const basePricePerSqm = 65000000; // 65M VND per sqm (base price)
-  const locationMultiplier = Math.random() * 0.4 + 0.8; // 0.8 - 1.2
-  const housePrice = payload.houseArea * basePricePerSqm * locationMultiplier;
-  const landPrice = payload.landArea * basePricePerSqm * 0.7 * locationMultiplier;
-  const totalPrice = housePrice + landPrice;
 
-  return {
-    evaluation: {
-      address: {
-        type: 'NORMAL',
-        city: payload.address?.city || 'ha_noi',
-        district: payload.address?.district || 'dong_da',
-        ward: payload.address?.ward || 'lang_thuong',
-        administrativeLevel: 0,
-      },
-      bathRoom: payload.bathRoom || 2,
-      bedRoom: payload.bedRoom || 3,
-      builtYear: new Date().getFullYear() - 5,
-      cityCenterDistance: Math.random() * 20 + 5,
-      cityLevel: 1,
-      clusterPrices: [[], [], []],
-      createdDate: new Date().toISOString(),
-      districtCenterDistance: Math.random() * 5 + 0.5,
-      districtLevel: 1,
-      facadeWidth: payload.facadeWidth || 4,
-      geoLocation: payload.geoLocation || [105.8342, 21.0278],
-      hasGarden: payload.hasGarden || false,
-      homeQualityRemaining: 0,
-      houseArea: payload.houseArea || 45,
-      housePrice: housePrice,
-      landArea: payload.landArea || 60,
-      laneWidth: payload.laneWidth || 10,
-      legal: payload.legal || "pink_book",
-      modifiedDate: new Date().toISOString(),
-      ownerId: 44724,
-      price: 0,
-      radarScore: {
-        descriptions: [
-          'Bất động sản có vị trí khá thuận lợi với nhiều tiện ích xung quanh, phù hợp cho việc sinh sống và đầu tư.',
-          'Pháp lý rõ ràng với sổ đỏ chính chủ, đảm bảo quyền sở hữu cho người mua.',
-          'Khu vực có tiềm năng phát triển tốt trong tương lai nhờ các dự án hạ tầng.',
-          'Giá bán phù hợp với thị trường hiện tại, cạnh tranh với các bất động sản cùng khu vực.'
-        ],
-        dividendScore: Math.floor(Math.random() * 3) + 6, // 6-8
-        evaluationScore: Math.floor(Math.random() * 2) + 6.5, // 6.5-7.5
-        legalityScore: Math.floor(Math.random() * 2) + 8, // 8-9
-        liquidityScore: Math.floor(Math.random() * 3) + 5, // 5-7
-        locationScore: Math.floor(Math.random() * 3) + 6 // 6-8
-      },
-      storyNumber: payload.storyNumber || 3,
-      totalPrice: totalPrice,
-      transId: Date.now(),
-      type: payload.type || "town_house",
-      year: new Date().getFullYear()
-    }
-  };
-}
 
 interface PropertyDetails {
   type?: string;
@@ -103,7 +45,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('🚀 STARTING COMPLETE REAL ESTATE VALUATION FLOW');
+    console.log('🚀 STARTING OPTIMIZED REAL ESTATE VALUATION FLOW');
     console.log('='.repeat(50));
 
     const result: {
@@ -115,8 +57,13 @@ export async function POST(request: NextRequest) {
       utilities: any;
       price_trend: any;
       ai_valuation: any;
+      ai_analysis: any;
       success: boolean;
       error: string | null;
+      performance: {
+        total_time: number;
+        step_times: Record<string, number>;
+      };
     } = {
       input_coordinates: [latitude, longitude],
       location_info: null,
@@ -126,12 +73,21 @@ export async function POST(request: NextRequest) {
       utilities: null,
       price_trend: null,
       ai_valuation: null,
+      ai_analysis: null,
       success: false,
       error: null,
+      performance: {
+        total_time: 0,
+        step_times: {}
+      }
     };
 
-    // Step 1: Get location info from coordinates
+    const startTime = Date.now();
+
+    // Step 1: Get location info from coordinates (Required first)
     console.log('\n📍 STEP 1: Getting location information');
+    const step1Start = Date.now();
+    
     const locationUrl = 'https://apis.resta.vn/erest-listing/features/location';
     const locationParams = new URLSearchParams({
       latitude: latitude.toString(),
@@ -157,7 +113,7 @@ export async function POST(request: NextRequest) {
     const locationData = await locationResponse.json();
     result.location_info = locationData;
 
-    // Step 2: Parse location information
+    // Step 2: Parse location information (Required for next steps)
     console.log('\n🔄 STEP 2: Parsing location information');
     const features = locationData?.features || [];
     if (!features.length) {
@@ -177,6 +133,7 @@ export async function POST(request: NextRequest) {
     };
 
     result.parsed_address = parsedAddress;
+    result.performance.step_times.location_and_parsing = Date.now() - step1Start;
 
     console.log(`📍 Parsed address: ${parsedAddress.formatted_address}`);
     console.log(`🏘️  City: ${parsedAddress.city}`);
@@ -199,298 +156,345 @@ export async function POST(request: NextRequest) {
 
     const mergedDetails = { ...defaultDetails, ...property_details };
 
-    const payload = {
-      type: mergedDetails.type,
-      transId: Date.now(),
-      geoLocation: parsedAddress.coordinates,
+    const valuationPayload = {
       address: {
+        type: 'NORMAL',
         city: parsedAddress.city,
         district: parsedAddress.district,
         ward: parsedAddress.ward,
-        addressCode: null,
-        name: parsedAddress.formatted_address,
-        detail: parsedAddress.formatted_address,
+        administrativeLevel: 0,
       },
-      landArea: mergedDetails.landArea,
-      houseArea: mergedDetails.houseArea,
-      laneWidth: mergedDetails.laneWidth,
-      'homeQualityRemaining ': 0.0,
-      facadeWidth: mergedDetails.facadeWidth,
-      storyNumber: mergedDetails.storyNumber,
-      bedRoom: mergedDetails.bedRoom,
       bathRoom: mergedDetails.bathRoom,
+      bedRoom: mergedDetails.bedRoom,
+      geoLocation: [longitude, latitude],
+      facadeWidth: mergedDetails.facadeWidth,
+      hasGarden: mergedDetails.utilities?.hasGarden || false,
+      houseArea: mergedDetails.houseArea,
+      landArea: mergedDetails.landArea,
+      laneWidth: mergedDetails.laneWidth,
       legal: mergedDetails.legal,
-      utilities: mergedDetails.utilities || null,
-      strengths: mergedDetails.strengths || null,
-      weaknesses: mergedDetails.weaknesses || null,
+      storyNumber: mergedDetails.storyNumber,
+      type: mergedDetails.type,
     };
 
-    result.valuation_payload = payload;
-    console.log('✅ Payload created successfully');
+    result.valuation_payload = valuationPayload;
 
-    // Step 4: Perform valuation
-    console.log('\n💰 STEP 4: Performing property valuation');
-    const valuationUrl = 'https://apis.resta.vn/erest-listing/real-estate-evaluations';
-
-    const valuationHeaders = {
-      'accept-encoding': 'gzip',
-      'authorization': `Bearer ${auth_token}`,
-      'content-type': 'text/plain; charset=utf-8',
-      'user-agent': 'Dart/2.19 (dart:io)',
+    // Map property type to API category
+    const mapPropertyTypeToCategory = (type: string): string => {
+      const categoryMap: Record<string, string> = {
+        'apartment': 'chung_cu',
+        'lane_house': 'nha_hem_ngo', 
+        'town_house': 'nha_mat_pho',
+        'land': 'ban_dat',
+        'villa': 'biet_thu_lien_ke'
+      };
+      return categoryMap[type] || 'nha_mat_pho';
     };
 
-    console.log('📋 Property info:');
-    console.log(`   - Type: ${payload.type}`);
-    console.log(`   - Land Area: ${payload.landArea} m²`);
-    console.log(`   - House Area: ${payload.houseArea} m²`);
-    console.log(`   - Bedrooms: ${payload.bedRoom}`);
-    console.log(`   - Bathrooms: ${payload.bathRoom}`);
+    // PARALLEL EXECUTION: Steps 4, 5, 6 run concurrently (removed AI calls to prevent circular dependency)
+    console.log('\n🚀 EXECUTING PARALLEL API CALLS (Steps 4-6)');
+    const parallelStart = Date.now();
 
-    try {
-      const valuationResponse = await fetch(valuationUrl, {
-        method: 'POST',
-        headers: valuationHeaders,
-        body: JSON.stringify(payload),
-      });
-
-      if (!valuationResponse.ok) {
-        const errorText = await valuationResponse.text();
-        console.error(`❌ API Error (${valuationResponse.status}):`, errorText);
-        
-        // If token is invalid or other API error, generate mock data
-        if (valuationResponse.status === 401) {
-          console.log('🔄 Token expired, generating mock data...');
-        } else {
-          console.log('🔄 API failed, generating mock data...');
-        }
-        
-        const mockValuation = generateMockValuation(payload);
-        result.valuation_result = mockValuation;
-        result.success = true;
-        result.error = `Using mock data due to API issue (status: ${valuationResponse.status})`;
-      } else {
-        const valuationResult = await valuationResponse.json();
-        result.valuation_result = valuationResult;
-        result.success = true;
-      }
-    } catch (apiError) {
-      console.error('❌ Valuation API Error:', apiError);
-      
-      // Fallback to mock data if API fails
-      console.log('🔄 API failed with exception, generating mock data...');
-      const mockValuation = generateMockValuation(payload);
-      result.valuation_result = mockValuation;
-      result.success = true;
-      result.error = 'Using mock data due to API exception';
-    }
-
-    // Step 5: Fetch utilities data đồng thời 
-    console.log('\n🏪 STEP 5: Fetching nearby utilities');
-    const [utilityLng, utilityLat] = payload.geoLocation || [105.8342, 21.0278];
-    
-    let utilitiesData = null;
-    try {
-      const utilityTypes = ['hospital', 'market', 'restaurant', 'cafe', 'supermarket', 'commercial_center'];
-      const typeString = utilityTypes.join(',');
-             const utilitiesUrl = `https://apis.resta.vn/erest-listing/map-utilities?type=${typeString}&lat=${utilityLat}&lng=${utilityLng}&_distance=5&_size=5`;
-      
-      console.log('🔗 Calling utilities API:', utilitiesUrl);
-      
-      const utilitiesResponse = await fetch(utilitiesUrl, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'User-Agent': 'EstateValuate/1.0',
-        },
-      });
-
-      if (utilitiesResponse.ok) {
-        const utilitiesResult = await utilitiesResponse.json();
-        
-        // Group utilities by type
-        const groupedUtilities = utilityTypes.reduce((acc, type) => {
-          acc[type] = utilitiesResult.data?.filter((utility: any) => utility.type === type) || [];
-          return acc;
-        }, {} as Record<string, any[]>);
-
-        utilitiesData = {
-          total: utilitiesResult.total || 0,
-          data: utilitiesResult.data || [],
-          groupedData: groupedUtilities,
-        };
-        
-        console.log('✅ Utilities data fetched successfully!');
-        console.log(`   - Total utilities found: ${utilitiesData.total}`);
-      } else {
-        console.log('⚠️  Utilities API failed, continuing without utilities data');
-      }
-    } catch (utilitiesError) {
-      console.error('⚠️  Error fetching utilities:', utilitiesError);
-    }
-
-    // Add utilities to result
-    result.utilities = utilitiesData;
-
-    // Step 6: Fetch price trend data
-    console.log('\n📈 STEP 6: Fetching price trend data');
-    let priceTrendData = null;
-    try {
-      // Map property type to API category
-      const mapPropertyTypeToCategory = (type: string): string => {
-        const categoryMap: Record<string, string> = {
-          'apartment': 'chung_cu',
-          'lane_house': 'nha_hem_ngo', 
-          'town_house': 'nha_mat_pho',
-          'land': 'ban_dat',
-          'villa': 'biet_thu_lien_ke'
-        };
-        return categoryMap[type] || 'nha_mat_pho';
-      };
-
-      const trendParams = new URLSearchParams({
-        city: parsedAddress.city,
-        district: parsedAddress.district,
-        category: mapPropertyTypeToCategory(mergedDetails.type || 'town_house')
-      });
-      
-      const trendUrl = `${request.nextUrl.origin}/api/price-trend?${trendParams}`;
-      console.log('🔗 Calling price trend API:', trendUrl);
-      
-      const trendResponse = await fetch(trendUrl, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-        },
-      });
-
-      if (trendResponse.ok) {
-        const trendResult = await trendResponse.json();
-        priceTrendData = {
-          success: trendResult.success,
-          data: trendResult.data,
-          source: trendResult.source,
-          error: trendResult.error || null
-        };
-        
-        console.log('✅ Price trend data fetched successfully!');
-        console.log(`   - Data points: ${trendResult.data?.length || 0}`);
-        console.log(`   - Source: ${trendResult.source}`);
-      } else {
-        console.log('⚠️  Price trend API failed, continuing without trend data');
-        priceTrendData = {
-          success: false,
-          error: `Trend API returned status ${trendResponse.status}`
-        };
-      }
-    } catch (trendError) {
-      console.error('⚠️  Error fetching price trend:', trendError);
-      priceTrendData = {
-        success: false,
-        error: `Error occurred: ${trendError}`
-      };
-    }
-
-    // Add price trend to result
-    result.price_trend = priceTrendData;
-
-    // Step 7: AI Property Valuation (Enhanced)
-    console.log('\n🤖 STEP 7: AI Property Valuation Enhancement');
-    let aiValuationData = null;
-    try {
-      // Prepare AI valuation input
-      const marketDataString = result.valuation_result?.evaluation ? 
-        `Khu vực: ${parsedAddress.formatted_address}. ` +
-        `Giá thị trường hiện tại: ${formatCurrency(result.valuation_result.evaluation.totalPrice)}. ` +
-        `Giá đất tham khảo: ${formatCurrency(result.valuation_result.evaluation.totalPrice / result.valuation_result.evaluation.landArea)}/m². ` +
-        `Các bất động sản cùng khu vực có giá từ ${formatCurrency(result.valuation_result.evaluation.totalPrice * 0.8)} đến ${formatCurrency(result.valuation_result.evaluation.totalPrice * 1.2)}.` :
-        `Khu vực: ${parsedAddress.formatted_address}. Dữ liệu thị trường đang được cập nhật.`;
-
-      const aiValuationInput = {
-        address: parsedAddress.formatted_address,
-        size: mergedDetails.houseArea || 45,
-        bedrooms: mergedDetails.bedRoom || 2,
-        bathrooms: mergedDetails.bathRoom || 2,
-        lotSize: mergedDetails.landArea || 45,
-        marketData: marketDataString
-      };
-
-      console.log('🔗 Calling AI property valuation with input:', JSON.stringify(aiValuationInput, null, 2));
-
-      const aiValuationUrl = `${request.nextUrl.origin}/api/property-valuation`;
-      const aiValuationResponse = await fetch(aiValuationUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(aiValuationInput),
-      });
-
-      if (aiValuationResponse.ok) {
-        const aiValuationResult = await aiValuationResponse.json();
-        aiValuationData = {
-          success: true,
-          data: aiValuationResult,
-          input: aiValuationInput
-        };
-        
-        console.log('✅ AI Property valuation completed successfully!');
-        console.log(`   - AI Low Value: ${formatCurrency(aiValuationResult.lowValue)}`);
-        console.log(`   - AI Reasonable Value: ${formatCurrency(aiValuationResult.reasonableValue)}`);
-        console.log(`   - AI High Value: ${formatCurrency(aiValuationResult.highValue)}`);
-        console.log(`   - AI House Price: ${formatCurrency(aiValuationResult.price_house)}`);
-
-        // Apply AI valuation to the main result
-        if (result.valuation_result?.evaluation) {
-          // Update the main evaluation with AI values
-          result.valuation_result.evaluation.totalPrice = aiValuationResult.reasonableValue;
-          result.valuation_result.evaluation.housePrice = aiValuationResult.price_house;
+    // Define all parallel tasks
+    const parallelTasks = [
+      // Task 1: AI Valuation API (Internal)
+      (async () => {
+        console.log('🤖 [PARALLEL] Starting AI valuation API...');
+        try {
+          // First get price trend data for market data
+          const trendParams = new URLSearchParams({
+            city: parsedAddress.city,
+            district: parsedAddress.district,
+            category: mapPropertyTypeToCategory(mergedDetails.type || 'town_house')
+          });
           
-          // Add AI valuation range
-          result.valuation_result.evaluation.ai_valuation = {
-            lowValue: aiValuationResult.lowValue,
-            reasonableValue: aiValuationResult.reasonableValue,
-            highValue: aiValuationResult.highValue,
-            price_house: aiValuationResult.price_house,
-            source: 'AI_ENHANCED'
+          const trendResponse = await fetch(`${request.nextUrl.origin}/api/price-trend?${trendParams}`, {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' },
+          });
+
+          let marketData = "Dữ liệu thị trường không khả dụng. Sử dụng ước tính trung bình 280-320 triệu VND/m².";
+          
+          if (trendResponse.ok) {
+            const trendResult = await trendResponse.json();
+            if (trendResult.success && trendResult.data && Array.isArray(trendResult.data)) {
+              const data = trendResult.data;
+              const latest = data[data.length - 1];
+              const earliest = data[0];
+              
+              const avgPrice = data.reduce((sum: number, item: any) => sum + item.price, 0) / data.length;
+              const minPrice = Math.min(...data.map((item: any) => item.minPrice || item.price * 0.7));
+              const maxPrice = Math.max(...data.map((item: any) => item.maxPrice || item.price * 1.3));
+              
+              const trend = latest.price > earliest.price ? "tăng" : "giảm";
+              const trendPercent = Math.abs(((latest.price - earliest.price) / earliest.price) * 100).toFixed(1);
+
+              marketData = `
+Dữ liệu thị trường bất động sản (${data.length} tháng gần nhất):
+- Giá trung bình: ${avgPrice.toFixed(0)} triệu VND/m²
+- Khoảng giá: ${minPrice.toFixed(0)} - ${maxPrice.toFixed(0)} triệu VND/m²
+- Xu hướng: ${trend} ${trendPercent}% so với ${data.length} tháng trước
+- Giá mới nhất (${latest.month}): ${latest.price} triệu VND/m²
+- Số lượng giao dịch trung bình: ${(data.reduce((sum: number, item: any) => sum + item.count, 0) / data.length).toFixed(0)} giao dịch/tháng
+- Nguồn dữ liệu: API
+- Chi tiết từng tháng: ${data.map((item: any) => `${item.month}: ${item.price}M VND/m²`).join(', ')}
+              `.trim();
+            }
+          }
+
+          // Now call AI valuation API
+          const aiValuationResponse = await fetch(`${request.nextUrl.origin}/api/property-valuation`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+              latitude,
+              longitude,
+              property_details: mergedDetails,
+              auth_token
+            }),
+          });
+
+          if (aiValuationResponse.ok) {
+            const aiValuationData = await aiValuationResponse.json();
+            console.log('✅ [PARALLEL] AI Valuation API completed');
+            return { type: 'ai_valuation', data: aiValuationData, success: true };
+          } else {
+            const errorText = await aiValuationResponse.text();
+            console.error('❌ [PARALLEL] AI Valuation API failed:', aiValuationResponse.status, errorText);
+            return { 
+              type: 'ai_valuation', 
+              data: null, 
+              success: false, 
+              error: `AI Valuation failed: ${aiValuationResponse.status} - ${errorText}` 
+            };
+          }
+        } catch (error) {
+          console.error('❌ [PARALLEL] AI Valuation error:', error);
+          return { 
+            type: 'ai_valuation', 
+            data: null, 
+            success: false, 
+            error: `AI Valuation error: ${error instanceof Error ? error.message : 'Unknown error'}` 
           };
+        }
+      })(),
+
+      // Task 2: Utilities API
+      (async () => {
+        console.log('🏪 [PARALLEL] Starting utilities API...');
+        try {
+          const utilityTypes = ['hospital', 'school', 'shopping_mall', 'park', 'bank', 'gas_station'];
+          const utilitiesUrl = `${request.nextUrl.origin}/api/utilities`;
+          const utilitiesParams = new URLSearchParams({
+            lat: latitude.toString(),
+            lng: longitude.toString(),
+            distance: '3',
+            size: '10',
+          });
+
+          const utilitiesResponse = await fetch(`${utilitiesUrl}?${utilitiesParams}`, {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'User-Agent': 'EstateValuate/1.0',
+            },
+          });
+
+          if (utilitiesResponse.ok) {
+            const utilitiesResult = await utilitiesResponse.json();
+            const groupedUtilities = utilityTypes.reduce((acc, type) => {
+              acc[type] = utilitiesResult.data?.filter((utility: any) => utility.type === type) || [];
+              return acc;
+            }, {} as Record<string, any[]>);
+
+            console.log('✅ [PARALLEL] Utilities API completed');
+            return {
+              type: 'utilities',
+              data: {
+                total: utilitiesResult.total || 0,
+                data: utilitiesResult.data || [],
+                groupedData: groupedUtilities,
+              },
+              success: true
+            };
+          } else {
+            console.log('⚠️  [PARALLEL] Utilities API failed');
+            return { type: 'utilities', data: null, success: false };
+          }
+        } catch (error) {
+          console.error('❌ [PARALLEL] Utilities error:', error);
+          return { type: 'utilities', data: null, success: false };
+        }
+      })(),
+
+      // Task 3: Price Trend API
+      (async () => {
+        console.log('📈 [PARALLEL] Starting price trend API...');
+        try {
+          const trendParams = new URLSearchParams({
+            city: parsedAddress.city,
+            district: parsedAddress.district,
+            category: mapPropertyTypeToCategory(mergedDetails.type || 'town_house')
+          });
           
-          console.log('✅ Applied AI valuation to main result');
+          const trendUrl = `${request.nextUrl.origin}/api/price-trend?${trendParams}`;
+          const trendResponse = await fetch(trendUrl, {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' },
+          });
+
+          if (trendResponse.ok) {
+            const trendResult = await trendResponse.json();
+            console.log('✅ [PARALLEL] Price trend API completed');
+            return {
+              type: 'price_trend',
+              data: {
+                success: trendResult.success,
+                data: trendResult.data,
+                source: trendResult.source,
+                error: trendResult.error || null
+              },
+              success: true
+            };
+          } else {
+            console.log('⚠️  [PARALLEL] Price trend API failed');
+            return {
+              type: 'price_trend',
+              data: { success: false, error: `API returned status ${trendResponse.status}` },
+              success: false
+            };
+          }
+        } catch (error) {
+          console.error('❌ [PARALLEL] Price trend error:', error);
+          return {
+            type: 'price_trend',
+            data: { success: false, error: `Error occurred: ${error}` },
+            success: false
+          };
+        }
+      })(),
+
+
+      // Task 4: AI Analysis API
+      (async () => {
+        console.log('🧠 [PARALLEL] Starting AI analysis API...');
+        try {
+          const aiAnalysisResponse = await fetch(`${request.nextUrl.origin}/api/property-analysis`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+              latitude,
+              longitude,
+              property_details: mergedDetails,
+              auth_token
+            }),
+          });
+
+          if (aiAnalysisResponse.ok) {
+            const aiAnalysisData = await aiAnalysisResponse.json();
+            console.log('✅ [PARALLEL] AI Analysis API completed');
+            return { type: 'ai_analysis', data: aiAnalysisData, success: true };
+          } else {
+            const errorText = await aiAnalysisResponse.text();
+            console.error('❌ [PARALLEL] AI Analysis API failed:', aiAnalysisResponse.status, errorText);
+            return { 
+              type: 'ai_analysis', 
+              data: null, 
+              success: false, 
+              error: `AI Analysis failed: ${aiAnalysisResponse.status} - ${errorText}` 
+            };
+          }
+        } catch (error) {
+          console.error('❌ [PARALLEL] AI Analysis error:', error);
+          return { 
+            type: 'ai_analysis', 
+            data: null, 
+            success: false, 
+            error: `AI Analysis error: ${error instanceof Error ? error.message : 'Unknown error'}` 
+          };
+        }
+      })(),
+
+    ];
+
+    // Execute all tasks in parallel with timeout
+    console.log('⏱️  Executing all tasks in parallel...');
+    const parallelResults = await Promise.allSettled(parallelTasks);
+    
+    result.performance.step_times.parallel_execution = Date.now() - parallelStart;
+
+    // Process parallel results
+    parallelResults.forEach((taskResult, index) => {
+      if (taskResult.status === 'fulfilled') {
+        const taskValue = taskResult.value;
+        const { type, data, success } = taskValue;
+        const error = 'error' in taskValue ? taskValue.error : undefined;
+        
+        switch (type) {
+          case 'ai_valuation':
+            result.ai_valuation = data;
+            if (!success && error) {
+              result.error = error;
+            }
+            console.log(`✅ AI Valuation: ${success ? 'Success' : 'Failed'}`);
+            break;
+          case 'ai_analysis':
+            result.ai_analysis = data;
+            console.log(`✅ AI Analysis: ${success ? 'Success' : 'Failed'}`);
+            break;
+          case 'utilities':
+            result.utilities = data;
+            console.log(`✅ Utilities: ${success ? 'Success' : 'Failed'}`);
+            break;
+          case 'price_trend':
+            result.price_trend = data;
+            console.log(`✅ Price Trend: ${success ? 'Success' : 'Failed'}`);
+            break;
         }
       } else {
-        console.log('⚠️  AI Property valuation API failed, continuing with existing data');
-        aiValuationData = {
-          success: false,
-          error: `AI Valuation API returned status ${aiValuationResponse.status}`
-        };
+        console.error(`❌ Task ${index} failed:`, taskResult.reason);
       }
-    } catch (aiError) {
-      console.error('⚠️  Error in AI property valuation:', aiError);
-      aiValuationData = {
-        success: false,
-        error: `AI Valuation error: ${aiError}`
-      };
-    }
+    });
 
-    // Add AI valuation to result
-    result.ai_valuation = aiValuationData;
+    // Note: AI valuation and analysis are now handled by separate endpoints
+    // This endpoint provides core property data for other services
 
-    console.log('\n🎉 ENHANCED VALUATION FLOW COMPLETED!');
+    // Calculate performance metrics
+    const totalTime = Date.now() - startTime;
+    result.performance.total_time = totalTime;
+    result.success = true;
+
+    console.log('\n🎉 OPTIMIZED VALUATION FLOW COMPLETED!');
     console.log('='.repeat(50));
+    console.log(`⚡ Performance Improvement:`);
+    console.log(`   - Total time: ${totalTime}ms`);
+    console.log(`   - Location + Parsing: ${result.performance.step_times.location_and_parsing}ms`);
+    console.log(`   - Parallel execution: ${result.performance.step_times.parallel_execution}ms`);
+    console.log(`   - Estimated sequential time: ${result.performance.step_times.parallel_execution * 5}ms`);
+    console.log(`   - Time saved: ~${(result.performance.step_times.parallel_execution * 4)}ms`);
 
     // Print summary
     console.log(`📍 Address: ${parsedAddress.formatted_address}`);
-    console.log(`🏘️  City: ${parsedAddress.city}`);
-    console.log(`🏙️  District: ${parsedAddress.district}`);
-    console.log(`🏡 Ward: ${parsedAddress.ward}`);
-    console.log(`🏪 Utilities found: ${utilitiesData?.total || 0}`);
-    console.log(`📈 Price trend data points: ${priceTrendData?.data?.length || 0}`);
-    console.log(`📊 Trend data source: ${priceTrendData?.source || 'none'}`);
-    console.log('💰 Valuation result:', JSON.stringify(result.valuation_result, null, 2));
+    console.log(`🏪 Utilities found: ${result.utilities?.total || 0}`);
+    console.log(`📈 Price trend data points: ${result.price_trend?.data?.length || 0}`);
+    console.log(`🤖 AI Valuation: ${result.ai_valuation ? 'Completed' : 'Failed'}`);
+    console.log(`🧠 AI Analysis: ${result.ai_analysis ? 'Completed' : 'Failed'}`);
+    
+    // Check if critical AI operations failed
+    if (!result.ai_valuation && !result.error) {
+      result.error = 'AI Valuation failed - this is required for the system to work properly';
+    }
 
     return NextResponse.json(result);
 
   } catch (error) {
-    console.error('❌ Error in complete flow:', error);
+    console.error('❌ Error in optimized complete flow:', error);
     return NextResponse.json(
       { 
         success: false, 

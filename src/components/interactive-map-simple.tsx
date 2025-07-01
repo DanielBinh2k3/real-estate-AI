@@ -99,9 +99,15 @@ export function InteractiveMapSimple({
   const [mapCenter, setMapCenter] = useState<[number, number]>([initialLocation.lat, initialLocation.lng]);
   const [mapZoom, setMapZoom] = useState(15);
   const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
+
+  // Fix hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Leaflet icon fix for Next.js
   useEffect(() => {
@@ -615,7 +621,7 @@ export function InteractiveMapSimple({
         {/* Interactive Map Display */}
         <div className="aspect-video w-full overflow-hidden rounded-lg border">
           <div className="w-full h-full">
-            {typeof window !== 'undefined' && (
+            {isMounted && (
               <MapContainer
                 ref={mapRef}
                 center={mapCenter}
@@ -653,6 +659,14 @@ export function InteractiveMapSimple({
                   </Marker>
                 )}
               </MapContainer>
+            )}
+            {!isMounted && (
+              <div className="flex items-center justify-center h-full bg-gray-100">
+                <div className="text-center">
+                  <Loader2 className="h-8 w-8 animate-spin mx-auto mb-2 text-blue-500" />
+                  <p className="text-sm text-gray-600">Đang tải bản đồ...</p>
+                </div>
+              </div>
             )}
           </div>
         </div>
