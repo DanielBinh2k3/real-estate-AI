@@ -1,4 +1,4 @@
-# EstateValuate - Real Estate Valuation Platform
+# ByteselAI - Real Estate Valuation Platform
 
 A Next.js application for real estate property valuation using AI-powered analysis and Resta.vn APIs.
 
