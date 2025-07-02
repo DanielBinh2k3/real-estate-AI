@@ -10,7 +10,7 @@ A Next.js application for real estate property valuation using AI-powered analys
 - Market comparison and trend analysis
 - Detailed property reports with location insights
 
-### 🗺️ Interactive Map Integration (NEW)
+### 🗺️ Interactive Map Integration
 - **Geoapify Maps Integration**: Interactive map powered by Geoapify
 - **Location Search**: Search for addresses using Geoapify Geocoding API
 - **GPS Location**: Get current user location using browser geolocation
@@ -18,6 +18,13 @@ A Next.js application for real estate property valuation using AI-powered analys
 - **Quick Location Buttons**: Fast access to popular cities (Hanoi, Ho Chi Minh, Da Nang)
 - **Real-time Valuation**: Perform property valuation directly from map selection
 - **Static Map Display**: Beautiful map visualization with location markers
+
+### 📏 Distance Analysis (NEW!)
+- **Administrative Centers Database**: Built-in coordinates for all 63 provinces/cities and districts in Vietnam
+- **Smart Distance Calculation**: Calculate distances to city and district centers using Haversine formula
+- **Accessibility Rating**: Automatic rating (excellent/good/fair/poor) based on distance to centers
+- **Market Impact Analysis**: AI-powered location advantage and market impact assessment
+- **Vietnamese Address Parsing**: Parse complex Vietnamese addresses to identify administrative units
 
 ### 📊 Data Visualization
 - Radar charts for multi-criteria property scoring
@@ -48,6 +55,9 @@ Three-tab interface for testing APIs:
 
 ### 4. Map Demo (`/map-demo`)
 Dedicated page showcasing the interactive map features with detailed controls and result display.
+
+### 5. Distance Analysis Demo (`/demo-distance`) (NEW!)
+Interactive demo for testing the distance analysis feature with preset locations and custom coordinates.
 
 ## Getting Started
 

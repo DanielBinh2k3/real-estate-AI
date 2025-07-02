@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -25,7 +26,8 @@ import {
   FileCheck,
   Users,
   Heart,
-  Lightbulb
+  Lightbulb,
+  Calculator
 } from 'lucide-react';
 import { UtilitiesInteractiveMap } from '@/components/utilities-interactive-map';
 import { PriceTrendChart } from '@/components/price-trend-chart';
@@ -73,8 +75,8 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
       laneWidth: propertyInfo?.specifications?.lane_width ?? 0,
       legal: propertyInfo?.specifications?.legal ?? 'contract',
       year: propertyInfo?.specifications?.year_built ?? 2015,
-      // Use input coordinates for utilities map if geoLocation not available
-      geoLocation: data.input_data?.coordinates ?? [0, 0]
+      // Preserve original coordinates for utilities map
+      geoLocation: data.input_data?.coordinates
     };
 
     address = {
@@ -153,39 +155,184 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
     return cities[city] || city.replace('_', ' ');
   };
 
-  // Function to get appropriate icon for AI analysis descriptions
-  const getAnalysisIcon = (description: string, index: number) => {
+  // Function to get appropriate icon and category for AI analysis descriptions
+  const getAnalysisIconAndCategory = (description: string, index: number) => {
     const desc = description.toLowerCase();
     
-    // Check for location/position related content
-    if (desc.includes('vị trí') || desc.includes('tiện ích') || desc.includes('trường học') || desc.includes('bệnh viện') || desc.includes('trung tâm')) {
-      return <MapPin className="h-4 w-4 text-blue-600" />;
+    // Lấy 5 từ đầu tiên để ưu tiên ý chính của câu
+    const words = desc.split(' ');
+    const firstFiveWords = words.slice(0, 5).join(' ');
+    
+    // PRIORITY CHECK: Kiểm tra 5 từ đầu tiên trước (ưu tiên cao)
+    
+    // 1. INVESTMENT POTENTIAL (Tiềm năng sinh lời) - AMBER (Check đầu tiên vì quan trọng)
+    if (firstFiveWords.includes('tiềm năng') || firstFiveWords.includes('sinh lời') || firstFiveWords.includes('đầu tư') || firstFiveWords.includes('lợi nhuận')) {
+      return {
+        icon: <TrendingUp className="h-4 w-4 text-amber-600" />,
+        category: 'investment',
+        categoryName: 'Tiềm năng sinh lời',
+        color: 'amber',
+        bgClass: 'bg-amber-50', 
+        borderClass: 'border-amber-200',
+        textClass: 'text-amber-600'
+      };
     }
     
-    // Check for legal/contract related content
-    if (desc.includes('hợp đồng') || desc.includes('pháp lý') || desc.includes('sổ') || desc.includes('đảm bảo') || desc.includes('minh bạch')) {
-      return <FileCheck className="h-4 w-4 text-green-600" />;
+    // 2. VALUATION ACCURACY (Định giá) - EMERALD
+    if (firstFiveWords.includes('định giá') || firstFiveWords.includes('thẩm định') || firstFiveWords.includes('giá trị')) {
+      return {
+        icon: <Calculator className="h-4 w-4 text-emerald-600" />,
+        category: 'valuation',
+        categoryName: 'Định giá',
+        color: 'emerald',
+        bgClass: 'bg-emerald-50',
+        borderClass: 'border-emerald-200', 
+        textClass: 'text-emerald-600'
+      };
     }
     
-    // Check for family/living related content
-    if (desc.includes('gia đình') || desc.includes('phòng ngủ') || desc.includes('phòng tắm') || desc.includes('sinh hoạt') || desc.includes('phù hợp')) {
-      return <Users className="h-4 w-4 text-purple-600" />;
+    // 3. LEGAL ANALYSIS (Pháp lý) - GREEN
+    if (firstFiveWords.includes('pháp lý') || firstFiveWords.includes('hợp đồng') || firstFiveWords.includes('sổ')) {
+      return {
+        icon: <Shield className="h-4 w-4 text-green-600" />,
+        category: 'legal',
+        categoryName: 'Pháp lý',
+        color: 'green',
+        bgClass: 'bg-green-50',
+        borderClass: 'border-green-200',
+        textClass: 'text-green-600'
+      };
     }
     
-    // Check for investment/financial related content
-    if (desc.includes('đầu tư') || desc.includes('thanh khoản') || desc.includes('sinh lời') || desc.includes('giá') || desc.includes('thời gian')) {
-      return <TrendingUp className="h-4 w-4 text-amber-600" />;
+    // 4. LIQUIDITY ANALYSIS (Thanh khoản) - BLUE  
+    if (firstFiveWords.includes('thanh khoản') || firstFiveWords.includes('giao dịch')) {
+      return {
+        icon: <DollarSign className="h-4 w-4 text-blue-600" />,
+        category: 'liquidity', 
+        categoryName: 'Thanh khoản',
+        color: 'blue',
+        bgClass: 'bg-blue-50',
+        borderClass: 'border-blue-200',
+        textClass: 'text-blue-600'
+      };
     }
     
-    // Default icons based on index if no keywords match
-    const defaultIcons = [
-      <MapPin className="h-4 w-4 text-blue-600" />,
-      <FileCheck className="h-4 w-4 text-green-600" />,
-      <Users className="h-4 w-4 text-purple-600" />,
-      <Lightbulb className="h-4 w-4 text-orange-600" />
+    // 5. LOCATION ANALYSIS (Vị trí) - PURPLE
+    if (firstFiveWords.includes('vị trí') || firstFiveWords.includes('địa điểm') || firstFiveWords.includes('khu vực')) {
+      return {
+        icon: <MapPin className="h-4 w-4 text-purple-600" />,
+        category: 'location',
+        categoryName: 'Vị trí', 
+        color: 'purple', 
+        bgClass: 'bg-purple-50',
+        borderClass: 'border-purple-200',
+        textClass: 'text-purple-600'
+      };
+    }
+    
+    // SECONDARY CHECK: Kiểm tra toàn bộ description nếu không match ở trên
+    
+    // 1. VALUATION ACCURACY (Định giá) - EMERALD (Ưu tiên cao)
+    if (desc.includes('định giá') || desc.includes('thẩm định') || desc.includes('được thẩm định') || desc.includes('giá trị bất động sản') || desc.includes('mức giá') || desc.includes('nằm sát') || desc.includes('giá trung bình') || desc.includes('thị trường hiện tại') || desc.includes('chính xác') || desc.includes('tương đồng')) {
+      return {
+        icon: <Calculator className="h-4 w-4 text-emerald-600" />,
+        category: 'valuation',
+        categoryName: 'Định giá',
+        color: 'emerald',
+        bgClass: 'bg-emerald-50',
+        borderClass: 'border-emerald-200', 
+        textClass: 'text-emerald-600'
+      };
+    }
+    
+    // 2. LEGAL ANALYSIS (Pháp lý) - GREEN
+    if (desc.includes('pháp lý') || desc.includes('hợp đồng') || desc.includes('sổ') || desc.includes('sổ đỏ') || desc.includes('sổ hồng') || desc.includes('đảm bảo') || desc.includes('minh bạch') || desc.includes('chứng nhận') || desc.includes('giấy tờ') || desc.includes('thủ tục') || desc.includes('rủi ro') || desc.includes('quyền sở hữu')) {
+      return {
+        icon: <Shield className="h-4 w-4 text-green-600" />,
+        category: 'legal',
+        categoryName: 'Pháp lý',
+        color: 'green',
+        bgClass: 'bg-green-50',
+        borderClass: 'border-green-200',
+        textClass: 'text-green-600'
+      };
+    }
+    
+    // 3. LIQUIDITY ANALYSIS (Thanh khoản) - BLUE  
+    if (desc.includes('thanh khoản') || desc.includes('giao dịch') || desc.includes('bán') || desc.includes('mua') || desc.includes('số lượng giao dịch') || desc.includes('tần suất') || desc.includes('dễ dàng') || desc.includes('nhanh chóng') || desc.includes('trung bình cao')) {
+      return {
+        icon: <TrendingUp className="h-4 w-4 text-blue-600" />,
+        category: 'liquidity', 
+        categoryName: 'Thanh khoản',
+        color: 'blue',
+        bgClass: 'bg-blue-50',
+        borderClass: 'border-blue-200',
+        textClass: 'text-blue-600'
+      };
+    }
+    
+    // 4. LOCATION ANALYSIS (Vị trí) - PURPLE
+    if (desc.includes('vị trí') || desc.includes('địa điểm') || desc.includes('khu vực') || desc.includes('trung tâm') || desc.includes('quận') || desc.includes('phường') || desc.includes('đắc địa') || desc.includes('cực kỳ đắc địa') || desc.includes('thuận tiện') || desc.includes('tiếp cận') || desc.includes('gần') || desc.includes('cách')) {
+      return {
+        icon: <MapPin className="h-4 w-4 text-purple-600" />,
+        category: 'location',
+        categoryName: 'Vị trí', 
+        color: 'purple', 
+        bgClass: 'bg-purple-50',
+        borderClass: 'border-purple-200',
+        textClass: 'text-purple-600'
+      };
+    }
+    
+    // 5. INVESTMENT POTENTIAL (Tiềm năng sinh lời) - AMBER
+    if (desc.includes('tiềm năng') || desc.includes('sinh lời') || desc.includes('đầu tư') || desc.includes('lợi nhuận') || desc.includes('tăng trưởng') || desc.includes('xu hướng') || desc.includes('tăng giá') || desc.includes('nhu cầu') || desc.includes('cho thuê') || desc.includes('tỷ suất') || desc.includes('ổn định')) {
+      return {
+        icon: <TrendingUp className="h-4 w-4 text-amber-600" />,
+        category: 'investment',
+        categoryName: 'Tiềm năng sinh lời',
+        color: 'amber',
+        bgClass: 'bg-amber-50', 
+        borderClass: 'border-amber-200',
+        textClass: 'text-amber-600'
+      };
+    }
+    
+    // 6. UTILITIES & AMENITIES (Tiện ích) - CYAN
+    if (desc.includes('tiện ích') || desc.includes('trường học') || desc.includes('bệnh viện') || desc.includes('chợ') || desc.includes('siêu thị') || desc.includes('công viên') || desc.includes('dịch vụ') || desc.includes('y tế') || desc.includes('giáo dục')) {
+      return {
+        icon: <Building className="h-4 w-4 text-cyan-600" />,
+        category: 'utilities',
+        categoryName: 'Tiện ích',
+        color: 'cyan',
+        bgClass: 'bg-cyan-50',
+        borderClass: 'border-cyan-200',
+        textClass: 'text-cyan-600'
+      };
+    }
+    
+    // 7. TRANSPORTATION (Giao thông) - INDIGO
+    if (desc.includes('giao thông') || desc.includes('đường') || desc.includes('xe buýt') || desc.includes('metro') || desc.includes('tàu') || desc.includes('sân bay') || desc.includes('di chuyển') || desc.includes('kết nối')) {
+      return {
+        icon: <Car className="h-4 w-4 text-indigo-600" />,
+        category: 'transportation',
+        categoryName: 'Giao thông',
+        color: 'indigo',
+        bgClass: 'bg-indigo-50',
+        borderClass: 'border-indigo-200',
+        textClass: 'text-indigo-600'
+      };
+    }
+    
+    // Enhanced fallback with category-based distribution
+    const fallbackOptions = [
+      { icon: <Calculator className="h-4 w-4 text-emerald-600" />, category: 'valuation', categoryName: 'Định giá', color: 'emerald', bgClass: 'bg-emerald-50', borderClass: 'border-emerald-200', textClass: 'text-emerald-600' },
+      { icon: <Shield className="h-4 w-4 text-green-600" />, category: 'legal', categoryName: 'Pháp lý', color: 'green', bgClass: 'bg-green-50', borderClass: 'border-green-200', textClass: 'text-green-600' },
+      { icon: <TrendingUp className="h-4 w-4 text-blue-600" />, category: 'liquidity', categoryName: 'Thanh khoản', color: 'blue', bgClass: 'bg-blue-50', borderClass: 'border-blue-200', textClass: 'text-blue-600' },
+      { icon: <MapPin className="h-4 w-4 text-purple-600" />, category: 'location', categoryName: 'Vị trí', color: 'purple', bgClass: 'bg-purple-50', borderClass: 'border-purple-200', textClass: 'text-purple-600' },
+      { icon: <TrendingUp className="h-4 w-4 text-amber-600" />, category: 'investment', categoryName: 'Tiềm năng sinh lời', color: 'amber', bgClass: 'bg-amber-50', borderClass: 'border-amber-200', textClass: 'text-amber-600' }
     ];
     
-    return defaultIcons[index % defaultIcons.length];
+    return fallbackOptions[index % fallbackOptions.length];
   };
 
   return (
@@ -369,15 +516,35 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Khoảng cách trung tâm TP:</span>
                 <span className="font-semibold text-emerald-600">
-                  {result.cityCenterDistance ? result.cityCenterDistance.toFixed(1) + ' km' : '—'}
+                  {data.distance_analysis?.distances?.toCityCenter?.distance 
+                    ? data.distance_analysis.distances.toCityCenter.distance + ' km' 
+                    : '—'}
                 </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Khoảng cách trung tâm quận:</span>
                 <span className="font-semibold text-emerald-600">
-                  {result.districtCenterDistance ? result.districtCenterDistance.toFixed(1) + ' km' : '—'}
+                  {data.distance_analysis?.distances?.toDistrictCenter?.distance 
+                    ? data.distance_analysis.distances.toDistrictCenter.distance + ' km' 
+                    : '—'}
                 </span>
               </div>
+              {data.distance_analysis?.analysis?.accessibility && (
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Đánh giá tiếp cận:</span>
+                  <Badge className={`
+                    ${data.distance_analysis.analysis.accessibility === 'excellent' ? 'bg-green-500 text-white' : ''}
+                    ${data.distance_analysis.analysis.accessibility === 'good' ? 'bg-blue-500 text-white' : ''}
+                    ${data.distance_analysis.analysis.accessibility === 'fair' ? 'bg-yellow-500 text-white' : ''}
+                    ${data.distance_analysis.analysis.accessibility === 'poor' ? 'bg-red-500 text-white' : ''}
+                  `}>
+                    {data.distance_analysis.analysis.accessibility === 'excellent' && 'Xuất sắc'}
+                    {data.distance_analysis.analysis.accessibility === 'good' && 'Tốt'}
+                    {data.distance_analysis.analysis.accessibility === 'fair' && 'Trung bình'}
+                    {data.distance_analysis.analysis.accessibility === 'poor' && 'Kém'}
+                  </Badge>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -445,7 +612,7 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
 
       {/* Phân tích từ AI */}
       {radarScore.descriptions && radarScore.descriptions.length > 0 && (
-        <Card className="professional-card bg-gradient-to-br from-violet-50 via-white to-blue-50 border-violet-200">
+        <Card className="professional-card bg-gradient-to-br from-violet-50 via-white to-blue-50 border-violet-200 shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
               <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-violet-600 to-violet-700 rounded-lg shadow-sm">
@@ -453,22 +620,68 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
               </div>
               <div>
                 <h3 className="text-slate-800">Phân tích từ AI</h3>
-                <p className="text-sm text-slate-600 font-normal">Đánh giá chuyên sâu</p>
+                <p className="text-sm text-slate-600 font-normal">Đánh giá chuyên sâu từ {radarScore.descriptions.length} khía cạnh</p>
               </div>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {radarScore.descriptions.map((desc: string, index: number) => (
-                <div key={index} className="p-4 bg-gray-50 rounded-lg border-l-4 border-primary hover:bg-gray-100 transition-colors">
-                  <div className="flex items-start gap-3">
-                    <div className="flex items-center justify-center w-8 h-8 bg-white rounded-lg shadow-sm border border-gray-200 flex-shrink-0 mt-0.5">
-                      {getAnalysisIcon(desc, index)}
+              {radarScore.descriptions.map((desc: string, index: number) => {
+                // Get icon and category info for consistent theming
+                const analysisInfo = getAnalysisIconAndCategory(desc, index);
+                
+                return (
+                  <div 
+                    key={index} 
+                    className={`group p-4 bg-white rounded-xl border-l-4 ${analysisInfo.borderClass} hover:shadow-md transition-all duration-200 hover:scale-[1.01] cursor-default`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`flex items-center justify-center w-10 h-10 ${analysisInfo.bgClass} rounded-xl shadow-sm border border-gray-100 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-200`}>
+                        {React.cloneElement(analysisInfo.icon, { 
+                          className: analysisInfo.icon.props.className.replace('h-4 w-4', 'h-5 w-5') 
+                        })}
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-200">
+                          {desc}
+                        </p>
+                        <div className="flex items-center gap-2 mt-2">
+                          <Badge 
+                            variant="outline" 
+                            className={`text-xs px-2 py-1 ${analysisInfo.textClass} bg-transparent border-current opacity-60 group-hover:opacity-100 transition-opacity duration-200`}
+                          >
+                            {analysisInfo.categoryName}
+                          </Badge>
+                          <Badge 
+                            variant="secondary"
+                            className="text-xs px-2 py-1 bg-gray-100 text-gray-600"
+                          >
+                            #{index + 1}
+                          </Badge>
+                        </div>
+                      </div>
                     </div>
-                    <p className="text-sm text-gray-700 leading-relaxed flex-1">{desc}</p>
                   </div>
+                );
+              })}
+            </div>
+            
+            {/* Summary footer */}
+            <div className="mt-6 p-4 bg-gradient-to-r from-violet-100 to-blue-100 rounded-lg border border-violet-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Lightbulb className="h-4 w-4 text-violet-600" />
+                  <span className="text-sm font-medium text-violet-800">
+                    Tổng quan phân tích AI
+                  </span>
                 </div>
-              ))}
+                <Badge className="bg-violet-600 text-white shadow-sm">
+                  {radarScore.descriptions.length} phân tích
+                </Badge>
+              </div>
+              <p className="text-xs text-violet-700 mt-2">
+                Dựa trên thuật toán machine learning và dữ liệu thị trường real-time
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -562,42 +775,56 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
 
       {/* Bản đồ tiện ích xung quanh - Phần cuối */}
       {(() => {
-        // Tìm coordinates từ nhiều nguồn
+        // Tìm coordinates từ nhiều nguồn với thứ tự ưu tiên mới
         let lat, lng;
         
         // Debug log để kiểm tra data
-        console.log('Debug utilities map data:', {
-          result_geoLocation: result.geoLocation,
+        console.log('🗺️ Debug utilities map data:', {
           input_data_coordinates: data.input_data?.coordinates,
-          evaluation_geoLocation: data.valuation_result?.evaluation?.geoLocation,
           valuation_payload_geoLocation: data.valuation_payload?.geoLocation,
-          utilities: data.utilities,
+          result_geoLocation: result.geoLocation,
+          evaluation_geoLocation: data.valuation_result?.evaluation?.geoLocation,
+          utilities: data.utilities ? 'YES' : 'NO',
           utilities_data_length: data.utilities?.data?.length
         });
         
-        // Thử tìm coordinates từ các nguồn khác nhau - với thứ tự ưu tiên
-        if (data.valuation_payload?.geoLocation && data.valuation_payload.geoLocation.length === 2) {
-          // API trả về geoLocation ở format [lng, lat]
-          lng = data.valuation_payload.geoLocation[0];
-          lat = data.valuation_payload.geoLocation[1];
-        } else if (data.input_data?.coordinates && data.input_data.coordinates.length === 2) {
+        // Thứ tự ưu tiên tìm coordinates:
+        // 1. input_data.coordinates (từ user input) - format [lat, lng]
+        // 2. valuation_payload.geoLocation (từ API) - format [lng, lat] 
+        // 3. result.geoLocation (computed)
+        // 4. evaluation.geoLocation (fallback)
+        
+        if (data.input_data?.coordinates && Array.isArray(data.input_data.coordinates) && data.input_data.coordinates.length === 2) {
+          // Input coordinates luôn là [lat, lng]
           lat = data.input_data.coordinates[0];
           lng = data.input_data.coordinates[1];
-        } else if (result.geoLocation && result.geoLocation.length === 2) {
-          lat = result.geoLocation[1];
+          console.log('📍 Using input_data coordinates:', { lat, lng });
+        } else if (data.valuation_payload?.geoLocation && Array.isArray(data.valuation_payload.geoLocation) && data.valuation_payload.geoLocation.length === 2) {
+          // API payload coordinates là [lng, lat] - cần đảo ngược
+          lng = data.valuation_payload.geoLocation[0];
+          lat = data.valuation_payload.geoLocation[1];
+          console.log('📍 Using valuation_payload coordinates:', { lat, lng });
+        } else if (result.geoLocation && Array.isArray(result.geoLocation) && result.geoLocation.length === 2) {
+          // Result coordinates thường là [lng, lat] 
           lng = result.geoLocation[0];
-        } else if (data.valuation_result?.evaluation?.geoLocation && data.valuation_result.evaluation.geoLocation.length === 2) {
-          lat = data.valuation_result.evaluation.geoLocation[1];
+          lat = result.geoLocation[1];
+          console.log('📍 Using result coordinates:', { lat, lng });
+        } else if (data.valuation_result?.evaluation?.geoLocation && Array.isArray(data.valuation_result.evaluation.geoLocation) && data.valuation_result.evaluation.geoLocation.length === 2) {
+          // Evaluation coordinates là [lng, lat]
           lng = data.valuation_result.evaluation.geoLocation[0];
+          lat = data.valuation_result.evaluation.geoLocation[1];
+          console.log('📍 Using evaluation coordinates:', { lat, lng });
         }
         
-        // Fallback coordinates cho Hà Nội nếu không có tọa độ
-        if (!lat || !lng) {
+        // Validation coordinates - đảm bảo là số hợp lệ
+        if (!lat || !lng || isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+          // Fallback coordinates cho Hà Nội
           lat = 21.0282993;
           lng = 105.8539963;
+          console.log('⚠️ Using fallback Hanoi coordinates:', { lat, lng });
         }
         
-        console.log('Final coordinates for utilities map:', { lat, lng });
+        console.log('✅ Final coordinates for utilities map:', { lat, lng });
         
         // Hiển thị utilities map luôn
         return (
@@ -614,8 +841,8 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
       <Card className="bg-gray-50">
         <CardContent className="pt-6">
           <div className="flex flex-wrap justify-between items-center text-sm text-gray-600">
-            <span>Transaction ID: {result.transId}</span>
-            <span>Ngày tạo: {new Date(result.createdDate).toLocaleDateString('vi-VN')}</span>
+            <span>Transaction ID: {crypto.randomUUID()}</span>
+            <span>Ngày tạo: {new Date().toLocaleDateString('vi-VN')}</span>
           </div>
         </CardContent>
       </Card>

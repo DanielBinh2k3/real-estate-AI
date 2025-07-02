@@ -24,6 +24,7 @@ const PropertyValuationRangeInputSchema = z.object({
   lotSize: z.number().describe('Diện tích lô đất (m²).'),
   yearBuilt: z.number().describe('Năm xây dựng bất động sản.'),
   marketData: z.string().describe('Dữ liệu thị trường hiện tại cho các bất động sản tương đương trong khu vực.'),
+  searchData: z.string().describe('Dữ liệu search được từ internet về bất động sản trong khu vực.').optional(),
 });
 export type PropertyValuationRangeInput = z.infer<typeof PropertyValuationRangeInputSchema>;
 
@@ -43,7 +44,7 @@ const prompt = ai.definePrompt({
   name: 'propertyValuationRangePrompt',
   input: {schema: PropertyValuationRangeInputSchema},
   output: {schema: PropertyValuationRangeOutputSchema},
-  prompt: `Bạn là chuyên gia định giá bất động sản với hơn 15 năm kinh nghiệm. Hãy thực hiện định giá CHÍNH XÁC dựa trên dữ liệu thị trường thực tế và quy trình chuẩn xác sau:
+  prompt: `Bạn là chuyên gia định giá bất động sản với hơn 15 năm kinh nghiệm. Hãy thực hiện định giá CHÍNH XÁC dựa trên dữ liệu thị trường thực tế, thông tin search từ internet và quy trình chuẩn xác sau:
 
 — **THÔNG TIN BẤT ĐỘNG SẢN**  
 - Địa chỉ: {{{address}}}  
@@ -58,6 +59,9 @@ const prompt = ai.definePrompt({
 
 — **DỮ LIỆU THỊ TRƯỜNG HIỆN TẠI** (bắt buộc tham khảo):  
 {{{marketData}}}
+
+— **DỮ LIỆU SEARCH ĐƯỢC TỪ INTERNET**:
+{{{searchData}}}
 
 — **QUY TRÌNH ĐỊNH GIÁ**  
 

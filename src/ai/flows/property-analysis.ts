@@ -29,6 +29,7 @@ const PropertyAnalysisInputSchema = z.object({
   legal: z.string().describe('Tình trạng pháp lý (sổ đỏ, hợp đồng, v.v.).'),
   yearBuilt: z.number().describe('Năm xây dựng bất động sản.'),
   marketData: z.string().describe('Dữ liệu thị trường hiện tại cho các bất động sản tương đương trong khu vực.'),
+  searchData: z.string().describe('Dữ liệu search được từ internet về bất động sản trong khu vực.').optional(),
 });
 export type PropertyAnalysisInput = z.infer<typeof PropertyAnalysisInputSchema>;
 
@@ -52,7 +53,7 @@ const prompt = ai.definePrompt({
   name: 'propertyAnalysisPrompt',
   input: {schema: PropertyAnalysisInputSchema},
   output: {schema: PropertyAnalysisOutputSchema},
-  prompt: `Phân tích BĐS và tạo radar score (5 tiêu chí). Dựa trên thông tin đầu vào và dữ liệu thị trường:
+  prompt: `Phân tích BĐS và tạo radar score (5 tiêu chí). Dựa trên thông tin đầu vào, dữ liệu thị trường và dữ liệu search:
 
 **Thông tin từ input:**
 - Loại: {{{type}}}
@@ -65,8 +66,11 @@ const prompt = ai.definePrompt({
 - Thị trường: {{{marketData}}}
 - Khu vực: {{{ward}}}, {{{district}}}, {{{city}}} (Cấp {{{administrativeLevel}}})
 
+**Dữ liệu search được:**
+{{{searchData}}}
+
 **Yêu cầu:**
-Phân tích chi tiết từ marketData (giá trung bình, số giao dịch theo năm) + thông tin input để tạo 5 điểm (1-10) + 5 mô tả ngắn (1 câu/mục):
+Phân tích chi tiết từ marketData (giá trung bình, số giao dịch theo năm) + searchData (thông tin thị trường internet) + thông tin input để tạo 5 điểm (1-10) + 5 mô tả ngắn (1 câu/mục):
 
 1. **legalityScore** – Phân tích theo loại sổ:
    - Sổ đỏ (red_book): 9-10 điểm (pháp lý hoàn hảo)

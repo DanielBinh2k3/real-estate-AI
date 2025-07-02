@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { MapPin, Loader2, Navigation, Search, X, Map, Image } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { useDebounce } from '@/hooks/use-debounce';
 import { getGeoapifyApiKey } from '@/lib/config';
 
 // Dynamic import của Leaflet components để tránh SSR issues
@@ -96,10 +97,16 @@ export function InteractiveMapSimple({
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
+  
+  // Debounce search input để tránh gọi API quá nhiều
+  const debouncedSearchAddress = useDebounce(searchAddress, 500);
   const [mapCenter, setMapCenter] = useState<[number, number]>([initialLocation.lat, initialLocation.lng]);
   const [mapZoom, setMapZoom] = useState(15);
   const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  
+  // State để hiển thị trạng thái debounce
+  const isDebouncing = searchAddress !== debouncedSearchAddress && searchAddress.length > 1;
   const searchInputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
@@ -139,6 +146,26 @@ export function InteractiveMapSimple({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Handle when map is ready
+  const handleMapReady = useCallback((map: any) => {
+    mapRef.current = map;
+  }, []);
+
+  // Function to smoothly zoom and center to a location
+  const zoomToLocation = useCallback((lat: number, lng: number, zoom = 16) => {
+    setMapCenter([lat, lng]);
+    setMapZoom(zoom);
+    
+    // If map instance is available, use flyTo for smooth animation
+    if (mapRef.current) {
+      const map = mapRef.current;
+      map.flyTo([lat, lng], zoom, {
+        duration: 1.5, // Animation duration in seconds
+        easeLinearity: 0.25
+      });
+    }
+  }, []);
+
   // Sync with external selectedLocation prop từ Dashboard
   useEffect(() => {
     if (selectedLocation && selectedLocation !== selectedLocationState) {
@@ -154,27 +181,7 @@ export function InteractiveMapSimple({
         setSearchAddress(selectedLocation.address);
       }
     }
-  }, [selectedLocation, selectedLocationState]);
-
-  // Handle when map is ready
-  const handleMapReady = useCallback((map: any) => {
-    mapRef.current = map;
-  }, []);
-
-  // Function to smoothly zoom and center to a location
-  const zoomToLocation = (lat: number, lng: number, zoom = 16) => {
-    setMapCenter([lat, lng]);
-    setMapZoom(zoom);
-    
-    // If map instance is available, use flyTo for smooth animation
-    if (mapRef.current) {
-      const map = mapRef.current;
-      map.flyTo([lat, lng], zoom, {
-        duration: 1.5, // Animation duration in seconds
-        easeLinearity: 0.25
-      });
-    }
-  };
+  }, [selectedLocation, selectedLocationState, zoomToLocation]);
 
   const handleLocationSelect = async (lat: number, lng: number) => {
     setIsLoading(true);
@@ -220,7 +227,7 @@ export function InteractiveMapSimple({
     }
   };
 
-  const fetchSuggestions = async (query: string) => {
+  const fetchSuggestions = useCallback(async (query: string) => {
     if (!query.trim() || query.length < 2) {
       setSuggestions([]);
       setShowSuggestions(false);
@@ -259,17 +266,21 @@ export function InteractiveMapSimple({
     } finally {
       setIsLoadingSuggestions(false);
     }
-  };
+  }, []);
+
+  // Effect để tự động fetch suggestions khi debouncedSearchAddress thay đổi
+  useEffect(() => {
+    if (debouncedSearchAddress && debouncedSearchAddress.trim().length > 1) {
+      fetchSuggestions(debouncedSearchAddress);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }, [debouncedSearchAddress, fetchSuggestions]);
 
   const handleSearchInputChange = (value: string) => {
     setSearchAddress(value);
-    
-    // Debounce suggestions fetch
-    const timeoutId = setTimeout(() => {
-      fetchSuggestions(value);
-    }, 300);
-    
-    return () => clearTimeout(timeoutId);
+    // Suggestions sẽ được fetch tự động thông qua useEffect với debouncedSearchAddress
   };
 
   const handleSuggestionClick = (suggestion: SearchSuggestion) => {
@@ -486,8 +497,18 @@ export function InteractiveMapSimple({
                     value={searchAddress}
                     onChange={(e) => handleSearchInputChange(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleSearchLocation()}
-                    onFocus={() => searchAddress.length > 1 && fetchSuggestions(searchAddress)}
+                    onFocus={() => {
+                      // Chỉ hiển thị suggestions nếu đã có và search input đủ dài
+                      if (searchAddress.length > 1 && suggestions.length > 0) {
+                        setShowSuggestions(true);
+                      }
+                    }}
                   />
+                  {isDebouncing && (
+                    <div className="absolute right-8 top-1/2 transform -translate-y-1/2 text-blue-500">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    </div>
+                  )}
                   {searchAddress && (
                     <button
                       onClick={clearSearch}
@@ -673,7 +694,7 @@ export function InteractiveMapSimple({
 
         <div className="text-sm text-gray-600">
           💡 <strong>Hướng dẫn:</strong> 
-          Click trực tiếp trên bản đồ hoặc gõ địa chỉ và chọn từ gợi ý. Bản đồ sẽ tự động zoom vào vị trí đã chọn.
+          Click trực tiếp trên bản đồ hoặc gõ địa chỉ và chọn từ gợi ý. Tìm kiếm có độ trễ 500ms để tối ưu hiệu suất. Bản đồ sẽ tự động zoom vào vị trí đã chọn.
         </div>
 
         {/* Quick Location Buttons */}

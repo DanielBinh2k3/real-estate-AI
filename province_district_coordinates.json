@@ -1,0 +1,5252 @@
+{
+    "Hà Nội": {
+        "latitude": 21.0283334,
+        "longitude": 105.854041,
+        "districts": [
+            {
+                "name": "Quận Ba Đình",
+                "coordinates": {
+                    "latitude": 21.034468,
+                    "longitude": 105.81237
+                }
+            },
+            {
+                "name": "Quận Hoàn Kiếm",
+                "coordinates": {
+                    "latitude": 21.027365,
+                    "longitude": 105.849486
+                }
+            },
+            {
+                "name": "Quận Tây Hồ",
+                "coordinates": {
+                    "latitude": 21.0683576,
+                    "longitude": 105.8240984
+                }
+            },
+            {
+                "name": "Quận Long Biên",
+                "coordinates": {
+                    "latitude": 21.05670165,
+                    "longitude": 105.90773396262549
+                }
+            },
+            {
+                "name": "Quận Cầu Giấy",
+                "coordinates": {
+                    "latitude": 21.03758,
+                    "longitude": 105.791602
+                }
+            },
+            {
+                "name": "Quận Đống Đa",
+                "coordinates": {
+                    "latitude": 21.0136436,
+                    "longitude": 105.8225234
+                }
+            },
+            {
+                "name": "Quận Hai Bà Trưng",
+                "coordinates": {
+                    "latitude": 21.0088541,
+                    "longitude": 105.8507816
+                }
+            },
+            {
+                "name": "Quận Hoàng Mai",
+                "coordinates": {
+                    "latitude": 20.968066,
+                    "longitude": 105.848206
+                }
+            },
+            {
+                "name": "Quận Thanh Xuân",
+                "coordinates": {
+                    "latitude": 20.994735,
+                    "longitude": 105.79971
+                }
+            },
+            {
+                "name": "Huyện Sóc Sơn",
+                "coordinates": {
+                    "latitude": 21.25674,
+                    "longitude": 105.847536
+                }
+            },
+            {
+                "name": "Huyện Đông Anh",
+                "coordinates": {
+                    "latitude": 21.139414,
+                    "longitude": 105.849226
+                }
+            },
+            {
+                "name": "Huyện Gia Lâm",
+                "coordinates": {
+                    "latitude": 21.0238721,
+                    "longitude": 105.97050129109073
+                }
+            },
+            {
+                "name": "Quận Nam Từ Liêm",
+                "coordinates": {
+                    "latitude": 21.0173512,
+                    "longitude": 105.7613329
+                }
+            },
+            {
+                "name": "Huyện Thanh Trì",
+                "coordinates": {
+                    "latitude": 20.94155585,
+                    "longitude": 105.83606213434689
+                }
+            },
+            {
+                "name": "Quận Bắc Từ Liêm",
+                "coordinates": {
+                    "latitude": 21.076062,
+                    "longitude": 105.772006
+                }
+            },
+            {
+                "name": "Huyện Mê Linh",
+                "coordinates": {
+                    "latitude": 21.180458899999998,
+                    "longitude": 105.70749866355271
+                }
+            },
+            {
+                "name": "Quận Hà Đông",
+                "coordinates": {
+                    "latitude": 20.9551855,
+                    "longitude": 105.758011
+                }
+            },
+            {
+                "name": "Thị xã Sơn Tây",
+                "coordinates": {
+                    "latitude": 21.141742,
+                    "longitude": 105.504037
+                }
+            },
+            {
+                "name": "Huyện Ba Vì",
+                "coordinates": {
+                    "latitude": 21.0245,
+                    "longitude": 105.84117
+                }
+            },
+            {
+                "name": "Huyện Phúc Thọ",
+                "coordinates": {
+                    "latitude": 21.0245,
+                    "longitude": 105.84117
+                }
+            },
+            {
+                "name": "Huyện Đan Phượng",
+                "coordinates": {
+                    "latitude": 21.0840728,
+                    "longitude": 105.67177200428937
+                }
+            },
+            {
+                "name": "Huyện Hoài Đức",
+                "coordinates": {
+                    "latitude": 21.0660338,
+                    "longitude": 105.7080967
+                }
+            },
+            {
+                "name": "Huyện Quốc Oai",
+                "coordinates": {
+                    "latitude": 20.97794175,
+                    "longitude": 105.62944755364812
+                }
+            },
+            {
+                "name": "Huyện Thạch Thất",
+                "coordinates": {
+                    "latitude": 21.0093935,
+                    "longitude": 105.63292079458856
+                }
+            },
+            {
+                "name": "Huyện Chương Mỹ",
+                "coordinates": {
+                    "latitude": 20.87851585,
+                    "longitude": 105.64923352491572
+                }
+            },
+            {
+                "name": "Huyện Thanh Oai",
+                "coordinates": {
+                    "latitude": 20.8598652,
+                    "longitude": 105.78051645709459
+                }
+            },
+            {
+                "name": "Huyện Thường Tín",
+                "coordinates": {
+                    "latitude": 20.83223625,
+                    "longitude": 105.86978922776883
+                }
+            },
+            {
+                "name": "Huyện Phú Xuyên",
+                "coordinates": {
+                    "latitude": 20.73039045,
+                    "longitude": 105.91452091902877
+                }
+            },
+            {
+                "name": "Huyện Ứng Hòa",
+                "coordinates": {
+                    "latitude": 20.7889189,
+                    "longitude": 105.7168533
+                }
+            },
+            {
+                "name": "Huyện Mỹ Đức",
+                "coordinates": {
+                    "latitude": 20.683285599999998,
+                    "longitude": 105.73861052648576
+                }
+            }
+        ]
+    },
+    "Hồ Chí Minh": {
+        "latitude": 10.7763897,
+        "longitude": 106.7011391,
+        "districts": [
+            {
+                "name": "Quận 1",
+                "coordinates": {
+                    "latitude": 10.7773145,
+                    "longitude": 106.6999907
+                }
+            },
+            {
+                "name": "Quận 12",
+                "coordinates": {
+                    "latitude": 10.8616036,
+                    "longitude": 106.6609731
+                }
+            },
+            {
+                "name": "Quận Gò Vấp",
+                "coordinates": {
+                    "latitude": 10.8306171,
+                    "longitude": 106.6779308
+                }
+            },
+            {
+                "name": "Quận Bình Thạnh",
+                "coordinates": {
+                    "latitude": 10.8017639,
+                    "longitude": 106.7110322
+                }
+            },
+            {
+                "name": "Quận Tân Bình",
+                "coordinates": {
+                    "latitude": 10.802583,
+                    "longitude": 106.6521157
+                }
+            },
+            {
+                "name": "Quận Tân Phú",
+                "coordinates": {
+                    "latitude": 10.7914967,
+                    "longitude": 106.6278431
+                }
+            },
+            {
+                "name": "Quận Phú Nhuận",
+                "coordinates": {
+                    "latitude": 10.7990972,
+                    "longitude": 106.6802278
+                }
+            },
+            {
+                "name": "Thành phố Thủ Đức",
+                "coordinates": {
+                    "latitude": 10.851585,
+                    "longitude": 106.762213
+                }
+            },
+            {
+                "name": "Quận 3",
+                "coordinates": {
+                    "latitude": 10.778639,
+                    "longitude": 106.6870156
+                }
+            },
+            {
+                "name": "Quận 10",
+                "coordinates": {
+                    "latitude": 10.772732,
+                    "longitude": 106.6683666
+                }
+            },
+            {
+                "name": "Quận 11",
+                "coordinates": {
+                    "latitude": 10.7658124,
+                    "longitude": 106.6474946
+                }
+            },
+            {
+                "name": "Quận 4",
+                "coordinates": {
+                    "latitude": 10.7607328,
+                    "longitude": 106.7075519
+                }
+            },
+            {
+                "name": "Quận 5",
+                "coordinates": {
+                    "latitude": 10.7553616,
+                    "longitude": 106.6685441
+                }
+            },
+            {
+                "name": "Quận 6",
+                "coordinates": {
+                    "latitude": 10.745886,
+                    "longitude": 106.6392921
+                }
+            },
+            {
+                "name": "Quận 8",
+                "coordinates": {
+                    "latitude": 10.7217236,
+                    "longitude": 106.6296151
+                }
+            },
+            {
+                "name": "Quận Bình Tân",
+                "coordinates": {
+                    "latitude": 10.737221,
+                    "longitude": 106.616151
+                }
+            },
+            {
+                "name": "Quận 7",
+                "coordinates": {
+                    "latitude": 10.7375481,
+                    "longitude": 106.7302238
+                }
+            },
+            {
+                "name": "Huyện Củ Chi",
+                "coordinates": {
+                    "latitude": 10.781971,
+                    "longitude": 106.693081
+                }
+            },
+            {
+                "name": "Huyện Hóc Môn",
+                "coordinates": {
+                    "latitude": 10.8895191,
+                    "longitude": 106.59509262817431
+                }
+            },
+            {
+                "name": "Huyện Bình Chánh",
+                "coordinates": {
+                    "latitude": 10.781971,
+                    "longitude": 106.693081
+                }
+            },
+            {
+                "name": "Huyện Nhà Bè",
+                "coordinates": {
+                    "latitude": 10.6745439,
+                    "longitude": 106.73295241850869
+                }
+            },
+            {
+                "name": "Huyện Cần Giờ",
+                "coordinates": {
+                    "latitude": 10.405918400000001,
+                    "longitude": 106.93505718375809
+                }
+            }
+        ]
+    },
+    "Hải Phòng": {
+        "latitude": 20.858864,
+        "longitude": 106.6749591,
+        "districts": [
+            {
+                "name": "Quận Hồng Bàng",
+                "coordinates": {
+                    "latitude": 20.86435,
+                    "longitude": 106.684435
+                }
+            },
+            {
+                "name": "Quận Ngô Quyền",
+                "coordinates": {
+                    "latitude": 20.840773,
+                    "longitude": 106.691631
+                }
+            },
+            {
+                "name": "Quận Lê Chân",
+                "coordinates": {
+                    "latitude": 20.8426235,
+                    "longitude": 106.6814463
+                }
+            },
+            {
+                "name": "Quận Hải An",
+                "coordinates": {
+                    "latitude": 20.833036,
+                    "longitude": 106.721741
+                }
+            },
+            {
+                "name": "Quận Kiến An",
+                "coordinates": {
+                    "latitude": 20.80298135,
+                    "longitude": 106.6247773476787
+                }
+            },
+            {
+                "name": "Quận Đồ Sơn",
+                "coordinates": {
+                    "latitude": 20.858864,
+                    "longitude": 106.6749591
+                }
+            },
+            {
+                "name": "Quận Dương Kinh",
+                "coordinates": {
+                    "latitude": 20.779576957670425,
+                    "longitude": 106.72620294188225
+                }
+            },
+            {
+                "name": "Thành phố Thuỷ Nguyên",
+                "coordinates": {
+                    "latitude": 20.839229,
+                    "longitude": 106.687581
+                }
+            },
+            {
+                "name": "Quận An Dương",
+                "coordinates": {
+                    "latitude": 20.8652215,
+                    "longitude": 106.6135101
+                }
+            },
+            {
+                "name": "Huyện An Lão",
+                "coordinates": {
+                    "latitude": 14.53447105,
+                    "longitude": 108.78248704267554
+                }
+            },
+            {
+                "name": "Huyện Kiến Thuỵ",
+                "coordinates": {
+                    "latitude": 20.73365105,
+                    "longitude": 106.67151606796983
+                }
+            },
+            {
+                "name": "Huyện Tiên Lãng",
+                "coordinates": {
+                    "latitude": 20.858864,
+                    "longitude": 106.6749591
+                }
+            },
+            {
+                "name": "Huyện Vĩnh Bảo",
+                "coordinates": {
+                    "latitude": 20.858864,
+                    "longitude": 106.6749591
+                }
+            },
+            {
+                "name": "Huyện Cát Hải",
+                "coordinates": {
+                    "latitude": 20.13509575,
+                    "longitude": 107.73010634325183
+                }
+            },
+            {
+                "name": "Huyện Bạch Long Vĩ",
+                "coordinates": {
+                    "latitude": 20.13509575,
+                    "longitude": 107.73010634325183
+                }
+            }
+        ]
+    },
+    "Đà Nẵng": {
+        "latitude": 16.068,
+        "longitude": 108.212,
+        "districts": [
+            {
+                "name": "Quận Liên Chiểu",
+                "coordinates": {
+                    "latitude": 16.0891126,
+                    "longitude": 108.1420613
+                }
+            },
+            {
+                "name": "Quận Thanh Khê",
+                "coordinates": {
+                    "latitude": 16.068,
+                    "longitude": 108.212
+                }
+            },
+            {
+                "name": "Quận Hải Châu",
+                "coordinates": {
+                    "latitude": 16.061718,
+                    "longitude": 108.222781
+                }
+            },
+            {
+                "name": "Quận Sơn Trà",
+                "coordinates": {
+                    "latitude": 16.0833029,
+                    "longitude": 108.2389578
+                }
+            },
+            {
+                "name": "Quận Ngũ Hành Sơn",
+                "coordinates": {
+                    "latitude": 16.0083623,
+                    "longitude": 108.25714283772055
+                }
+            },
+            {
+                "name": "Quận Cẩm Lệ",
+                "coordinates": {
+                    "latitude": 16.0153046,
+                    "longitude": 108.2013088
+                }
+            },
+            {
+                "name": "Huyện Hòa Vang",
+                "coordinates": {
+                    "latitude": 16.06665445,
+                    "longitude": 107.97380571659018
+                }
+            },
+            {
+                "name": "Huyện Hoàng Sa",
+                "coordinates": {
+                    "latitude": 16.06778,
+                    "longitude": 108.22083
+                }
+            }
+        ]
+    },
+    "Cần Thơ": {
+        "latitude": 10.0364634,
+        "longitude": 105.7875821,
+        "districts": [
+            {
+                "name": "Quận Ninh Kiều",
+                "coordinates": {
+                    "latitude": 10.0349558,
+                    "longitude": 105.7721694
+                }
+            },
+            {
+                "name": "Quận Ô Môn",
+                "coordinates": {
+                    "latitude": 10.114293,
+                    "longitude": 105.623222
+                }
+            },
+            {
+                "name": "Quận Bình Thuỷ",
+                "coordinates": {
+                    "latitude": 10.07330305,
+                    "longitude": 105.74012145130219
+                }
+            },
+            {
+                "name": "Quận Cái Răng",
+                "coordinates": {
+                    "latitude": 10.010670600000001,
+                    "longitude": 105.80448190868213
+                }
+            },
+            {
+                "name": "Quận Thốt Nốt",
+                "coordinates": {
+                    "latitude": 10.27735505,
+                    "longitude": 105.5288534
+                }
+            },
+            {
+                "name": "Huyện Vĩnh Thạnh",
+                "coordinates": {
+                    "latitude": 13.84564,
+                    "longitude": 109.15275
+                }
+            },
+            {
+                "name": "Huyện Cờ Đỏ",
+                "coordinates": {
+                    "latitude": 10.1024277,
+                    "longitude": 105.4262759
+                }
+            },
+            {
+                "name": "Huyện Phong Điền",
+                "coordinates": {
+                    "latitude": 10.0006446,
+                    "longitude": 105.6640139
+                }
+            },
+            {
+                "name": "Huyện Thới Lai",
+                "coordinates": {
+                    "latitude": 10.0364634,
+                    "longitude": 105.7875821
+                }
+            }
+        ]
+    },
+    "An Giang": {
+        "latitude": 10.5392057,
+        "longitude": 105.2312822,
+        "districts": [
+            {
+                "name": "Thành phố Long Xuyên",
+                "coordinates": {
+                    "latitude": 10.38398705,
+                    "longitude": 105.42662138793887
+                }
+            },
+            {
+                "name": "Thành phố Châu Đốc",
+                "coordinates": {
+                    "latitude": 10.699215,
+                    "longitude": 105.103179
+                }
+            },
+            {
+                "name": "Huyện An Phú",
+                "coordinates": {
+                    "latitude": 10.83361035,
+                    "longitude": 105.10424917543008
+                }
+            },
+            {
+                "name": "Thị xã Tân Châu",
+                "coordinates": {
+                    "latitude": 10.7997501,
+                    "longitude": 105.2400851
+                }
+            },
+            {
+                "name": "Huyện Phú Tân",
+                "coordinates": {
+                    "latitude": 9.1782047,
+                    "longitude": 105.1519707
+                }
+            },
+            {
+                "name": "Huyện Châu Phú",
+                "coordinates": {
+                    "latitude": 10.597376050000001,
+                    "longitude": 105.2219272116559
+                }
+            },
+            {
+                "name": "Thị xã Tịnh Biên",
+                "coordinates": {
+                    "latitude": 10.59911615,
+                    "longitude": 104.95056189281257
+                }
+            },
+            {
+                "name": "Huyện Tri Tôn",
+                "coordinates": {
+                    "latitude": 10.41222205,
+                    "longitude": 104.97094380778296
+                }
+            },
+            {
+                "name": "Huyện Châu Thành",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Chợ Mới",
+                "coordinates": {
+                    "latitude": 22.1494915,
+                    "longitude": 105.837248
+                }
+            },
+            {
+                "name": "Huyện Thoại Sơn",
+                "coordinates": {
+                    "latitude": 10.27864325,
+                    "longitude": 105.2691602988576
+                }
+            }
+        ]
+    },
+    "Bà Rịa-Vũng Tàu": {
+        "latitude": 10.5738801,
+        "longitude": 107.3284362,
+        "districts": [
+            {
+                "name": "Thành phố Vũng Tàu",
+                "coordinates": {
+                    "latitude": 10.3486485,
+                    "longitude": 107.0765028
+                }
+            },
+            {
+                "name": "Thành phố Bà Rịa",
+                "coordinates": {
+                    "latitude": 10.4962696,
+                    "longitude": 107.1688433
+                }
+            },
+            {
+                "name": "Huyện Châu Đức",
+                "coordinates": {
+                    "latitude": 10.6551151,
+                    "longitude": 107.2428506916915
+                }
+            },
+            {
+                "name": "Huyện Xuyên Mộc",
+                "coordinates": {
+                    "latitude": 10.53840215,
+                    "longitude": 107.41283222889086
+                }
+            },
+            {
+                "name": "Huyện Long Đất",
+                "coordinates": {
+                    "latitude": 10.4828527,
+                    "longitude": 107.1749599
+                }
+            },
+            {
+                "name": "Thành phố Phú Mỹ",
+                "coordinates": {
+                    "latitude": 10.5883909,
+                    "longitude": 107.0553345
+                }
+            },
+            {
+                "name": "Huyện Côn Đảo",
+                "coordinates": {
+                    "latitude": 8.6855081,
+                    "longitude": 106.6067254
+                }
+            }
+        ]
+    },
+    "Bắc Giang": {
+        "latitude": 21.2632864,
+        "longitude": 106.2093655,
+        "districts": [
+            {
+                "name": "Thành phố Bắc Giang",
+                "coordinates": {
+                    "latitude": 21.2632864,
+                    "longitude": 106.2093655
+                }
+            },
+            {
+                "name": "Huyện Yên Thế",
+                "coordinates": {
+                    "latitude": 21.2632864,
+                    "longitude": 106.2093655
+                }
+            },
+            {
+                "name": "Huyện Tân Yên",
+                "coordinates": {
+                    "latitude": 21.2632864,
+                    "longitude": 106.2093655
+                }
+            },
+            {
+                "name": "Huyện Lạng Giang",
+                "coordinates": {
+                    "latitude": 21.2632864,
+                    "longitude": 106.2093655
+                }
+            },
+            {
+                "name": "Huyện Lục Nam",
+                "coordinates": {
+                    "latitude": 21.2632864,
+                    "longitude": 106.2093655
+                }
+            },
+            {
+                "name": "Huyện Lục Ngạn",
+                "coordinates": {
+                    "latitude": 21.2632864,
+                    "longitude": 106.2093655
+                }
+            },
+            {
+                "name": "Huyện Sơn Động",
+                "coordinates": {
+                    "latitude": 21.270093,
+                    "longitude": 106.201749
+                }
+            },
+            {
+                "name": "Thị Xã Việt Yên",
+                "coordinates": {
+                    "latitude": 21.295903,
+                    "longitude": 106.198183
+                }
+            },
+            {
+                "name": "Huyện Hiệp Hòa",
+                "coordinates": {
+                    "latitude": 21.2632864,
+                    "longitude": 106.2093655
+                }
+            },
+            {
+                "name": "Thị xã Chũ",
+                "coordinates": {
+                    "latitude": 21.2632864,
+                    "longitude": 106.2093655
+                }
+            }
+        ]
+    },
+    "Bắc Kạn": {
+        "latitude": 22.1494915,
+        "longitude": 105.837248,
+        "districts": [
+            {
+                "name": "Thành Phố Bắc Kạn",
+                "coordinates": {
+                    "latitude": 22.1494915,
+                    "longitude": 105.837248
+                }
+            },
+            {
+                "name": "Huyện Pác Nặm",
+                "coordinates": {
+                    "latitude": 22.1494915,
+                    "longitude": 105.837248
+                }
+            },
+            {
+                "name": "Huyện Ba Bể",
+                "coordinates": {
+                    "latitude": 22.14701,
+                    "longitude": 105.83481
+                }
+            },
+            {
+                "name": "Huyện Ngân Sơn",
+                "coordinates": {
+                    "latitude": 22.1494915,
+                    "longitude": 105.837248
+                }
+            },
+            {
+                "name": "Huyện Bạch Thông",
+                "coordinates": {
+                    "latitude": 22.1494915,
+                    "longitude": 105.837248
+                }
+            },
+            {
+                "name": "Huyện Chợ Đồn",
+                "coordinates": {
+                    "latitude": 22.1494915,
+                    "longitude": 105.837248
+                }
+            },
+            {
+                "name": "Huyện Chợ Mới",
+                "coordinates": {
+                    "latitude": 22.1494915,
+                    "longitude": 105.837248
+                }
+            },
+            {
+                "name": "Huyện Na Rì",
+                "coordinates": {
+                    "latitude": 22.14701,
+                    "longitude": 105.83481
+                }
+            }
+        ]
+    },
+    "Bạc Liêu": {
+        "latitude": 9.2824882,
+        "longitude": 105.7260685,
+        "districts": [
+            {
+                "name": "Thành phố Bạc Liêu",
+                "coordinates": {
+                    "latitude": 9.274043,
+                    "longitude": 105.732086
+                }
+            },
+            {
+                "name": "Huyện Hồng Dân",
+                "coordinates": {
+                    "latitude": 9.2824882,
+                    "longitude": 105.7260685
+                }
+            },
+            {
+                "name": "Huyện Phước Long",
+                "coordinates": {
+                    "latitude": 9.2824882,
+                    "longitude": 105.7260685
+                }
+            },
+            {
+                "name": "Huyện Vĩnh Lợi",
+                "coordinates": {
+                    "latitude": 9.2824882,
+                    "longitude": 105.7260685
+                }
+            },
+            {
+                "name": "Thị xã Giá Rai",
+                "coordinates": {
+                    "latitude": 9.2824882,
+                    "longitude": 105.7260685
+                }
+            },
+            {
+                "name": "Huyện Đông Hải",
+                "coordinates": {
+                    "latitude": 9.2824882,
+                    "longitude": 105.7260685
+                }
+            },
+            {
+                "name": "Huyện Hoà Bình",
+                "coordinates": {
+                    "latitude": 9.2824882,
+                    "longitude": 105.7260685
+                }
+            }
+        ]
+    },
+    "Bắc Ninh": {
+        "latitude": 21.1781515,
+        "longitude": 106.0710078,
+        "districts": [
+            {
+                "name": "Thành phố Bắc Ninh",
+                "coordinates": {
+                    "latitude": 21.1781515,
+                    "longitude": 106.0710078
+                }
+            },
+            {
+                "name": "Huyện Yên Phong",
+                "coordinates": {
+                    "latitude": 21.1781515,
+                    "longitude": 106.0710078
+                }
+            },
+            {
+                "name": "Thị xã Quế Võ",
+                "coordinates": {
+                    "latitude": 21.152369999999998,
+                    "longitude": 106.1541738634442
+                }
+            },
+            {
+                "name": "Huyện Tiên Du",
+                "coordinates": {
+                    "latitude": 21.1781515,
+                    "longitude": 106.0710078
+                }
+            },
+            {
+                "name": "Thành phố Từ Sơn",
+                "coordinates": {
+                    "latitude": 21.1781515,
+                    "longitude": 106.0710078
+                }
+            },
+            {
+                "name": "Thị xã Thuận Thành",
+                "coordinates": {
+                    "latitude": 21.1781515,
+                    "longitude": 106.0710078
+                }
+            },
+            {
+                "name": "Huyện Gia Bình",
+                "coordinates": {
+                    "latitude": 21.1781515,
+                    "longitude": 106.0710078
+                }
+            },
+            {
+                "name": "Huyện Lương Tài",
+                "coordinates": {
+                    "latitude": 21.1781515,
+                    "longitude": 106.0710078
+                }
+            }
+        ]
+    },
+    "Bến Tre": {
+        "latitude": 10.2448214,
+        "longitude": 106.3734823,
+        "districts": [
+            {
+                "name": "Thành phố Bến Tre",
+                "coordinates": {
+                    "latitude": 10.237538,
+                    "longitude": 106.3787
+                }
+            },
+            {
+                "name": "Huyện Châu Thành",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Chợ Lách",
+                "coordinates": {
+                    "latitude": 10.2448214,
+                    "longitude": 106.3734823
+                }
+            },
+            {
+                "name": "Huyện Mỏ Cày Nam",
+                "coordinates": {
+                    "latitude": 10.258235,
+                    "longitude": 106.362219
+                }
+            },
+            {
+                "name": "Huyện Giồng Trôm",
+                "coordinates": {
+                    "latitude": 10.2448214,
+                    "longitude": 106.3734823
+                }
+            },
+            {
+                "name": "Huyện Bình Đại",
+                "coordinates": {
+                    "latitude": 10.2448214,
+                    "longitude": 106.3734823
+                }
+            },
+            {
+                "name": "Huyện Ba Tri",
+                "coordinates": {
+                    "latitude": 10.2448214,
+                    "longitude": 106.3734823
+                }
+            },
+            {
+                "name": "Huyện Thạnh Phú",
+                "coordinates": {
+                    "latitude": 10.25782,
+                    "longitude": 106.39283
+                }
+            },
+            {
+                "name": "Huyện Mỏ Cày Bắc",
+                "coordinates": {
+                    "latitude": 10.2448214,
+                    "longitude": 106.3734823
+                }
+            }
+        ]
+    },
+    "Bình Định": {
+        "latitude": 20.999648,
+        "longitude": 106.1673364,
+        "districts": [
+            {
+                "name": "Thành phố Quy Nhơn",
+                "coordinates": {
+                    "latitude": 13.7696121,
+                    "longitude": 109.2313768
+                }
+            },
+            {
+                "name": "Huyện An Lão",
+                "coordinates": {
+                    "latitude": 14.53447105,
+                    "longitude": 108.78248704267554
+                }
+            },
+            {
+                "name": "Thị xã Hoài Nhơn",
+                "coordinates": {
+                    "latitude": 13.86955,
+                    "longitude": 109.06333
+                }
+            },
+            {
+                "name": "Huyện Hoài Ân",
+                "coordinates": {
+                    "latitude": 14.3602888,
+                    "longitude": 108.96413111228989
+                }
+            },
+            {
+                "name": "Huyện Phù Mỹ",
+                "coordinates": {
+                    "latitude": 14.24487345,
+                    "longitude": 109.10179494932541
+                }
+            },
+            {
+                "name": "Huyện Vĩnh Thạnh",
+                "coordinates": {
+                    "latitude": 13.84564,
+                    "longitude": 109.15275
+                }
+            },
+            {
+                "name": "Huyện Tây Sơn",
+                "coordinates": {
+                    "latitude": 13.94306,
+                    "longitude": 108.87999
+                }
+            },
+            {
+                "name": "Huyện Phù Cát",
+                "coordinates": {
+                    "latitude": 14.061683500000001,
+                    "longitude": 109.0669996788363
+                }
+            },
+            {
+                "name": "Thị xã An Nhơn",
+                "coordinates": {
+                    "latitude": 13.8866373,
+                    "longitude": 109.1077973
+                }
+            },
+            {
+                "name": "Huyện Tuy Phước",
+                "coordinates": {
+                    "latitude": 13.84564,
+                    "longitude": 109.15275
+                }
+            },
+            {
+                "name": "Huyện Vân Canh",
+                "coordinates": {
+                    "latitude": 13.6759022,
+                    "longitude": 108.95706901191005
+                }
+            }
+        ]
+    },
+    "Bình Dương": {
+        "latitude": 11.1836551,
+        "longitude": 106.7031737,
+        "districts": [
+            {
+                "name": "Thành phố Thủ Dầu Một",
+                "coordinates": {
+                    "latitude": 10.9808435,
+                    "longitude": 106.6537483
+                }
+            },
+            {
+                "name": "Huyện Bàu Bàng",
+                "coordinates": {
+                    "latitude": 11.2697956,
+                    "longitude": 106.62771355641692
+                }
+            },
+            {
+                "name": "Huyện Dầu Tiếng",
+                "coordinates": {
+                    "latitude": 11.31884255,
+                    "longitude": 106.44088839716765
+                }
+            },
+            {
+                "name": "Thành phố Bến Cát",
+                "coordinates": {
+                    "latitude": 11.1513162,
+                    "longitude": 106.5937404
+                }
+            },
+            {
+                "name": "Huyện Phú Giáo",
+                "coordinates": {
+                    "latitude": 11.340211,
+                    "longitude": 106.75387081097304
+                }
+            },
+            {
+                "name": "Thành phố Tân Uyên",
+                "coordinates": {
+                    "latitude": 11.08569495,
+                    "longitude": 106.78088080962715
+                }
+            },
+            {
+                "name": "Thành phố Dĩ An",
+                "coordinates": {
+                    "latitude": 10.891628149999999,
+                    "longitude": 106.76282601551327
+                }
+            },
+            {
+                "name": "Thành phố Thuận An",
+                "coordinates": {
+                    "latitude": 10.93976,
+                    "longitude": 106.71124
+                }
+            },
+            {
+                "name": "Huyện Bắc Tân Uyên",
+                "coordinates": {
+                    "latitude": 11.12678115,
+                    "longitude": 106.84883454023527
+                }
+            }
+        ]
+    },
+    "Bình Phước": {
+        "latitude": 11.7543232,
+        "longitude": 106.9266473,
+        "districts": [
+            {
+                "name": "Thị xã Phước Long",
+                "coordinates": {
+                    "latitude": 11.82370545,
+                    "longitude": 106.96114479513867
+                }
+            },
+            {
+                "name": "Thành phố Đồng Xoài",
+                "coordinates": {
+                    "latitude": 11.5376338,
+                    "longitude": 106.8998884
+                }
+            },
+            {
+                "name": "Thị xã Bình Long",
+                "coordinates": {
+                    "latitude": 11.64980125,
+                    "longitude": 106.605083798673
+                }
+            },
+            {
+                "name": "Huyện Bù Gia Mập",
+                "coordinates": {
+                    "latitude": 11.661685,
+                    "longitude": 106.898892
+                }
+            },
+            {
+                "name": "Huyện Lộc Ninh",
+                "coordinates": {
+                    "latitude": 11.82333655,
+                    "longitude": 106.60494691423611
+                }
+            },
+            {
+                "name": "Huyện Bù Đốp",
+                "coordinates": {
+                    "latitude": 11.95983465,
+                    "longitude": 106.79529693504878
+                }
+            },
+            {
+                "name": "Huyện Hớn Quản",
+                "coordinates": {
+                    "latitude": 11.625486299999999,
+                    "longitude": 106.6944495338796
+                }
+            },
+            {
+                "name": "Huyện Đồng Phú",
+                "coordinates": {
+                    "latitude": 11.47919465,
+                    "longitude": 107.00509554584136
+                }
+            },
+            {
+                "name": "Huyện Bù Đăng",
+                "coordinates": {
+                    "latitude": 11.770288749999999,
+                    "longitude": 107.22347900827236
+                }
+            },
+            {
+                "name": "Thị xã Chơn Thành",
+                "coordinates": {
+                    "latitude": 11.4281711,
+                    "longitude": 106.63629515005584
+                }
+            },
+            {
+                "name": "Huyện Phú Riềng",
+                "coordinates": {
+                    "latitude": 11.73928175,
+                    "longitude": 106.91362991028632
+                }
+            }
+        ]
+    },
+    "Bình Thuận": {
+        "latitude": 11.1041572,
+        "longitude": 108.1832931,
+        "districts": [
+            {
+                "name": "Thành phố Phan Thiết",
+                "coordinates": {
+                    "latitude": 10.9311514,
+                    "longitude": 108.1015919
+                }
+            },
+            {
+                "name": "Thị xã La Gi",
+                "coordinates": {
+                    "latitude": 10.6588219,
+                    "longitude": 107.7731192
+                }
+            },
+            {
+                "name": "Huyện Tuy Phong",
+                "coordinates": {
+                    "latitude": 11.344508300000001,
+                    "longitude": 108.74496330649986
+                }
+            },
+            {
+                "name": "Huyện Bắc Bình",
+                "coordinates": {
+                    "latitude": 11.26154015,
+                    "longitude": 108.36324766097175
+                }
+            },
+            {
+                "name": "Huyện Hàm Thuận Bắc",
+                "coordinates": {
+                    "latitude": 11.15549885,
+                    "longitude": 108.09888403011699
+                }
+            },
+            {
+                "name": "Huyện Hàm Thuận Nam",
+                "coordinates": {
+                    "latitude": 10.85033555,
+                    "longitude": 107.87841471771138
+                }
+            },
+            {
+                "name": "Huyện Tánh Linh",
+                "coordinates": {
+                    "latitude": 11.08421,
+                    "longitude": 107.68095
+                }
+            },
+            {
+                "name": "Huyện Đức Linh",
+                "coordinates": {
+                    "latitude": 11.17774,
+                    "longitude": 107.53015
+                }
+            },
+            {
+                "name": "Huyện Hàm Tân",
+                "coordinates": {
+                    "latitude": 10.7423325,
+                    "longitude": 107.63489093755462
+                }
+            },
+            {
+                "name": "Huyện Phú Quí",
+                "coordinates": {
+                    "latitude": 10.52933,
+                    "longitude": 108.94376
+                }
+            }
+        ]
+    },
+    "Cà Mau": {
+        "latitude": 9.1782047,
+        "longitude": 105.1519707,
+        "districts": [
+            {
+                "name": "Thành phố Cà Mau",
+                "coordinates": {
+                    "latitude": 9.179792,
+                    "longitude": 105.151721
+                }
+            },
+            {
+                "name": "Huyện U Minh",
+                "coordinates": {
+                    "latitude": 9.1782047,
+                    "longitude": 105.1519707
+                }
+            },
+            {
+                "name": "Huyện Thới Bình",
+                "coordinates": {
+                    "latitude": 9.1782047,
+                    "longitude": 105.1519707
+                }
+            },
+            {
+                "name": "Huyện Trần Văn Thời",
+                "coordinates": {
+                    "latitude": 9.1782047,
+                    "longitude": 105.1519707
+                }
+            },
+            {
+                "name": "Huyện Cái Nước",
+                "coordinates": {
+                    "latitude": 9.1782047,
+                    "longitude": 105.1519707
+                }
+            },
+            {
+                "name": "Huyện Đầm Dơi",
+                "coordinates": {
+                    "latitude": 9.1782047,
+                    "longitude": 105.1519707
+                }
+            },
+            {
+                "name": "Huyện Năm Căn",
+                "coordinates": {
+                    "latitude": 9.1782047,
+                    "longitude": 105.1519707
+                }
+            },
+            {
+                "name": "Huyện Phú Tân",
+                "coordinates": {
+                    "latitude": 9.1782047,
+                    "longitude": 105.1519707
+                }
+            },
+            {
+                "name": "Huyện Ngọc Hiển",
+                "coordinates": {
+                    "latitude": 9.1782047,
+                    "longitude": 105.1519707
+                }
+            }
+        ]
+    },
+    "Cao Bằng": {
+        "latitude": 22.6657612,
+        "longitude": 106.2588307,
+        "districts": [
+            {
+                "name": "Thành phố Cao Bằng",
+                "coordinates": {
+                    "latitude": 22.662006,
+                    "longitude": 106.265775
+                }
+            },
+            {
+                "name": "Huyện Bảo Lâm",
+                "coordinates": {
+                    "latitude": 22.8087023,
+                    "longitude": 104.9673151
+                }
+            },
+            {
+                "name": "Huyện Bảo Lạc",
+                "coordinates": {
+                    "latitude": 22.950808,
+                    "longitude": 105.6810931
+                }
+            },
+            {
+                "name": "Huyện Hà Quảng",
+                "coordinates": {
+                    "latitude": 22.6657612,
+                    "longitude": 106.2588307
+                }
+            },
+            {
+                "name": "Huyện Trùng Khánh",
+                "coordinates": {
+                    "latitude": 22.6657612,
+                    "longitude": 106.2588307
+                }
+            },
+            {
+                "name": "Huyện Hạ Lang",
+                "coordinates": {
+                    "latitude": 22.6657612,
+                    "longitude": 106.2588307
+                }
+            },
+            {
+                "name": "Huyện Quảng Hòa",
+                "coordinates": {
+                    "latitude": 22.6657612,
+                    "longitude": 106.2588307
+                }
+            },
+            {
+                "name": "Huyện Hoà An",
+                "coordinates": {
+                    "latitude": 22.6657612,
+                    "longitude": 106.2588307
+                }
+            },
+            {
+                "name": "Huyện Nguyên Bình",
+                "coordinates": {
+                    "latitude": 22.6657612,
+                    "longitude": 106.2588307
+                }
+            },
+            {
+                "name": "Huyện Thạch An",
+                "coordinates": {
+                    "latitude": 22.6657612,
+                    "longitude": 106.2588307
+                }
+            }
+        ]
+    },
+    "Đắk Lắk": {
+        "latitude": 12.8292274,
+        "longitude": 108.2999058,
+        "districts": [
+            {
+                "name": "Thành phố Buôn Ma Thuột",
+                "coordinates": {
+                    "latitude": 12.696041,
+                    "longitude": 108.056501
+                }
+            },
+            {
+                "name": "Thị Xã Buôn Hồ",
+                "coordinates": {
+                    "latitude": 12.911143299999999,
+                    "longitude": 108.26872807639904
+                }
+            },
+            {
+                "name": "Huyện Ea H'leo",
+                "coordinates": {
+                    "latitude": 13.23222715,
+                    "longitude": 108.19962482364465
+                }
+            },
+            {
+                "name": "Huyện Ea Súp",
+                "coordinates": {
+                    "latitude": 13.0707722,
+                    "longitude": 107.8838852
+                }
+            },
+            {
+                "name": "Huyện Buôn Đôn",
+                "coordinates": {
+                    "latitude": 12.8112015,
+                    "longitude": 107.895116
+                }
+            },
+            {
+                "name": "Huyện Cư M'gar",
+                "coordinates": {
+                    "latitude": 12.89592335,
+                    "longitude": 108.06965365810954
+                }
+            },
+            {
+                "name": "Huyện Krông Búk",
+                "coordinates": {
+                    "latitude": 13.013755249999999,
+                    "longitude": 108.19365998690162
+                }
+            },
+            {
+                "name": "Huyện Krông Năng",
+                "coordinates": {
+                    "latitude": 12.9494681,
+                    "longitude": 108.33806376945428
+                }
+            },
+            {
+                "name": "Huyện Ea Kar",
+                "coordinates": {
+                    "latitude": 12.805279,
+                    "longitude": 108.449495
+                }
+            },
+            {
+                "name": "Huyện M'Đrắk",
+                "coordinates": {
+                    "latitude": 12.69833,
+                    "longitude": 108.82262
+                }
+            },
+            {
+                "name": "Huyện Krông Bông",
+                "coordinates": {
+                    "latitude": 12.51454,
+                    "longitude": 108.338052
+                }
+            },
+            {
+                "name": "Huyện Krông Pắc",
+                "coordinates": {
+                    "latitude": 12.687232550000001,
+                    "longitude": 108.29512412214248
+                }
+            },
+            {
+                "name": "Huyện Krông A Na",
+                "coordinates": {
+                    "latitude": 12.47840055,
+                    "longitude": 108.03548174575415
+                }
+            },
+            {
+                "name": "Huyện Lắk",
+                "coordinates": {
+                    "latitude": 12.405372,
+                    "longitude": 108.188749
+                }
+            },
+            {
+                "name": "Huyện Cư Kuin",
+                "coordinates": {
+                    "latitude": 12.626644,
+                    "longitude": 108.127313
+                }
+            }
+        ]
+    },
+    "Đắk Nông": {
+        "latitude": 12.2818851,
+        "longitude": 107.7302484,
+        "districts": [
+            {
+                "name": "Thành phố Gia Nghĩa",
+                "coordinates": {
+                    "latitude": 12.00156325,
+                    "longitude": 107.70045259727712
+                }
+            },
+            {
+                "name": "Huyện Đăk Glong",
+                "coordinates": {
+                    "latitude": 14.7857076,
+                    "longitude": 107.6981646
+                }
+            },
+            {
+                "name": "Huyện Cư Jút",
+                "coordinates": {
+                    "latitude": 12.6796397,
+                    "longitude": 107.77149513982022
+                }
+            },
+            {
+                "name": "Huyện Đắk Mil",
+                "coordinates": {
+                    "latitude": 12.43612145,
+                    "longitude": 107.61480211925158
+                }
+            },
+            {
+                "name": "Huyện Krông Nô",
+                "coordinates": {
+                    "latitude": 12.36963545,
+                    "longitude": 107.82173121557774
+                }
+            },
+            {
+                "name": "Huyện Đắk Song",
+                "coordinates": {
+                    "latitude": 12.232804049999999,
+                    "longitude": 107.61959964758066
+                }
+            },
+            {
+                "name": "Huyện Đắk R'Lấp",
+                "coordinates": {
+                    "latitude": 12.002568499999999,
+                    "longitude": 107.5146697139756
+                }
+            },
+            {
+                "name": "Huyện Tuy Đức",
+                "coordinates": {
+                    "latitude": 14.7857076,
+                    "longitude": 107.6981646
+                }
+            }
+        ]
+    },
+    "Điện Biên": {
+        "latitude": 21.6546566,
+        "longitude": 103.2168632,
+        "districts": [
+            {
+                "name": "Thành phố Điện Biên Phủ",
+                "coordinates": {
+                    "latitude": 21.38478405,
+                    "longitude": 103.02476587216825
+                }
+            },
+            {
+                "name": "Thị Xã Mường Lay",
+                "coordinates": {
+                    "latitude": 22.03959855,
+                    "longitude": 103.15419521883709
+                }
+            },
+            {
+                "name": "Huyện Mường Nhé",
+                "coordinates": {
+                    "latitude": 22.195194549999997,
+                    "longitude": 102.45681571873996
+                }
+            },
+            {
+                "name": "Huyện Mường Chà",
+                "coordinates": {
+                    "latitude": 21.8272713,
+                    "longitude": 103.1428346145048
+                }
+            },
+            {
+                "name": "Huyện Tủa Chùa",
+                "coordinates": {
+                    "latitude": 21.850819,
+                    "longitude": 103.35531
+                }
+            },
+            {
+                "name": "Huyện Tuần Giáo",
+                "coordinates": {
+                    "latitude": 21.5886847,
+                    "longitude": 103.4209617
+                }
+            },
+            {
+                "name": "Huyện Điện Biên",
+                "coordinates": {
+                    "latitude": 21.328433750000002,
+                    "longitude": 103.02141089044564
+                }
+            },
+            {
+                "name": "Huyện Điện Biên Đông",
+                "coordinates": {
+                    "latitude": 21.3024578,
+                    "longitude": 103.23164309554204
+                }
+            },
+            {
+                "name": "Huyện Mường Ảng",
+                "coordinates": {
+                    "latitude": 21.526797799999997,
+                    "longitude": 103.25949991631711
+                }
+            },
+            {
+                "name": "Huyện Nậm Pồ",
+                "coordinates": {
+                    "latitude": 21.88501385,
+                    "longitude": 102.80759165422444
+                }
+            }
+        ]
+    },
+    "Đồng Nai": {
+        "latitude": 11.8105637,
+        "longitude": 107.3291301,
+        "districts": [
+            {
+                "name": "Thành phố Biên Hòa",
+                "coordinates": {
+                    "latitude": 10.9509538,
+                    "longitude": 106.8226134
+                }
+            },
+            {
+                "name": "Thành phố Long Khánh",
+                "coordinates": {
+                    "latitude": 10.940577,
+                    "longitude": 107.21732279891617
+                }
+            },
+            {
+                "name": "Huyện Tân Phú",
+                "coordinates": {
+                    "latitude": 11.379390749999999,
+                    "longitude": 107.42947844616329
+                }
+            },
+            {
+                "name": "Huyện Vĩnh Cửu",
+                "coordinates": {
+                    "latitude": 11.24275055,
+                    "longitude": 107.05314430683094
+                }
+            },
+            {
+                "name": "Huyện Định Quán",
+                "coordinates": {
+                    "latitude": 11.21625,
+                    "longitude": 107.28811
+                }
+            },
+            {
+                "name": "Huyện Trảng Bom",
+                "coordinates": {
+                    "latitude": 10.952572,
+                    "longitude": 107.0066039
+                }
+            },
+            {
+                "name": "Huyện Thống Nhất",
+                "coordinates": {
+                    "latitude": 18.1,
+                    "longitude": 106.33333
+                }
+            },
+            {
+                "name": "Huyện Cẩm Mỹ",
+                "coordinates": {
+                    "latitude": 10.78402425,
+                    "longitude": 107.26518247841848
+                }
+            },
+            {
+                "name": "Huyện Long Thành",
+                "coordinates": {
+                    "latitude": 10.7810219,
+                    "longitude": 106.9515102
+                }
+            },
+            {
+                "name": "Huyện Xuân Lộc",
+                "coordinates": {
+                    "latitude": 10.927458,
+                    "longitude": 107.43347297755236
+                }
+            },
+            {
+                "name": "Huyện Nhơn Trạch",
+                "coordinates": {
+                    "latitude": 10.69692,
+                    "longitude": 106.88205
+                }
+            }
+        ]
+    },
+    "Đồng Tháp": {
+        "latitude": 10.590424,
+        "longitude": 105.6802341,
+        "districts": [
+            {
+                "name": "Thành phố Cao Lãnh",
+                "coordinates": {
+                    "latitude": 10.4589259,
+                    "longitude": 105.63907477663042
+                }
+            },
+            {
+                "name": "Thành phố Sa Đéc",
+                "coordinates": {
+                    "latitude": 10.2906124,
+                    "longitude": 105.7562735
+                }
+            },
+            {
+                "name": "Thành phố Hồng Ngự",
+                "coordinates": {
+                    "latitude": 10.8083867,
+                    "longitude": 105.3417921
+                }
+            },
+            {
+                "name": "Huyện Tân Hồng",
+                "coordinates": {
+                    "latitude": 10.8786868,
+                    "longitude": 105.4880237051691
+                }
+            },
+            {
+                "name": "Huyện Hồng Ngự",
+                "coordinates": {
+                    "latitude": 10.80288565,
+                    "longitude": 105.29792515674406
+                }
+            },
+            {
+                "name": "Huyện Tam Nông",
+                "coordinates": {
+                    "latitude": 10.6821888,
+                    "longitude": 105.4928349
+                }
+            },
+            {
+                "name": "Huyện Tháp Mười",
+                "coordinates": {
+                    "latitude": 10.5605098,
+                    "longitude": 105.81180989490429
+                }
+            },
+            {
+                "name": "Huyện Cao Lãnh",
+                "coordinates": {
+                    "latitude": 10.442802,
+                    "longitude": 105.70136
+                }
+            },
+            {
+                "name": "Huyện Thanh Bình",
+                "coordinates": {
+                    "latitude": 10.6095651,
+                    "longitude": 105.47864333850754
+                }
+            },
+            {
+                "name": "Huyện Lấp Vò",
+                "coordinates": {
+                    "latitude": 10.357108400000001,
+                    "longitude": 105.60791080162488
+                }
+            },
+            {
+                "name": "Huyện Lai Vung",
+                "coordinates": {
+                    "latitude": 10.28701,
+                    "longitude": 105.661697
+                }
+            },
+            {
+                "name": "Huyện Châu Thành",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            }
+        ]
+    },
+    "Gia Lai": {
+        "latitude": 13.8177445,
+        "longitude": 108.2004015,
+        "districts": [
+            {
+                "name": "Thành phố Pleiku",
+                "coordinates": {
+                    "latitude": 13.9715982,
+                    "longitude": 108.0143597
+                }
+            },
+            {
+                "name": "Thị xã An Khê",
+                "coordinates": {
+                    "latitude": 13.960189,
+                    "longitude": 108.674241
+                }
+            },
+            {
+                "name": "Thị xã Ayun Pa",
+                "coordinates": {
+                    "latitude": 13.4005198,
+                    "longitude": 108.4467165
+                }
+            },
+            {
+                "name": "Huyện KBang",
+                "coordinates": {
+                    "latitude": 14.30506,
+                    "longitude": 108.49779
+                }
+            },
+            {
+                "name": "Huyện Đăk Đoa",
+                "coordinates": {
+                    "latitude": 13.99501,
+                    "longitude": 108.11207
+                }
+            },
+            {
+                "name": "Huyện Chư Păh",
+                "coordinates": {
+                    "latitude": 14.099217,
+                    "longitude": 107.970807
+                }
+            },
+            {
+                "name": "Huyện Ia Grai",
+                "coordinates": {
+                    "latitude": 13.962959,
+                    "longitude": 107.840307
+                }
+            },
+            {
+                "name": "Huyện Mang Yang",
+                "coordinates": {
+                    "latitude": 13.956394199999998,
+                    "longitude": 108.31598800727713
+                }
+            },
+            {
+                "name": "Huyện Kông Chro",
+                "coordinates": {
+                    "latitude": 13.76235545,
+                    "longitude": 108.59066693938226
+                }
+            },
+            {
+                "name": "Huyện Đức Cơ",
+                "coordinates": {
+                    "latitude": 13.78454,
+                    "longitude": 107.6697
+                }
+            },
+            {
+                "name": "Huyện Chư Prông",
+                "coordinates": {
+                    "latitude": 13.761822,
+                    "longitude": 107.888405
+                }
+            },
+            {
+                "name": "Huyện Chư Sê",
+                "coordinates": {
+                    "latitude": 13.701528249999999,
+                    "longitude": 108.08146886965893
+                }
+            },
+            {
+                "name": "Huyện Đăk Pơ",
+                "coordinates": {
+                    "latitude": 13.92068,
+                    "longitude": 108.61183
+                }
+            },
+            {
+                "name": "Huyện Ia Pa",
+                "coordinates": {
+                    "latitude": 13.52690085,
+                    "longitude": 108.577835369865
+                }
+            },
+            {
+                "name": "Huyện Krông Pa",
+                "coordinates": {
+                    "latitude": 13.2348415,
+                    "longitude": 108.6668368242042
+                }
+            },
+            {
+                "name": "Huyện Phú Thiện",
+                "coordinates": {
+                    "latitude": 13.51858665,
+                    "longitude": 108.30526775381276
+                }
+            },
+            {
+                "name": "Huyện Chư Pưh",
+                "coordinates": {
+                    "latitude": 13.5095746,
+                    "longitude": 108.07779924306303
+                }
+            }
+        ]
+    },
+    "Hà Giang": {
+        "latitude": 22.8264592,
+        "longitude": 104.9846342,
+        "districts": [
+            {
+                "name": "Thành phố Hà Giang",
+                "coordinates": {
+                    "latitude": 22.831023,
+                    "longitude": 104.988674
+                }
+            },
+            {
+                "name": "Huyện Đồng Văn",
+                "coordinates": {
+                    "latitude": 22.8264592,
+                    "longitude": 104.9846342
+                }
+            },
+            {
+                "name": "Huyện Mèo Vạc",
+                "coordinates": {
+                    "latitude": 22.8264592,
+                    "longitude": 104.9846342
+                }
+            },
+            {
+                "name": "Huyện Yên Minh",
+                "coordinates": {
+                    "latitude": 22.8264592,
+                    "longitude": 104.9846342
+                }
+            },
+            {
+                "name": "Huyện Quản Bạ",
+                "coordinates": {
+                    "latitude": 22.8264592,
+                    "longitude": 104.9846342
+                }
+            },
+            {
+                "name": "Huyện Vị Xuyên",
+                "coordinates": {
+                    "latitude": 22.8264592,
+                    "longitude": 104.9846342
+                }
+            },
+            {
+                "name": "Huyện Bắc Mê",
+                "coordinates": {
+                    "latitude": 22.8264592,
+                    "longitude": 104.9846342
+                }
+            },
+            {
+                "name": "Huyện Hoàng Su Phì",
+                "coordinates": {
+                    "latitude": 22.8264592,
+                    "longitude": 104.9846342
+                }
+            },
+            {
+                "name": "Huyện Xín Mần",
+                "coordinates": {
+                    "latitude": 22.8264592,
+                    "longitude": 104.9846342
+                }
+            },
+            {
+                "name": "Huyện Bắc Quang",
+                "coordinates": {
+                    "latitude": 22.8264592,
+                    "longitude": 104.9846342
+                }
+            },
+            {
+                "name": "Huyện Quang Bình",
+                "coordinates": {
+                    "latitude": 22.8264592,
+                    "longitude": 104.9846342
+                }
+            }
+        ]
+    },
+    "Hà Nam": {
+        "latitude": 16.335831,
+        "longitude": 107.7706,
+        "districts": [
+            {
+                "name": "Thành phố Phủ Lý",
+                "coordinates": {
+                    "latitude": 16.335831,
+                    "longitude": 107.7706
+                }
+            },
+            {
+                "name": "Thị xã Duy Tiên",
+                "coordinates": {
+                    "latitude": 16.335831,
+                    "longitude": 107.7706
+                }
+            },
+            {
+                "name": "Thị xã Kim Bảng",
+                "coordinates": {
+                    "latitude": 16.335831,
+                    "longitude": 107.7706
+                }
+            },
+            {
+                "name": "Huyện Thanh Liêm",
+                "coordinates": {
+                    "latitude": 16.335831,
+                    "longitude": 107.7706
+                }
+            },
+            {
+                "name": "Huyện Bình Lục",
+                "coordinates": {
+                    "latitude": 16.335831,
+                    "longitude": 107.7706
+                }
+            },
+            {
+                "name": "Huyện Lý Nhân",
+                "coordinates": {
+                    "latitude": 16.335831,
+                    "longitude": 107.7706
+                }
+            }
+        ]
+    },
+    "Hà Tĩnh": {
+        "latitude": 18.3420485,
+        "longitude": 105.9056559,
+        "districts": [
+            {
+                "name": "Thành phố Hà Tĩnh",
+                "coordinates": {
+                    "latitude": 18.3387,
+                    "longitude": 105.902652
+                }
+            },
+            {
+                "name": "Thị xã Hồng Lĩnh",
+                "coordinates": {
+                    "latitude": 18.340823,
+                    "longitude": 105.910259
+                }
+            },
+            {
+                "name": "Huyện Hương Sơn",
+                "coordinates": {
+                    "latitude": 18.3420485,
+                    "longitude": 105.9056559
+                }
+            },
+            {
+                "name": "Huyện Đức Thọ",
+                "coordinates": {
+                    "latitude": 18.3420485,
+                    "longitude": 105.9056559
+                }
+            },
+            {
+                "name": "Huyện Vũ Quang",
+                "coordinates": {
+                    "latitude": 18.3402307,
+                    "longitude": 105.8832388
+                }
+            },
+            {
+                "name": "Huyện Nghi Xuân",
+                "coordinates": {
+                    "latitude": 18.3420485,
+                    "longitude": 105.9056559
+                }
+            },
+            {
+                "name": "Huyện Can Lộc",
+                "coordinates": {
+                    "latitude": 18.3420485,
+                    "longitude": 105.9056559
+                }
+            },
+            {
+                "name": "Huyện Hương Khê",
+                "coordinates": {
+                    "latitude": 18.3420485,
+                    "longitude": 105.9056559
+                }
+            },
+            {
+                "name": "Huyện Thạch Hà",
+                "coordinates": {
+                    "latitude": 18.3420485,
+                    "longitude": 105.9056559
+                }
+            },
+            {
+                "name": "Huyện Cẩm Xuyên",
+                "coordinates": {
+                    "latitude": 18.3420485,
+                    "longitude": 105.9056559
+                }
+            },
+            {
+                "name": "Huyện Kỳ Anh",
+                "coordinates": {
+                    "latitude": 18.3420485,
+                    "longitude": 105.9056559
+                }
+            },
+            {
+                "name": "Thị xã Kỳ Anh",
+                "coordinates": {
+                    "latitude": 18.3420485,
+                    "longitude": 105.9056559
+                }
+            }
+        ]
+    },
+    "Hải Dương": {
+        "latitude": 20.9430878,
+        "longitude": 106.3225388,
+        "districts": [
+            {
+                "name": "Thành phố Hải Dương",
+                "coordinates": {
+                    "latitude": 20.932502,
+                    "longitude": 106.317976
+                }
+            },
+            {
+                "name": "Thành phố Chí Linh",
+                "coordinates": {
+                    "latitude": 20.9337405451342,
+                    "longitude": 106.31167356750771
+                }
+            },
+            {
+                "name": "Huyện Nam Sách",
+                "coordinates": {
+                    "latitude": 20.9430878,
+                    "longitude": 106.3225388
+                }
+            },
+            {
+                "name": "Thị xã Kinh Môn",
+                "coordinates": {
+                    "latitude": 20.9430878,
+                    "longitude": 106.3225388
+                }
+            },
+            {
+                "name": "Huyện Kim Thành",
+                "coordinates": {
+                    "latitude": 20.9430878,
+                    "longitude": 106.3225388
+                }
+            },
+            {
+                "name": "Huyện Thanh Hà",
+                "coordinates": {
+                    "latitude": 20.9430878,
+                    "longitude": 106.3225388
+                }
+            },
+            {
+                "name": "Huyện Cẩm Giàng",
+                "coordinates": {
+                    "latitude": 20.9430878,
+                    "longitude": 106.3225388
+                }
+            },
+            {
+                "name": "Huyện Bình Giang",
+                "coordinates": {
+                    "latitude": 20.9430878,
+                    "longitude": 106.3225388
+                }
+            },
+            {
+                "name": "Huyện Gia Lộc",
+                "coordinates": {
+                    "latitude": 20.9430878,
+                    "longitude": 106.3225388
+                }
+            },
+            {
+                "name": "Huyện Tứ Kỳ",
+                "coordinates": {
+                    "latitude": 20.9430878,
+                    "longitude": 106.3225388
+                }
+            },
+            {
+                "name": "Huyện Ninh Giang",
+                "coordinates": {
+                    "latitude": 20.9430878,
+                    "longitude": 106.3225388
+                }
+            },
+            {
+                "name": "Huyện Thanh Miện",
+                "coordinates": {
+                    "latitude": 20.9430878,
+                    "longitude": 106.3225388
+                }
+            }
+        ]
+    },
+    "Hậu Giang": {
+        "latitude": 9.7985063,
+        "longitude": 105.6379524,
+        "districts": [
+            {
+                "name": "Thành phố Vị Thanh",
+                "coordinates": {
+                    "latitude": 9.7752054,
+                    "longitude": 105.45858811015952
+                }
+            },
+            {
+                "name": "Thành phố Ngã Bảy",
+                "coordinates": {
+                    "latitude": 9.827077200000002,
+                    "longitude": 105.82276480166605
+                }
+            },
+            {
+                "name": "Huyện Châu Thành A",
+                "coordinates": {
+                    "latitude": 9.93014655,
+                    "longitude": 105.64014022638986
+                }
+            },
+            {
+                "name": "Huyện Châu Thành",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Phụng Hiệp",
+                "coordinates": {
+                    "latitude": 9.78553595,
+                    "longitude": 105.7081975418058
+                }
+            },
+            {
+                "name": "Huyện Vị Thuỷ",
+                "coordinates": {
+                    "latitude": 9.80111335,
+                    "longitude": 105.55257555502038
+                }
+            },
+            {
+                "name": "Huyện Long Mỹ",
+                "coordinates": {
+                    "latitude": 9.65630485,
+                    "longitude": 105.4894388460863
+                }
+            },
+            {
+                "name": "Thị xã Long Mỹ",
+                "coordinates": {
+                    "latitude": 9.6819201,
+                    "longitude": 105.5695075
+                }
+            }
+        ]
+    },
+    "Hòa Bình": {
+        "latitude": 20.8252056,
+        "longitude": 105.3431291,
+        "districts": [
+            {
+                "name": "Thành phố Hòa Bình",
+                "coordinates": {
+                    "latitude": 20.837345,
+                    "longitude": 105.342041
+                }
+            },
+            {
+                "name": "Huyện Đà Bắc",
+                "coordinates": {
+                    "latitude": 20.93152525,
+                    "longitude": 105.06792968281272
+                }
+            },
+            {
+                "name": "Huyện Lương Sơn",
+                "coordinates": {
+                    "latitude": 20.78145465,
+                    "longitude": 105.60248177074686
+                }
+            },
+            {
+                "name": "Huyện Kim Bôi",
+                "coordinates": {
+                    "latitude": 20.675926,
+                    "longitude": 105.5140030747036
+                }
+            },
+            {
+                "name": "Huyện Cao Phong",
+                "coordinates": {
+                    "latitude": 20.6882915,
+                    "longitude": 105.33832039321926
+                }
+            },
+            {
+                "name": "Huyện Tân Lạc",
+                "coordinates": {
+                    "latitude": 20.609234,
+                    "longitude": 105.22816457383709
+                }
+            },
+            {
+                "name": "Huyện Mai Châu",
+                "coordinates": {
+                    "latitude": 20.71587505,
+                    "longitude": 104.97912930663392
+                }
+            },
+            {
+                "name": "Huyện Lạc Sơn",
+                "coordinates": {
+                    "latitude": 20.498455,
+                    "longitude": 105.43501003153847
+                }
+            },
+            {
+                "name": "Huyện Yên Thủy",
+                "coordinates": {
+                    "latitude": 20.427393000000002,
+                    "longitude": 105.63056734764356
+                }
+            },
+            {
+                "name": "Huyện Lạc Thủy",
+                "coordinates": {
+                    "latitude": 20.4955801,
+                    "longitude": 105.74945849409471
+                }
+            }
+        ]
+    },
+    "Hưng Yên": {
+        "latitude": 20.6568406,
+        "longitude": 106.054036,
+        "districts": [
+            {
+                "name": "Thành phố Hưng Yên",
+                "coordinates": {
+                    "latitude": 20.645737,
+                    "longitude": 106.060248
+                }
+            },
+            {
+                "name": "Huyện Văn Lâm",
+                "coordinates": {
+                    "latitude": 20.972623499999997,
+                    "longitude": 106.01646597968514
+                }
+            },
+            {
+                "name": "Huyện Văn Giang",
+                "coordinates": {
+                    "latitude": 20.65,
+                    "longitude": 106.06667
+                }
+            },
+            {
+                "name": "Huyện Yên Mỹ",
+                "coordinates": {
+                    "latitude": 20.891614750000002,
+                    "longitude": 106.04478797782528
+                }
+            },
+            {
+                "name": "Thị xã Mỹ Hào",
+                "coordinates": {
+                    "latitude": 20.9361841,
+                    "longitude": 106.0584514
+                }
+            },
+            {
+                "name": "Huyện Ân Thi",
+                "coordinates": {
+                    "latitude": 20.812668799999997,
+                    "longitude": 106.09573782253199
+                }
+            },
+            {
+                "name": "Huyện Khoái Châu",
+                "coordinates": {
+                    "latitude": 20.99995,
+                    "longitude": 104.33417
+                }
+            },
+            {
+                "name": "Huyện Kim Động",
+                "coordinates": {
+                    "latitude": 20.7399608,
+                    "longitude": 106.0602987183955
+                }
+            },
+            {
+                "name": "Huyện Tiên Lữ",
+                "coordinates": {
+                    "latitude": 20.65,
+                    "longitude": 106.06667
+                }
+            },
+            {
+                "name": "Huyện Phù Cừ",
+                "coordinates": {
+                    "latitude": 20.713157250000002,
+                    "longitude": 106.18141954602125
+                }
+            }
+        ]
+    },
+    "Khánh Hòa": {
+        "latitude": 18.270423,
+        "longitude": 105.610174,
+        "districts": [
+            {
+                "name": "Thành phố Nha Trang",
+                "coordinates": {
+                    "latitude": 12.25084045,
+                    "longitude": 109.19189324990424
+                }
+            },
+            {
+                "name": "Thành phố Cam Ranh",
+                "coordinates": {
+                    "latitude": 11.9166696,
+                    "longitude": 109.14861
+                }
+            },
+            {
+                "name": "Huyện Cam Lâm",
+                "coordinates": {
+                    "latitude": 12.0756838,
+                    "longitude": 109.07143490682444
+                }
+            },
+            {
+                "name": "Huyện Vạn Ninh",
+                "coordinates": {
+                    "latitude": 21.96428,
+                    "longitude": 105.12704
+                }
+            },
+            {
+                "name": "Thị xã Ninh Hòa",
+                "coordinates": {
+                    "latitude": 12.4934379,
+                    "longitude": 109.1270865
+                }
+            },
+            {
+                "name": "Huyện Khánh Vĩnh",
+                "coordinates": {
+                    "latitude": 12.30593,
+                    "longitude": 108.83073
+                }
+            },
+            {
+                "name": "Huyện Diên Khánh",
+                "coordinates": {
+                    "latitude": 12.2779046,
+                    "longitude": 109.04776635738149
+                }
+            },
+            {
+                "name": "Huyện Khánh Sơn",
+                "coordinates": {
+                    "latitude": 21.96428,
+                    "longitude": 105.12704
+                }
+            },
+            {
+                "name": "Huyện Trường Sa",
+                "coordinates": {
+                    "latitude": 10.68333,
+                    "longitude": 105.16667
+                }
+            }
+        ]
+    },
+    "Kiên Giang": {
+        "latitude": 9.9904962,
+        "longitude": 105.2435248,
+        "districts": [
+            {
+                "name": "Thành phố Rạch Giá",
+                "coordinates": {
+                    "latitude": 10.00911825,
+                    "longitude": 105.08295003968155
+                }
+            },
+            {
+                "name": "Thành phố Hà Tiên",
+                "coordinates": {
+                    "latitude": 10.381923149999999,
+                    "longitude": 104.46552232904727
+                }
+            },
+            {
+                "name": "Huyện Kiên Lương",
+                "coordinates": {
+                    "latitude": 10.2866597,
+                    "longitude": 104.64554290000001
+                }
+            },
+            {
+                "name": "Huyện Hòn Đất",
+                "coordinates": {
+                    "latitude": 10.18532385,
+                    "longitude": 104.92827072935366
+                }
+            },
+            {
+                "name": "Huyện Tân Hiệp",
+                "coordinates": {
+                    "latitude": 10.1,
+                    "longitude": 105.15
+                }
+            },
+            {
+                "name": "Huyện Châu Thành",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Giồng Riềng",
+                "coordinates": {
+                    "latitude": 9.91041075,
+                    "longitude": 105.31383724994626
+                }
+            },
+            {
+                "name": "Huyện Gò Quao",
+                "coordinates": {
+                    "latitude": 9.7280636,
+                    "longitude": 105.2766391
+                }
+            },
+            {
+                "name": "Huyện An Biên",
+                "coordinates": {
+                    "latitude": 9.8159242,
+                    "longitude": 105.0636655
+                }
+            },
+            {
+                "name": "Huyện An Minh",
+                "coordinates": {
+                    "latitude": 10.068796,
+                    "longitude": 105.811471
+                }
+            },
+            {
+                "name": "Huyện Vĩnh Thuận",
+                "coordinates": {
+                    "latitude": 17.22328,
+                    "longitude": 106.79011
+                }
+            },
+            {
+                "name": "Thành phố Phú Quốc",
+                "coordinates": {
+                    "latitude": 10.25516,
+                    "longitude": 104.01455
+                }
+            },
+            {
+                "name": "Huyện Kiên Hải",
+                "coordinates": {
+                    "latitude": 9.8080368,
+                    "longitude": 104.63651205039501
+                }
+            },
+            {
+                "name": "Huyện U Minh Thượng",
+                "coordinates": {
+                    "latitude": 9.623775649999999,
+                    "longitude": 105.10220099379092
+                }
+            },
+            {
+                "name": "Huyện Giang Thành",
+                "coordinates": {
+                    "latitude": 10.443888000000001,
+                    "longitude": 104.66940567882625
+                }
+            }
+        ]
+    },
+    "Kon Tum": {
+        "latitude": 14.3615256,
+        "longitude": 108.0039102,
+        "districts": [
+            {
+                "name": "Thành phố Kon Tum",
+                "coordinates": {
+                    "latitude": 14.3615256,
+                    "longitude": 108.0039102
+                }
+            },
+            {
+                "name": "Huyện Đắk Glei",
+                "coordinates": {
+                    "latitude": 14.3615256,
+                    "longitude": 108.0039102
+                }
+            },
+            {
+                "name": "Huyện Ngọc Hồi",
+                "coordinates": {
+                    "latitude": 14.3615256,
+                    "longitude": 108.0039102
+                }
+            },
+            {
+                "name": "Huyện Đắk Tô",
+                "coordinates": {
+                    "latitude": 14.3615256,
+                    "longitude": 108.0039102
+                }
+            },
+            {
+                "name": "Huyện Kon Plông",
+                "coordinates": {
+                    "latitude": 14.3615256,
+                    "longitude": 108.0039102
+                }
+            },
+            {
+                "name": "Huyện Kon Rẫy",
+                "coordinates": {
+                    "latitude": 14.3615256,
+                    "longitude": 108.0039102
+                }
+            },
+            {
+                "name": "Huyện Đắk Hà",
+                "coordinates": {
+                    "latitude": 14.3615256,
+                    "longitude": 108.0039102
+                }
+            },
+            {
+                "name": "Huyện Sa Thầy",
+                "coordinates": {
+                    "latitude": 14.3615256,
+                    "longitude": 108.0039102
+                }
+            },
+            {
+                "name": "Huyện Tu Mơ Rông",
+                "coordinates": {
+                    "latitude": 14.3482379,
+                    "longitude": 108.0344241
+                }
+            },
+            {
+                "name": "Huyện Ia H' Drai",
+                "coordinates": {
+                    "latitude": 14.3615256,
+                    "longitude": 108.0039102
+                }
+            }
+        ]
+    },
+    "Lai Châu": {
+        "latitude": 22.3996612,
+        "longitude": 103.4516882,
+        "districts": [
+            {
+                "name": "Thành phố Lai Châu",
+                "coordinates": {
+                    "latitude": 22.3996612,
+                    "longitude": 103.4516882
+                }
+            },
+            {
+                "name": "Huyện Tam Đường",
+                "coordinates": {
+                    "latitude": 22.3300426,
+                    "longitude": 103.61065135712238
+                }
+            },
+            {
+                "name": "Huyện Mường Tè",
+                "coordinates": {
+                    "latitude": 22.4731029,
+                    "longitude": 102.65064164344365
+                }
+            },
+            {
+                "name": "Huyện Sìn Hồ",
+                "coordinates": {
+                    "latitude": 22.25057715,
+                    "longitude": 103.35271392142076
+                }
+            },
+            {
+                "name": "Huyện Phong Thổ",
+                "coordinates": {
+                    "latitude": 22.614415700000002,
+                    "longitude": 103.33258751505245
+                }
+            },
+            {
+                "name": "Huyện Than Uyên",
+                "coordinates": {
+                    "latitude": 21.8838348,
+                    "longitude": 103.80168115326606
+                }
+            },
+            {
+                "name": "Huyện Tân Uyên",
+                "coordinates": {
+                    "latitude": 22.1706313,
+                    "longitude": 103.7507605334219
+                }
+            },
+            {
+                "name": "Huyện Nậm Nhùn",
+                "coordinates": {
+                    "latitude": 22.255682550000003,
+                    "longitude": 103.03090269938167
+                }
+            }
+        ]
+    },
+    "Lâm Đồng": {
+        "latitude": 11.6614957,
+        "longitude": 108.1335279,
+        "districts": [
+            {
+                "name": "Thành phố Đà Lạt",
+                "coordinates": {
+                    "latitude": 11.9502809,
+                    "longitude": 108.4499447
+                }
+            },
+            {
+                "name": "Thành phố Bảo Lộc",
+                "coordinates": {
+                    "latitude": 21.1308108,
+                    "longitude": 105.4142526
+                }
+            },
+            {
+                "name": "Huyện Đam Rông",
+                "coordinates": {
+                    "latitude": 12.0322028,
+                    "longitude": 108.13152114220921
+                }
+            },
+            {
+                "name": "Huyện Lạc Dương",
+                "coordinates": {
+                    "latitude": 12.1213433,
+                    "longitude": 108.52037461324952
+                }
+            },
+            {
+                "name": "Huyện Lâm Hà",
+                "coordinates": {
+                    "latitude": 21.01986905,
+                    "longitude": 105.9369887877382
+                }
+            },
+            {
+                "name": "Huyện Đơn Dương",
+                "coordinates": {
+                    "latitude": 22.8087023,
+                    "longitude": 104.9673151
+                }
+            },
+            {
+                "name": "Huyện Đức Trọng",
+                "coordinates": {
+                    "latitude": 11.73559,
+                    "longitude": 108.3733
+                }
+            },
+            {
+                "name": "Huyện Di Linh",
+                "coordinates": {
+                    "latitude": 11.577811,
+                    "longitude": 108.047857
+                }
+            },
+            {
+                "name": "Huyện Bảo Lâm",
+                "coordinates": {
+                    "latitude": 22.8087023,
+                    "longitude": 104.9673151
+                }
+            },
+            {
+                "name": "Huyện Đạ Huoai",
+                "coordinates": {
+                    "latitude": 22.8087023,
+                    "longitude": 104.9673151
+                }
+            }
+        ]
+    },
+    "Lạng Sơn": {
+        "latitude": 21.8528759,
+        "longitude": 106.7597458,
+        "districts": [
+            {
+                "name": "Thành phố Lạng Sơn",
+                "coordinates": {
+                    "latitude": 21.8528759,
+                    "longitude": 106.7597458
+                }
+            },
+            {
+                "name": "Huyện Tràng Định",
+                "coordinates": {
+                    "latitude": 21.8528759,
+                    "longitude": 106.7597458
+                }
+            },
+            {
+                "name": "Huyện Bình Gia",
+                "coordinates": {
+                    "latitude": 21.8528759,
+                    "longitude": 106.7597458
+                }
+            },
+            {
+                "name": "Huyện Văn Lãng",
+                "coordinates": {
+                    "latitude": 21.8528759,
+                    "longitude": 106.7597458
+                }
+            },
+            {
+                "name": "Huyện Cao Lộc",
+                "coordinates": {
+                    "latitude": 21.83333,
+                    "longitude": 106.73333
+                }
+            },
+            {
+                "name": "Huyện Văn Quan",
+                "coordinates": {
+                    "latitude": 21.8528759,
+                    "longitude": 106.7597458
+                }
+            },
+            {
+                "name": "Huyện Bắc Sơn",
+                "coordinates": {
+                    "latitude": 21.8528759,
+                    "longitude": 106.7597458
+                }
+            },
+            {
+                "name": "Huyện Hữu Lũng",
+                "coordinates": {
+                    "latitude": 21.8528759,
+                    "longitude": 106.7597458
+                }
+            },
+            {
+                "name": "Huyện Chi Lăng",
+                "coordinates": {
+                    "latitude": 21.83333,
+                    "longitude": 106.73333
+                }
+            },
+            {
+                "name": "Huyện Lộc Bình",
+                "coordinates": {
+                    "latitude": 21.8528759,
+                    "longitude": 106.7597458
+                }
+            },
+            {
+                "name": "Huyện Đình Lập",
+                "coordinates": {
+                    "latitude": 21.8528759,
+                    "longitude": 106.7597458
+                }
+            }
+        ]
+    },
+    "Lào Cai": {
+        "latitude": 22.4997452,
+        "longitude": 103.9656924,
+        "districts": [
+            {
+                "name": "Thành phố Lào Cai",
+                "coordinates": {
+                    "latitude": 22.478763,
+                    "longitude": 103.972716
+                }
+            },
+            {
+                "name": "Huyện Bát Xát",
+                "coordinates": {
+                    "latitude": 22.4997452,
+                    "longitude": 103.9656924
+                }
+            },
+            {
+                "name": "Huyện Mường Khương",
+                "coordinates": {
+                    "latitude": 22.4997452,
+                    "longitude": 103.9656924
+                }
+            },
+            {
+                "name": "Huyện Si Ma Cai",
+                "coordinates": {
+                    "latitude": 22.4997452,
+                    "longitude": 103.9656924
+                }
+            },
+            {
+                "name": "Huyện Bắc Hà",
+                "coordinates": {
+                    "latitude": 22.4997452,
+                    "longitude": 103.9656924
+                }
+            },
+            {
+                "name": "Huyện Bảo Thắng",
+                "coordinates": {
+                    "latitude": 22.4997452,
+                    "longitude": 103.9656924
+                }
+            },
+            {
+                "name": "Huyện Bảo Yên",
+                "coordinates": {
+                    "latitude": 22.4997452,
+                    "longitude": 103.9656924
+                }
+            },
+            {
+                "name": "Thị xã Sa Pa",
+                "coordinates": {
+                    "latitude": 22.4997452,
+                    "longitude": 103.9656924
+                }
+            },
+            {
+                "name": "Huyện Văn Bàn",
+                "coordinates": {
+                    "latitude": 22.4997452,
+                    "longitude": 103.9656924
+                }
+            }
+        ]
+    },
+    "Long An": {
+        "latitude": 10.7995415,
+        "longitude": 105.2068162,
+        "districts": [
+            {
+                "name": "Thành phố Tân An",
+                "coordinates": {
+                    "latitude": 10.5321,
+                    "longitude": 106.40419
+                }
+            },
+            {
+                "name": "Thị xã Kiến Tường",
+                "coordinates": {
+                    "latitude": 10.77867,
+                    "longitude": 105.90309
+                }
+            },
+            {
+                "name": "Huyện Tân Hưng",
+                "coordinates": {
+                    "latitude": 10.816386,
+                    "longitude": 105.69488807962748
+                }
+            },
+            {
+                "name": "Huyện Vĩnh Hưng",
+                "coordinates": {
+                    "latitude": 10.89150225,
+                    "longitude": 105.8004739112902
+                }
+            },
+            {
+                "name": "Huyện Mộc Hóa",
+                "coordinates": {
+                    "latitude": 10.757619250000001,
+                    "longitude": 106.04067805682209
+                }
+            },
+            {
+                "name": "Huyện Tân Thạnh",
+                "coordinates": {
+                    "latitude": 10.6277416,
+                    "longitude": 105.9649122306184
+                }
+            },
+            {
+                "name": "Huyện Thạnh Hóa",
+                "coordinates": {
+                    "latitude": 10.69351325,
+                    "longitude": 106.13937304444073
+                }
+            },
+            {
+                "name": "Huyện Đức Huệ",
+                "coordinates": {
+                    "latitude": 10.86556615,
+                    "longitude": 106.25613014442791
+                }
+            },
+            {
+                "name": "Huyện Đức Hòa",
+                "coordinates": {
+                    "latitude": 10.87838,
+                    "longitude": 106.42422
+                }
+            },
+            {
+                "name": "Huyện Bến Lức",
+                "coordinates": {
+                    "latitude": 10.87838,
+                    "longitude": 106.42422
+                }
+            },
+            {
+                "name": "Huyện Thủ Thừa",
+                "coordinates": {
+                    "latitude": 10.660178,
+                    "longitude": 106.3296895687021
+                }
+            },
+            {
+                "name": "Huyện Tân Trụ",
+                "coordinates": {
+                    "latitude": 10.5281207,
+                    "longitude": 106.51565213384268
+                }
+            },
+            {
+                "name": "Huyện Cần Đước",
+                "coordinates": {
+                    "latitude": 10.5221333,
+                    "longitude": 106.60895608225506
+                }
+            },
+            {
+                "name": "Huyện Cần Giuộc",
+                "coordinates": {
+                    "latitude": 10.5720107,
+                    "longitude": 106.6393092
+                }
+            },
+            {
+                "name": "Huyện Châu Thành",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            }
+        ]
+    },
+    "Nam Định": {
+        "latitude": 20.4232641,
+        "longitude": 106.1688515,
+        "districts": [
+            {
+                "name": "Thành phố Nam Định",
+                "coordinates": {
+                    "latitude": 20.4232641,
+                    "longitude": 106.1688515
+                }
+            },
+            {
+                "name": "Huyện Vụ Bản",
+                "coordinates": {
+                    "latitude": 20.4232641,
+                    "longitude": 106.1688515
+                }
+            },
+            {
+                "name": "Huyện Ý Yên",
+                "coordinates": {
+                    "latitude": 20.4232641,
+                    "longitude": 106.1688515
+                }
+            },
+            {
+                "name": "Huyện Nghĩa Hưng",
+                "coordinates": {
+                    "latitude": 20.4232641,
+                    "longitude": 106.1688515
+                }
+            },
+            {
+                "name": "Huyện Nam Trực",
+                "coordinates": {
+                    "latitude": 20.4232641,
+                    "longitude": 106.1688515
+                }
+            },
+            {
+                "name": "Huyện Trực Ninh",
+                "coordinates": {
+                    "latitude": 20.4232641,
+                    "longitude": 106.1688515
+                }
+            },
+            {
+                "name": "Huyện Xuân Trường",
+                "coordinates": {
+                    "latitude": 20.4232641,
+                    "longitude": 106.1688515
+                }
+            },
+            {
+                "name": "Huyện Giao Thủy",
+                "coordinates": {
+                    "latitude": 20.4232641,
+                    "longitude": 106.1688515
+                }
+            },
+            {
+                "name": "Huyện Hải Hậu",
+                "coordinates": {
+                    "latitude": 20.4232641,
+                    "longitude": 106.1688515
+                }
+            }
+        ]
+    },
+    "Nghệ An": {
+        "latitude": 18.67872415,
+        "longitude": 105.63742754810175,
+        "districts": [
+            {
+                "name": "Thành phố Vinh",
+                "coordinates": {
+                    "latitude": 9.94719,
+                    "longitude": 106.34225
+                }
+            },
+            {
+                "name": "Thị xã Thái Hoà",
+                "coordinates": {
+                    "latitude": 19.28464,
+                    "longitude": 105.44759
+                }
+            },
+            {
+                "name": "Huyện Quế Phong",
+                "coordinates": {
+                    "latitude": 19.70177,
+                    "longitude": 104.87913
+                }
+            },
+            {
+                "name": "Huyện Quỳ Châu",
+                "coordinates": {
+                    "latitude": 19.53561835,
+                    "longitude": 105.13297446709093
+                }
+            },
+            {
+                "name": "Huyện Kỳ Sơn",
+                "coordinates": {
+                    "latitude": 19.410235649999997,
+                    "longitude": 104.18698456526376
+                }
+            },
+            {
+                "name": "Huyện Tương Dương",
+                "coordinates": {
+                    "latitude": 19.320072250000003,
+                    "longitude": 104.62894059889884
+                }
+            },
+            {
+                "name": "Huyện Nghĩa Đàn",
+                "coordinates": {
+                    "latitude": 19.339568049999997,
+                    "longitude": 105.48713217654942
+                }
+            },
+            {
+                "name": "Huyện Quỳ Hợp",
+                "coordinates": {
+                    "latitude": 19.32514,
+                    "longitude": 105.16009
+                }
+            },
+            {
+                "name": "Huyện Quỳnh Lưu",
+                "coordinates": {
+                    "latitude": 19.23285405,
+                    "longitude": 105.60004256673577
+                }
+            },
+            {
+                "name": "Huyện Con Cuông",
+                "coordinates": {
+                    "latitude": 19.0628106,
+                    "longitude": 104.8232319584995
+                }
+            },
+            {
+                "name": "Huyện Tân Kỳ",
+                "coordinates": {
+                    "latitude": 21.20398,
+                    "longitude": 105.97414
+                }
+            },
+            {
+                "name": "Huyện Anh Sơn",
+                "coordinates": {
+                    "latitude": 18.9669845,
+                    "longitude": 105.10268915997932
+                }
+            },
+            {
+                "name": "Huyện Diễn Châu",
+                "coordinates": {
+                    "latitude": 19.021568000000002,
+                    "longitude": 105.57809018508287
+                }
+            },
+            {
+                "name": "Huyện Yên Thành",
+                "coordinates": {
+                    "latitude": 19.02724,
+                    "longitude": 105.43649
+                }
+            },
+            {
+                "name": "Huyện Đô Lương",
+                "coordinates": {
+                    "latitude": 18.9159875,
+                    "longitude": 105.31406798494636
+                }
+            },
+            {
+                "name": "Huyện Thanh Chương",
+                "coordinates": {
+                    "latitude": 20.9207336,
+                    "longitude": 105.7013877
+                }
+            },
+            {
+                "name": "Huyện Nghi Lộc",
+                "coordinates": {
+                    "latitude": 18.80889645,
+                    "longitude": 105.58919558789694
+                }
+            },
+            {
+                "name": "Huyện Nam Đàn",
+                "coordinates": {
+                    "latitude": 18.67394455,
+                    "longitude": 105.52351162918467
+                }
+            },
+            {
+                "name": "Huyện Hưng Nguyên",
+                "coordinates": {
+                    "latitude": 18.685556849999998,
+                    "longitude": 105.62395394235884
+                }
+            },
+            {
+                "name": "Thị xã Hoàng Mai",
+                "coordinates": {
+                    "latitude": 19.2684676,
+                    "longitude": 105.7163991
+                }
+            }
+        ]
+    },
+    "Ninh Bình": {
+        "latitude": 11.7723927,
+        "longitude": 108.7893088,
+        "districts": [
+            {
+                "name": "Thành phố Tam Điệp",
+                "coordinates": {
+                    "latitude": 20.1565628,
+                    "longitude": 105.9180352
+                }
+            },
+            {
+                "name": "Huyện Nho Quan",
+                "coordinates": {
+                    "latitude": 20.31154495,
+                    "longitude": 105.74858793941853
+                }
+            },
+            {
+                "name": "Huyện Gia Viễn",
+                "coordinates": {
+                    "latitude": 20.34677,
+                    "longitude": 105.86437
+                }
+            },
+            {
+                "name": "Thành phố Hoa Lư",
+                "coordinates": {
+                    "latitude": 20.2421142,
+                    "longitude": 105.9746207
+                }
+            },
+            {
+                "name": "Huyện Yên Khánh",
+                "coordinates": {
+                    "latitude": 20.17734705,
+                    "longitude": 106.07083789610516
+                }
+            },
+            {
+                "name": "Huyện Kim Sơn",
+                "coordinates": {
+                    "latitude": 11.7723927,
+                    "longitude": 108.7893088
+                }
+            },
+            {
+                "name": "Huyện Yên Mô",
+                "coordinates": {
+                    "latitude": 20.1281337,
+                    "longitude": 106.01227646164281
+                }
+            }
+        ]
+    },
+    "Ninh Thuận": {
+        "latitude": 11.6965639,
+        "longitude": 108.8928476,
+        "districts": [
+            {
+                "name": "Thành phố Phan Rang-Tháp Chàm",
+                "coordinates": {
+                    "latitude": 11.5600381,
+                    "longitude": 108.3518616
+                }
+            },
+            {
+                "name": "Huyện Bác Ái",
+                "coordinates": {
+                    "latitude": 20.6733482,
+                    "longitude": 105.7009059
+                }
+            },
+            {
+                "name": "Huyện Ninh Sơn",
+                "coordinates": {
+                    "latitude": 11.7117416,
+                    "longitude": 108.80039119095932
+                }
+            },
+            {
+                "name": "Huyện Ninh Hải",
+                "coordinates": {
+                    "latitude": 11.5600381,
+                    "longitude": 108.3518616
+                }
+            },
+            {
+                "name": "Huyện Ninh Phước",
+                "coordinates": {
+                    "latitude": 11.5219338,
+                    "longitude": 108.9241193
+                }
+            },
+            {
+                "name": "Huyện Thuận Bắc",
+                "coordinates": {
+                    "latitude": 11.7434285,
+                    "longitude": 109.05908357602489
+                }
+            },
+            {
+                "name": "Huyện Thuận Nam",
+                "coordinates": {
+                    "latitude": 10.85033555,
+                    "longitude": 107.87841471771138
+                }
+            }
+        ]
+    },
+    "Phú Thọ": {
+        "latitude": 21.4000047,
+        "longitude": 105.2238899,
+        "districts": [
+            {
+                "name": "Thành phố Việt Trì",
+                "coordinates": {
+                    "latitude": 21.33451,
+                    "longitude": 105.38151
+                }
+            },
+            {
+                "name": "Thị xã Phú Thọ",
+                "coordinates": {
+                    "latitude": 21.403953,
+                    "longitude": 105.207355
+                }
+            },
+            {
+                "name": "Huyện Đoan Hùng",
+                "coordinates": {
+                    "latitude": 21.6147084,
+                    "longitude": 105.1561210741571
+                }
+            },
+            {
+                "name": "Huyện Hạ Hoà",
+                "coordinates": {
+                    "latitude": 21.02328,
+                    "longitude": 106.16962
+                }
+            },
+            {
+                "name": "Huyện Thanh Ba",
+                "coordinates": {
+                    "latitude": 21.45070665,
+                    "longitude": 105.16626116492901
+                }
+            },
+            {
+                "name": "Huyện Phù Ninh",
+                "coordinates": {
+                    "latitude": 21.44805,
+                    "longitude": 105.30725
+                }
+            },
+            {
+                "name": "Huyện Yên Lập",
+                "coordinates": {
+                    "latitude": 21.3722635,
+                    "longitude": 104.9760095191688
+                }
+            },
+            {
+                "name": "Huyện Cẩm Khê",
+                "coordinates": {
+                    "latitude": 21.384698399999998,
+                    "longitude": 105.105453181571
+                }
+            },
+            {
+                "name": "Huyện Tam Nông",
+                "coordinates": {
+                    "latitude": 10.6821888,
+                    "longitude": 105.4928349
+                }
+            },
+            {
+                "name": "Huyện Lâm Thao",
+                "coordinates": {
+                    "latitude": 21.29971,
+                    "longitude": 105.31119
+                }
+            },
+            {
+                "name": "Huyện Thanh Sơn",
+                "coordinates": {
+                    "latitude": 21.46,
+                    "longitude": 105.16576
+                }
+            },
+            {
+                "name": "Huyện Thanh Thuỷ",
+                "coordinates": {
+                    "latitude": 21.15376,
+                    "longitude": 105.26926
+                }
+            },
+            {
+                "name": "Huyện Tân Sơn",
+                "coordinates": {
+                    "latitude": 21.18988925,
+                    "longitude": 104.98314082900026
+                }
+            }
+        ]
+    },
+    "Phú Yên": {
+        "latitude": 13.1912633,
+        "longitude": 109.1273678,
+        "districts": [
+            {
+                "name": "Thành phố Tuy Hoà",
+                "coordinates": {
+                    "latitude": 13.0877226,
+                    "longitude": 109.2993584
+                }
+            },
+            {
+                "name": "Thị xã Sông Cầu",
+                "coordinates": {
+                    "latitude": 13.4593792,
+                    "longitude": 109.2208388
+                }
+            },
+            {
+                "name": "Huyện Đồng Xuân",
+                "coordinates": {
+                    "latitude": 13.413046399999999,
+                    "longitude": 108.97283038083101
+                }
+            },
+            {
+                "name": "Huyện Tuy An",
+                "coordinates": {
+                    "latitude": 13.254778550000001,
+                    "longitude": 109.21057086828677
+                }
+            },
+            {
+                "name": "Huyện Sơn Hòa",
+                "coordinates": {
+                    "latitude": 13.05056075,
+                    "longitude": 108.97667232299821
+                }
+            },
+            {
+                "name": "Huyện Sông Hinh",
+                "coordinates": {
+                    "latitude": 12.903052200000001,
+                    "longitude": 108.89529442109067
+                }
+            },
+            {
+                "name": "Huyện Tây Hoà",
+                "coordinates": {
+                    "latitude": 12.91667,
+                    "longitude": 108.91667
+                }
+            },
+            {
+                "name": "Huyện Phú Hoà",
+                "coordinates": {
+                    "latitude": 13.0680555,
+                    "longitude": 109.19180131041166
+                }
+            },
+            {
+                "name": "Thị xã Đông Hòa",
+                "coordinates": {
+                    "latitude": 12.9897858,
+                    "longitude": 109.3335839
+                }
+            }
+        ]
+    },
+    "Quảng Bình": {
+        "latitude": 17.509599,
+        "longitude": 106.4004452,
+        "districts": [
+            {
+                "name": "Thành Phố Đồng Hới",
+                "coordinates": {
+                    "latitude": 17.4659566,
+                    "longitude": 106.5984715
+                }
+            },
+            {
+                "name": "Huyện Minh Hóa",
+                "coordinates": {
+                    "latitude": 17.801177,
+                    "longitude": 105.973842
+                }
+            },
+            {
+                "name": "Huyện Tuyên Hóa",
+                "coordinates": {
+                    "latitude": 17.899741,
+                    "longitude": 106.10430650862298
+                }
+            },
+            {
+                "name": "Huyện Quảng Trạch",
+                "coordinates": {
+                    "latitude": 17.85850755,
+                    "longitude": 106.43371285224194
+                }
+            },
+            {
+                "name": "Huyện Bố Trạch",
+                "coordinates": {
+                    "latitude": 11.9180963,
+                    "longitude": 107.559307
+                }
+            },
+            {
+                "name": "Huyện Quảng Ninh",
+                "coordinates": {
+                    "latitude": 11.9180963,
+                    "longitude": 107.559307
+                }
+            },
+            {
+                "name": "Huyện Lệ Thủy",
+                "coordinates": {
+                    "latitude": 17.219946,
+                    "longitude": 106.786366
+                }
+            },
+            {
+                "name": "Thị xã Ba Đồn",
+                "coordinates": {
+                    "latitude": 17.7558925,
+                    "longitude": 106.420438
+                }
+            }
+        ]
+    },
+    "Quảng Nam": {
+        "latitude": 15.5761698,
+        "longitude": 108.0527132,
+        "districts": [
+            {
+                "name": "Thành phố Tam Kỳ",
+                "coordinates": {
+                    "latitude": 15.5635585,
+                    "longitude": 108.48121267980399
+                }
+            },
+            {
+                "name": "Thành phố Hội An",
+                "coordinates": {
+                    "latitude": 15.8795863,
+                    "longitude": 108.3319406
+                }
+            },
+            {
+                "name": "Huyện Tây Giang",
+                "coordinates": {
+                    "latitude": 15.887215,
+                    "longitude": 107.494435
+                }
+            },
+            {
+                "name": "Huyện Đông Giang",
+                "coordinates": {
+                    "latitude": 15.9233133,
+                    "longitude": 107.64867266691621
+                }
+            },
+            {
+                "name": "Huyện Đại Lộc",
+                "coordinates": {
+                    "latitude": 21.1308108,
+                    "longitude": 105.4142526
+                }
+            },
+            {
+                "name": "Thị xã Điện Bàn",
+                "coordinates": {
+                    "latitude": 21.0756589,
+                    "longitude": 105.4233096
+                }
+            },
+            {
+                "name": "Huyện Duy Xuyên",
+                "coordinates": {
+                    "latitude": 15.55629,
+                    "longitude": 107.957221
+                }
+            },
+            {
+                "name": "Huyện Quế Sơn",
+                "coordinates": {
+                    "latitude": 15.67634625,
+                    "longitude": 108.2373028524083
+                }
+            },
+            {
+                "name": "Huyện Nam Giang",
+                "coordinates": {
+                    "latitude": 15.74220115,
+                    "longitude": 107.82982648908165
+                }
+            },
+            {
+                "name": "Huyện Phước Sơn",
+                "coordinates": {
+                    "latitude": 15.995147,
+                    "longitude": 108.24682
+                }
+            },
+            {
+                "name": "Huyện Hiệp Đức",
+                "coordinates": {
+                    "latitude": 15.995147,
+                    "longitude": 108.24682
+                }
+            },
+            {
+                "name": "Huyện Thăng Bình",
+                "coordinates": {
+                    "latitude": 15.736117,
+                    "longitude": 108.34871
+                }
+            },
+            {
+                "name": "Huyện Tiên Phước",
+                "coordinates": {
+                    "latitude": 15.4910852,
+                    "longitude": 108.25550823586187
+                }
+            },
+            {
+                "name": "Huyện Bắc Trà My",
+                "coordinates": {
+                    "latitude": 15.338434,
+                    "longitude": 108.222526
+                }
+            },
+            {
+                "name": "Huyện Nam Trà My",
+                "coordinates": {
+                    "latitude": 15.3392872,
+                    "longitude": 108.2201956
+                }
+            },
+            {
+                "name": "Huyện Núi Thành",
+                "coordinates": {
+                    "latitude": 15.434957,
+                    "longitude": 108.649341
+                }
+            },
+            {
+                "name": "Huyện Phú Ninh",
+                "coordinates": {
+                    "latitude": 15.55260615,
+                    "longitude": 108.4183030594669
+                }
+            }
+        ]
+    },
+    "Quảng Ngãi": {
+        "latitude": 15.1190037,
+        "longitude": 108.8095598,
+        "districts": [
+            {
+                "name": "Thành phố Quảng Ngãi",
+                "coordinates": {
+                    "latitude": 15.1121147,
+                    "longitude": 108.82253029507993
+                }
+            },
+            {
+                "name": "Huyện Bình Sơn",
+                "coordinates": {
+                    "latitude": 15.1190037,
+                    "longitude": 108.8095598
+                }
+            },
+            {
+                "name": "Huyện Trà Bồng",
+                "coordinates": {
+                    "latitude": 15.1190037,
+                    "longitude": 108.8095598
+                }
+            },
+            {
+                "name": "Huyện Sơn Tịnh",
+                "coordinates": {
+                    "latitude": 15.1190037,
+                    "longitude": 108.8095598
+                }
+            },
+            {
+                "name": "Huyện Tư Nghĩa",
+                "coordinates": {
+                    "latitude": 15.1190037,
+                    "longitude": 108.8095598
+                }
+            },
+            {
+                "name": "Huyện Sơn Hà",
+                "coordinates": {
+                    "latitude": 15.1190037,
+                    "longitude": 108.8095598
+                }
+            },
+            {
+                "name": "Huyện Sơn Tây",
+                "coordinates": {
+                    "latitude": 15.1190037,
+                    "longitude": 108.8095598
+                }
+            },
+            {
+                "name": "Huyện Minh Long",
+                "coordinates": {
+                    "latitude": 15.1190037,
+                    "longitude": 108.8095598
+                }
+            },
+            {
+                "name": "Huyện Nghĩa Hành",
+                "coordinates": {
+                    "latitude": 15.1190037,
+                    "longitude": 108.8095598
+                }
+            },
+            {
+                "name": "Huyện Mộ Đức",
+                "coordinates": {
+                    "latitude": 15.1190037,
+                    "longitude": 108.8095598
+                }
+            },
+            {
+                "name": "Thị xã Đức Phổ",
+                "coordinates": {
+                    "latitude": 14.8087189,
+                    "longitude": 108.9571626
+                }
+            },
+            {
+                "name": "Huyện Ba Tơ",
+                "coordinates": {
+                    "latitude": 15.1190037,
+                    "longitude": 108.8095598
+                }
+            },
+            {
+                "name": "Huyện Lý Sơn",
+                "coordinates": {
+                    "latitude": 15.11667,
+                    "longitude": 108.8
+                }
+            }
+        ]
+    },
+    "Quảng Ninh": {
+        "latitude": 12.4763456,
+        "longitude": 109.1094483,
+        "districts": [
+            {
+                "name": "Thành phố Hạ Long",
+                "coordinates": {
+                    "latitude": 20.94999055,
+                    "longitude": 107.0735117858884
+                }
+            },
+            {
+                "name": "Thành phố Móng Cái",
+                "coordinates": {
+                    "latitude": 21.524996299999998,
+                    "longitude": 107.96603086750218
+                }
+            },
+            {
+                "name": "Thành phố Cẩm Phả",
+                "coordinates": {
+                    "latitude": 21.010751,
+                    "longitude": 107.270608
+                }
+            },
+            {
+                "name": "Thành phố Uông Bí",
+                "coordinates": {
+                    "latitude": 21.0361897,
+                    "longitude": 106.764375545226
+                }
+            },
+            {
+                "name": "Huyện Bình Liêu",
+                "coordinates": {
+                    "latitude": 21.55009455,
+                    "longitude": 107.44023870266739
+                }
+            },
+            {
+                "name": "Huyện Tiên Yên",
+                "coordinates": {
+                    "latitude": 21.0261465,
+                    "longitude": 105.6863449
+                }
+            },
+            {
+                "name": "Huyện Đầm Hà",
+                "coordinates": {
+                    "latitude": 21.353287,
+                    "longitude": 107.588542
+                }
+            },
+            {
+                "name": "Huyện Hải Hà",
+                "coordinates": {
+                    "latitude": 21.49537,
+                    "longitude": 107.6679
+                }
+            },
+            {
+                "name": "Huyện Ba Chẽ",
+                "coordinates": {
+                    "latitude": 21.2733736,
+                    "longitude": 107.2826989
+                }
+            },
+            {
+                "name": "Huyện Vân Đồn",
+                "coordinates": {
+                    "latitude": 20.981892449999997,
+                    "longitude": 107.50001837522814
+                }
+            },
+            {
+                "name": "Thành phố Đông Triều",
+                "coordinates": {
+                    "latitude": 21.0837903,
+                    "longitude": 106.5133609
+                }
+            },
+            {
+                "name": "Thị xã Quảng Yên",
+                "coordinates": {
+                    "latitude": 20.93685405,
+                    "longitude": 106.79448619665226
+                }
+            },
+            {
+                "name": "Huyện Cô Tô",
+                "coordinates": {
+                    "latitude": 20.971245850000003,
+                    "longitude": 107.76615467516908
+                }
+            }
+        ]
+    },
+    "Quảng Trị": {
+        "latitude": 16.7512362,
+        "longitude": 107.185912,
+        "districts": [
+            {
+                "name": "Thành phố Đông Hà",
+                "coordinates": {
+                    "latitude": 16.80549,
+                    "longitude": 107.09066
+                }
+            },
+            {
+                "name": "Thị xã Quảng Trị",
+                "coordinates": {
+                    "latitude": 16.751134,
+                    "longitude": 107.192299
+                }
+            },
+            {
+                "name": "Huyện Vĩnh Linh",
+                "coordinates": {
+                    "latitude": 17.026848049999998,
+                    "longitude": 106.96126319109172
+                }
+            },
+            {
+                "name": "Huyện Hướng Hóa",
+                "coordinates": {
+                    "latitude": 16.70132,
+                    "longitude": 106.67036
+                }
+            },
+            {
+                "name": "Huyện Gio Linh",
+                "coordinates": {
+                    "latitude": 16.9264341,
+                    "longitude": 107.0873477235104
+                }
+            },
+            {
+                "name": "Huyện Đa Krông",
+                "coordinates": {
+                    "latitude": 16.56829855,
+                    "longitude": 106.97956012608
+                }
+            },
+            {
+                "name": "Huyện Cam Lộ",
+                "coordinates": {
+                    "latitude": 16.7847145,
+                    "longitude": 106.94427505884894
+                }
+            },
+            {
+                "name": "Huyện Triệu Phong",
+                "coordinates": {
+                    "latitude": 16.765256,
+                    "longitude": 107.165574
+                }
+            },
+            {
+                "name": "Huyện Hải Lăng",
+                "coordinates": {
+                    "latitude": 16.70149975,
+                    "longitude": 107.25335799033944
+                }
+            },
+            {
+                "name": "Huyện Cồn Cỏ",
+                "coordinates": {
+                    "latitude": 17.158597999999998,
+                    "longitude": 107.33935763961352
+                }
+            }
+        ]
+    },
+    "Sóc Trăng": {
+        "latitude": 9.6026724,
+        "longitude": 105.9733211,
+        "districts": [
+            {
+                "name": "Thành phố Sóc Trăng",
+                "coordinates": {
+                    "latitude": 9.60981565,
+                    "longitude": 105.96981830249413
+                }
+            },
+            {
+                "name": "Huyện Châu Thành",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Kế Sách",
+                "coordinates": {
+                    "latitude": 9.6026724,
+                    "longitude": 105.9733211
+                }
+            },
+            {
+                "name": "Huyện Mỹ Tú",
+                "coordinates": {
+                    "latitude": 9.6026724,
+                    "longitude": 105.9733211
+                }
+            },
+            {
+                "name": "Huyện Cù Lao Dung",
+                "coordinates": {
+                    "latitude": 9.67314,
+                    "longitude": 106.14874
+                }
+            },
+            {
+                "name": "Huyện Long Phú",
+                "coordinates": {
+                    "latitude": 9.6026724,
+                    "longitude": 105.9733211
+                }
+            },
+            {
+                "name": "Huyện Mỹ Xuyên",
+                "coordinates": {
+                    "latitude": 9.6026724,
+                    "longitude": 105.9733211
+                }
+            },
+            {
+                "name": "Thị xã Ngã Năm",
+                "coordinates": {
+                    "latitude": 9.6026724,
+                    "longitude": 105.9733211
+                }
+            },
+            {
+                "name": "Huyện Thạnh Trị",
+                "coordinates": {
+                    "latitude": 9.6026724,
+                    "longitude": 105.9733211
+                }
+            },
+            {
+                "name": "Thị xã Vĩnh Châu",
+                "coordinates": {
+                    "latitude": 9.6026724,
+                    "longitude": 105.9733211
+                }
+            },
+            {
+                "name": "Huyện Trần Đề",
+                "coordinates": {
+                    "latitude": 9.6026724,
+                    "longitude": 105.9733211
+                }
+            }
+        ]
+    },
+    "Sơn La": {
+        "latitude": 21.3274048,
+        "longitude": 103.9151701,
+        "districts": [
+            {
+                "name": "Thành phố Sơn La",
+                "coordinates": {
+                    "latitude": 21.3274048,
+                    "longitude": 103.9151701
+                }
+            },
+            {
+                "name": "Huyện Quỳnh Nhai",
+                "coordinates": {
+                    "latitude": 21.3274048,
+                    "longitude": 103.9151701
+                }
+            },
+            {
+                "name": "Huyện Thuận Châu",
+                "coordinates": {
+                    "latitude": 21.3274048,
+                    "longitude": 103.9151701
+                }
+            },
+            {
+                "name": "Huyện Mường La",
+                "coordinates": {
+                    "latitude": 21.3274048,
+                    "longitude": 103.9151701
+                }
+            },
+            {
+                "name": "Huyện Bắc Yên",
+                "coordinates": {
+                    "latitude": 21.3274048,
+                    "longitude": 103.9151701
+                }
+            },
+            {
+                "name": "Huyện Phù Yên",
+                "coordinates": {
+                    "latitude": 21.3274048,
+                    "longitude": 103.9151701
+                }
+            },
+            {
+                "name": "Thị xã Mộc Châu",
+                "coordinates": {
+                    "latitude": 21.3274048,
+                    "longitude": 103.9151701
+                }
+            },
+            {
+                "name": "Huyện Yên Châu",
+                "coordinates": {
+                    "latitude": 21.3274048,
+                    "longitude": 103.9151701
+                }
+            },
+            {
+                "name": "Huyện Mai Sơn",
+                "coordinates": {
+                    "latitude": 21.3274048,
+                    "longitude": 103.9151701
+                }
+            },
+            {
+                "name": "Huyện Sông Mã",
+                "coordinates": {
+                    "latitude": 21.3274048,
+                    "longitude": 103.9151701
+                }
+            },
+            {
+                "name": "Huyện Sốp Cộp",
+                "coordinates": {
+                    "latitude": 21.3274048,
+                    "longitude": 103.9151701
+                }
+            },
+            {
+                "name": "Huyện Vân Hồ",
+                "coordinates": {
+                    "latitude": 20.80959885,
+                    "longitude": 104.87323503174335
+                }
+            }
+        ]
+    },
+    "Tây Ninh": {
+        "latitude": 11.3138286,
+        "longitude": 106.0964769,
+        "districts": [
+            {
+                "name": "Thành phố Tây Ninh",
+                "coordinates": {
+                    "latitude": 11.3138286,
+                    "longitude": 106.0964769
+                }
+            },
+            {
+                "name": "Huyện Tân Biên",
+                "coordinates": {
+                    "latitude": 11.3138286,
+                    "longitude": 106.0964769
+                }
+            },
+            {
+                "name": "Huyện Tân Châu",
+                "coordinates": {
+                    "latitude": 11.3138286,
+                    "longitude": 106.0964769
+                }
+            },
+            {
+                "name": "Huyện Dương Minh Châu",
+                "coordinates": {
+                    "latitude": 11.3138286,
+                    "longitude": 106.0964769
+                }
+            },
+            {
+                "name": "Huyện Châu Thành",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Thị xã Hòa Thành",
+                "coordinates": {
+                    "latitude": 11.3138286,
+                    "longitude": 106.0964769
+                }
+            },
+            {
+                "name": "Huyện Gò Dầu",
+                "coordinates": {
+                    "latitude": 11.3138286,
+                    "longitude": 106.0964769
+                }
+            },
+            {
+                "name": "Huyện Bến Cầu",
+                "coordinates": {
+                    "latitude": 11.3138286,
+                    "longitude": 106.0964769
+                }
+            },
+            {
+                "name": "Thị xã Trảng Bàng",
+                "coordinates": {
+                    "latitude": 11.034416,
+                    "longitude": 106.3594506
+                }
+            }
+        ]
+    },
+    "Thái Bình": {
+        "latitude": 20.449288,
+        "longitude": 106.3424893,
+        "districts": [
+            {
+                "name": "Thành phố Thái Bình",
+                "coordinates": {
+                    "latitude": 20.448293,
+                    "longitude": 106.345434
+                }
+            },
+            {
+                "name": "Huyện Quỳnh Phụ",
+                "coordinates": {
+                    "latitude": 20.647978600000002,
+                    "longitude": 106.3630021418404
+                }
+            },
+            {
+                "name": "Huyện Hưng Hà",
+                "coordinates": {
+                    "latitude": 20.5934597,
+                    "longitude": 106.21843677154311
+                }
+            },
+            {
+                "name": "Huyện Đông Hưng",
+                "coordinates": {
+                    "latitude": 20.448477,
+                    "longitude": 106.34113
+                }
+            },
+            {
+                "name": "Huyện Thái Thụy",
+                "coordinates": {
+                    "latitude": 20.45,
+                    "longitude": 106.33333
+                }
+            },
+            {
+                "name": "Huyện Tiền Hải",
+                "coordinates": {
+                    "latitude": 20.38465,
+                    "longitude": 106.52882
+                }
+            },
+            {
+                "name": "Huyện Kiến Xương",
+                "coordinates": {
+                    "latitude": 20.3967441,
+                    "longitude": 106.42057075471456
+                }
+            },
+            {
+                "name": "Huyện Vũ Thư",
+                "coordinates": {
+                    "latitude": 20.43460335,
+                    "longitude": 106.29013824874187
+                }
+            }
+        ]
+    },
+    "Thái Nguyên": {
+        "latitude": 21.592477,
+        "longitude": 105.8435398,
+        "districts": [
+            {
+                "name": "Thành phố Thái Nguyên",
+                "coordinates": {
+                    "latitude": 21.593456,
+                    "longitude": 105.84253
+                }
+            },
+            {
+                "name": "Thành phố Sông Công",
+                "coordinates": {
+                    "latitude": 21.593456,
+                    "longitude": 105.84253
+                }
+            },
+            {
+                "name": "Huyện Định Hóa",
+                "coordinates": {
+                    "latitude": 21.592477,
+                    "longitude": 105.8435398
+                }
+            },
+            {
+                "name": "Huyện Phú Lương",
+                "coordinates": {
+                    "latitude": 21.592477,
+                    "longitude": 105.8435398
+                }
+            },
+            {
+                "name": "Huyện Đồng Hỷ",
+                "coordinates": {
+                    "latitude": 21.592477,
+                    "longitude": 105.8435398
+                }
+            },
+            {
+                "name": "Huyện Võ Nhai",
+                "coordinates": {
+                    "latitude": 21.592477,
+                    "longitude": 105.8435398
+                }
+            },
+            {
+                "name": "Huyện Đại Từ",
+                "coordinates": {
+                    "latitude": 21.592477,
+                    "longitude": 105.8435398
+                }
+            },
+            {
+                "name": "Thành phố Phổ Yên",
+                "coordinates": {
+                    "latitude": 21.592477,
+                    "longitude": 105.8435398
+                }
+            },
+            {
+                "name": "Huyện Phú Bình",
+                "coordinates": {
+                    "latitude": 21.592477,
+                    "longitude": 105.8435398
+                }
+            }
+        ]
+    },
+    "Thanh Hóa": {
+        "latitude": 19.8076814,
+        "longitude": 105.7767437,
+        "districts": [
+            {
+                "name": "Thành phố Thanh Hóa",
+                "coordinates": {
+                    "latitude": 19.816004,
+                    "longitude": 105.781593
+                }
+            },
+            {
+                "name": "Thị xã Bỉm Sơn",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Thành phố Sầm Sơn",
+                "coordinates": {
+                    "latitude": 19.743069,
+                    "longitude": 105.899578
+                }
+            },
+            {
+                "name": "Huyện Mường Lát",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Quan Hóa",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Bá Thước",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Quan Sơn",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Lang Chánh",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Ngọc Lặc",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Cẩm Thủy",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Thạch Thành",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Hà Trung",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Vĩnh Lộc",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Yên Định",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Thọ Xuân",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Thường Xuân",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Triệu Sơn",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Thiệu Hóa",
+                "coordinates": {
+                    "latitude": 19.867154,
+                    "longitude": 105.6771
+                }
+            },
+            {
+                "name": "Huyện Hoằng Hóa",
+                "coordinates": {
+                    "latitude": 19.850852,
+                    "longitude": 105.856293
+                }
+            },
+            {
+                "name": "Huyện Hậu Lộc",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Nga Sơn",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Như Xuân",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Như Thanh",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Nông Cống",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Huyện Quảng Xương",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            },
+            {
+                "name": "Thị xã Nghi Sơn",
+                "coordinates": {
+                    "latitude": 19.8076814,
+                    "longitude": 105.7767437
+                }
+            }
+        ]
+    },
+    "Thừa Thiên Huế": {
+        "latitude": 16.349255,
+        "longitude": 107.395227,
+        "districts": [
+            {
+                "name": "Quận Thuận Hóa",
+                "coordinates": {
+                    "latitude": 16.4597491,
+                    "longitude": 107.5993051
+                }
+            },
+            {
+                "name": "Quận Phú Xuân",
+                "coordinates": {
+                    "latitude": 16.48438345,
+                    "longitude": 107.57554909328046
+                }
+            },
+            {
+                "name": "Thị xã Phong Điền",
+                "coordinates": {
+                    "latitude": 16.5819269,
+                    "longitude": 107.3654347
+                }
+            },
+            {
+                "name": "Huyện Quảng Điền",
+                "coordinates": {
+                    "latitude": 16.5891445,
+                    "longitude": 107.512176991567
+                }
+            },
+            {
+                "name": "Huyện Phú Vang",
+                "coordinates": {
+                    "latitude": 16.44494995,
+                    "longitude": 107.70849583441692
+                }
+            },
+            {
+                "name": "Thị xã Hương Thủy",
+                "coordinates": {
+                    "latitude": 16.4115408,
+                    "longitude": 107.671579
+                }
+            },
+            {
+                "name": "Thị xã Hương Trà",
+                "coordinates": {
+                    "latitude": 16.5265472,
+                    "longitude": 107.46893237755339
+                }
+            },
+            {
+                "name": "Huyện A Lưới",
+                "coordinates": {
+                    "latitude": 16.2664333,
+                    "longitude": 107.23514469500996
+                }
+            },
+            {
+                "name": "Huyện Phú Lộc",
+                "coordinates": {
+                    "latitude": 21.1308108,
+                    "longitude": 105.4142526
+                }
+            }
+        ]
+    },
+    "Tiền Giang": {
+        "latitude": 10.4030368,
+        "longitude": 106.361633,
+        "districts": [
+            {
+                "name": "Thành phố Mỹ Tho",
+                "coordinates": {
+                    "latitude": 10.35885215,
+                    "longitude": 106.37549314176826
+                }
+            },
+            {
+                "name": "Thành phố Gò Công",
+                "coordinates": {
+                    "latitude": 10.3629555,
+                    "longitude": 106.6767031
+                }
+            },
+            {
+                "name": "Thị xã Cai Lậy",
+                "coordinates": {
+                    "latitude": 10.403219650796,
+                    "longitude": 106.1628038990872
+                }
+            },
+            {
+                "name": "Huyện Tân Phước",
+                "coordinates": {
+                    "latitude": 10.509738200000001,
+                    "longitude": 106.21126813442129
+                }
+            },
+            {
+                "name": "Huyện Cái Bè",
+                "coordinates": {
+                    "latitude": 10.3354439,
+                    "longitude": 106.0343064
+                }
+            },
+            {
+                "name": "Huyện Cai Lậy",
+                "coordinates": {
+                    "latitude": 10.44774361199428,
+                    "longitude": 106.12655698815296
+                }
+            },
+            {
+                "name": "Huyện Châu Thành",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Chợ Gạo",
+                "coordinates": {
+                    "latitude": 10.39521855,
+                    "longitude": 106.50093353310416
+                }
+            },
+            {
+                "name": "Huyện Gò Công Tây",
+                "coordinates": {
+                    "latitude": 10.3546895,
+                    "longitude": 106.58663997282127
+                }
+            },
+            {
+                "name": "Huyện Gò Công Đông",
+                "coordinates": {
+                    "latitude": 10.397046,
+                    "longitude": 106.649007
+                }
+            },
+            {
+                "name": "Huyện Tân Phú Đông",
+                "coordinates": {
+                    "latitude": 10.2516925,
+                    "longitude": 106.6729886891093
+                }
+            }
+        ]
+    },
+    "Trà Vinh": {
+        "latitude": 9.9355829,
+        "longitude": 106.3397849,
+        "districts": [
+            {
+                "name": "Thành phố Trà Vinh",
+                "coordinates": {
+                    "latitude": 9.92299285,
+                    "longitude": 106.33630592190916
+                }
+            },
+            {
+                "name": "Huyện Càng Long",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Cầu Kè",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Tiểu Cần",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Châu Thành",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Cầu Ngang",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Trà Cú",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Huyện Duyên Hải",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            },
+            {
+                "name": "Thị xã Duyên Hải",
+                "coordinates": {
+                    "latitude": 9.9355829,
+                    "longitude": 106.3397849
+                }
+            }
+        ]
+    },
+    "Tuyên Quang": {
+        "latitude": 21.7879695,
+        "longitude": 105.217387,
+        "districts": [
+            {
+                "name": "Thành phố Tuyên Quang",
+                "coordinates": {
+                    "latitude": 21.81741,
+                    "longitude": 105.216936
+                }
+            },
+            {
+                "name": "Huyện Lâm Bình",
+                "coordinates": {
+                    "latitude": 21.7879695,
+                    "longitude": 105.217387
+                }
+            },
+            {
+                "name": "Huyện Na Hang",
+                "coordinates": {
+                    "latitude": 21.7879695,
+                    "longitude": 105.217387
+                }
+            },
+            {
+                "name": "Huyện Chiêm Hóa",
+                "coordinates": {
+                    "latitude": 21.7879695,
+                    "longitude": 105.217387
+                }
+            },
+            {
+                "name": "Huyện Hàm Yên",
+                "coordinates": {
+                    "latitude": 21.7879695,
+                    "longitude": 105.217387
+                }
+            },
+            {
+                "name": "Huyện Yên Sơn",
+                "coordinates": {
+                    "latitude": 21.784678,
+                    "longitude": 105.220816
+                }
+            },
+            {
+                "name": "Huyện Sơn Dương",
+                "coordinates": {
+                    "latitude": 21.7879695,
+                    "longitude": 105.217387
+                }
+            }
+        ]
+    },
+    "Vĩnh Long": {
+        "latitude": 10.252039,
+        "longitude": 105.9735715,
+        "districts": [
+            {
+                "name": "Thành phố Vĩnh Long",
+                "coordinates": {
+                    "latitude": 10.266896,
+                    "longitude": 105.914446
+                }
+            },
+            {
+                "name": "Huyện Long Hồ",
+                "coordinates": {
+                    "latitude": 10.252039,
+                    "longitude": 105.9735715
+                }
+            },
+            {
+                "name": "Huyện Mang Thít",
+                "coordinates": {
+                    "latitude": 10.252039,
+                    "longitude": 105.9735715
+                }
+            },
+            {
+                "name": "Huyện  Vũng Liêm",
+                "coordinates": {
+                    "latitude": 10.252039,
+                    "longitude": 105.9735715
+                }
+            },
+            {
+                "name": "Huyện Tam Bình",
+                "coordinates": {
+                    "latitude": 10.252039,
+                    "longitude": 105.9735715
+                }
+            },
+            {
+                "name": "Thị xã Bình Minh",
+                "coordinates": {
+                    "latitude": 10.252039,
+                    "longitude": 105.9735715
+                }
+            },
+            {
+                "name": "Huyện Trà Ôn",
+                "coordinates": {
+                    "latitude": 10.252039,
+                    "longitude": 105.9735715
+                }
+            },
+            {
+                "name": "Huyện Bình Tân",
+                "coordinates": {
+                    "latitude": 10.252039,
+                    "longitude": 105.9735715
+                }
+            }
+        ]
+    },
+    "Vĩnh Phúc": {
+        "latitude": 21.3778689,
+        "longitude": 105.5758286,
+        "districts": [
+            {
+                "name": "Thành phố Vĩnh Yên",
+                "coordinates": {
+                    "latitude": 21.3088479,
+                    "longitude": 105.5916322
+                }
+            },
+            {
+                "name": "Thành phố Phúc Yên",
+                "coordinates": {
+                    "latitude": 21.254471,
+                    "longitude": 105.711548
+                }
+            },
+            {
+                "name": "Huyện Lập Thạch",
+                "coordinates": {
+                    "latitude": 21.418416,
+                    "longitude": 105.452285
+                }
+            },
+            {
+                "name": "Huyện Tam Dương",
+                "coordinates": {
+                    "latitude": 21.372834,
+                    "longitude": 105.538712
+                }
+            },
+            {
+                "name": "Huyện Tam Đảo",
+                "coordinates": {
+                    "latitude": 21.45864045,
+                    "longitude": 105.5903829249532
+                }
+            },
+            {
+                "name": "Huyện Bình Xuyên",
+                "coordinates": {
+                    "latitude": 21.278673,
+                    "longitude": 105.645251
+                }
+            },
+            {
+                "name": "Huyện Yên Lạc",
+                "coordinates": {
+                    "latitude": 21.230833,
+                    "longitude": 105.572773
+                }
+            },
+            {
+                "name": "Huyện Vĩnh Tường",
+                "coordinates": {
+                    "latitude": 21.2162632,
+                    "longitude": 105.51261149428194
+                }
+            },
+            {
+                "name": "Huyện Sông Lô",
+                "coordinates": {
+                    "latitude": 21.42559145,
+                    "longitude": 105.41978519057625
+                }
+            }
+        ]
+    },
+    "Yên Bái": {
+        "latitude": 21.69611,
+        "longitude": 104.8752392,
+        "districts": [
+            {
+                "name": "Thành phố Yên Bái",
+                "coordinates": {
+                    "latitude": 21.7075578,
+                    "longitude": 104.87845970744029
+                }
+            },
+            {
+                "name": "Thị xã Nghĩa Lộ",
+                "coordinates": {
+                    "latitude": 21.69611,
+                    "longitude": 104.8752392
+                }
+            },
+            {
+                "name": "Huyện Lục Yên",
+                "coordinates": {
+                    "latitude": 21.69611,
+                    "longitude": 104.8752392
+                }
+            },
+            {
+                "name": "Huyện Văn Yên",
+                "coordinates": {
+                    "latitude": 21.69611,
+                    "longitude": 104.8752392
+                }
+            },
+            {
+                "name": "Huyện Mù Căng Chải",
+                "coordinates": {
+                    "latitude": 21.69611,
+                    "longitude": 104.8752392
+                }
+            },
+            {
+                "name": "Huyện Trấn Yên",
+                "coordinates": {
+                    "latitude": 21.69611,
+                    "longitude": 104.8752392
+                }
+            },
+            {
+                "name": "Huyện Trạm Tấu",
+                "coordinates": {
+                    "latitude": 21.69611,
+                    "longitude": 104.8752392
+                }
+            },
+            {
+                "name": "Huyện Văn Chấn",
+                "coordinates": {
+                    "latitude": 21.69611,
+                    "longitude": 104.8752392
+                }
+            },
+            {
+                "name": "Huyện Yên Bình",
+                "coordinates": {
+                    "latitude": 21.69611,
+                    "longitude": 104.8752392
+                }
+            }
+        ]
+    }
+}

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getDistanceAnalysis } from '@/lib/distance-utils';
 
 // Helper function to format currency
 function formatCurrency(value: number) {
@@ -59,6 +60,7 @@ export async function POST(request: NextRequest) {
       price_trend: any;
       ai_valuation: any;
       ai_analysis: any;
+      distance_analysis: any;
       success: boolean;
       error: string | null;
       performance: {
@@ -75,6 +77,7 @@ export async function POST(request: NextRequest) {
       price_trend: null,
       ai_valuation: null,
       ai_analysis: null,
+      distance_analysis: null,
       success: false,
       error: null,
       performance: {
@@ -449,6 +452,37 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
         }
       })(),
 
+      // Task 5: Distance Analysis
+      (async () => {
+        console.log('📏 [PARALLEL] Starting distance analysis...');
+        try {
+          const distanceAnalysis = await getDistanceAnalysis(
+            latitude,
+            longitude,
+            parsedAddress.formatted_address
+          );
+          
+          console.log('✅ [PARALLEL] Distance analysis completed');
+          console.log(`📏 Distance to city center: ${distanceAnalysis.distances.toCityCenter?.distance || 'N/A'} km`);
+          console.log(`📏 Distance to district center: ${distanceAnalysis.distances.toDistrictCenter?.distance || 'N/A'} km`);
+          console.log(`📏 Accessibility rating: ${distanceAnalysis.analysis.accessibility}`);
+          
+          return { 
+            type: 'distance_analysis', 
+            data: distanceAnalysis, 
+            success: true 
+          };
+        } catch (error) {
+          console.error('❌ [PARALLEL] Distance analysis error:', error);
+          return { 
+            type: 'distance_analysis', 
+            data: null, 
+            success: false, 
+            error: `Distance analysis error: ${error instanceof Error ? error.message : 'Unknown error'}` 
+          };
+        }
+      })(),
+
     ];
 
     // Execute all tasks in parallel with timeout
@@ -484,6 +518,10 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
             result.price_trend = data;
             console.log(`✅ Price Trend: ${success ? 'Success' : 'Failed'}`);
             break;
+          case 'distance_analysis':
+            result.distance_analysis = data;
+            console.log(`✅ Distance Analysis: ${success ? 'Success' : 'Failed'}`);
+            break;
         }
       } else {
         console.error(`❌ Task ${index} failed:`, taskResult.reason);
@@ -513,6 +551,21 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
     console.log(`📈 Price trend data points: ${result.price_trend?.data?.length || 0}`);
     console.log(`🤖 AI Valuation: ${result.ai_valuation ? 'Completed' : 'Failed'}`);
     console.log(`🧠 AI Analysis: ${result.ai_analysis ? 'Completed' : 'Failed'}`);
+    console.log(`📏 Distance Analysis: ${result.distance_analysis ? 'Completed' : 'Failed'}`);
+    
+    // Print distance analysis summary
+    if (result.distance_analysis) {
+      const distanceData = result.distance_analysis;
+      if (distanceData.distances?.toCityCenter) {
+        console.log(`   🏛️  To city center (${distanceData.distances.toCityCenter.name}): ${distanceData.distances.toCityCenter.distance} km`);
+      }
+      if (distanceData.distances?.toDistrictCenter) {
+        console.log(`   🏢 To district center (${distanceData.distances.toDistrictCenter.name}): ${distanceData.distances.toDistrictCenter.distance} km`);
+      }
+      if (distanceData.analysis?.accessibility) {
+        console.log(`   🚗 Accessibility: ${distanceData.analysis.accessibility}`);
+      }
+    }
     
     // Check if critical AI operations failed
     if (!result.ai_valuation && !result.error) {

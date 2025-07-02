@@ -40,6 +40,17 @@ Performs the entire flow from coordinates to valuation in one API call.
   },
   "valuation_payload": { ... },
   "valuation_result": { ... },
+  "distance_analysis": {
+    "distances": {
+      "toCityCenter": { "distance": 1.2, "name": "Hà Nội" },
+      "toDistrictCenter": { "distance": 0.5, "name": "Quận Hoàn Kiếm" }
+    },
+    "analysis": {
+      "accessibility": "excellent",
+      "locationAdvantage": "Vị trí trung tâm quận, thuận tiện di chuyển và sinh hoạt",
+      "marketImpact": "Giá trị bất động sản cao, thanh khoản tốt"
+    }
+  },
   "success": true,
   "error": null
 }
@@ -172,9 +183,33 @@ Performs the actual property valuation using Resta.vn API.
 | `strengths` | any | undefined | Property strengths |
 | `weaknesses` | any | undefined | Property weaknesses |
 
-## Demo Page
+## New Features
 
-Visit `/demo-api` to test the APIs with a user-friendly interface.
+### Distance Analysis
+
+The `/api/complete-flow` endpoint now includes **distance analysis** that calculates distances to administrative centers:
+
+**Distance Data:**
+- `toCityCenter`: Distance to city/province center
+- `toDistrictCenter`: Distance to district center
+
+**Analysis Metrics:**
+- `accessibility`: Rating (excellent/good/fair/poor) based on distance to district center
+  - `excellent`: ≤ 2km to district center
+  - `good`: 2-5km to district center  
+  - `fair`: 5-10km to district center
+  - `poor`: > 10km to district center
+- `locationAdvantage`: Vietnamese description of location benefits
+- `marketImpact`: Real estate market impact assessment
+
+**Supported Locations:**
+- All 63 provinces and cities in Vietnam
+- Districts and administrative subdivisions
+
+## Demo Pages
+
+- Visit `/demo-api` to test the APIs with a user-friendly interface
+- Visit `/demo-distance` to test the distance analysis feature specifically
 
 ## Example Usage
 

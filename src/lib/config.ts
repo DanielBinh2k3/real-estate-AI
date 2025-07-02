@@ -9,6 +9,16 @@ export const config = {
   // Geoapify API Configuration
   geoapify: {
     apiKey: process.env.GEOAPIFY_API_KEY
+  },
+
+  // Perplexity AI API Configuration
+  perplexity: {
+    apiKey: process.env.PERPLEXITY_API_KEY
+  },
+
+  // Jina AI API Configuration (deprecated, kept for legacy support)
+  jina: {
+    apiKey: process.env.JINA_API_KEY
   }
 };
 
@@ -36,6 +46,24 @@ export const getGeoapifyApiKey = () => {
   const apiKey = clientConfig.geoapify.apiKey;
   if (!apiKey) {
     throw new Error('NEXT_PUBLIC_GEOAPIFY_API_KEY is not set in environment variables');
+  }
+  return apiKey;
+};
+
+// Helper function to get Perplexity API key (throws error if not set)
+export const getPerplexityApiKey = () => {
+  const apiKey = config.perplexity.apiKey;
+  if (!apiKey) {
+    throw new Error('PERPLEXITY_API_KEY is not set in environment variables');
+  }
+  return apiKey;
+};
+
+// Helper function to get Jina API key (throws error if not set)
+export const getJinaApiKey = () => {
+  const apiKey = config.jina.apiKey;
+  if (!apiKey) {
+    throw new Error('JINA_API_KEY is not set in environment variables');
   }
   return apiKey;
 };
