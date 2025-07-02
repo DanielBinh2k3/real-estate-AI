@@ -66,12 +66,33 @@ const prompt = ai.definePrompt({
 - Khu vực: {{{ward}}}, {{{district}}}, {{{city}}} (Cấp {{{administrativeLevel}}})
 
 **Yêu cầu:**
-Kết hợp thông tin tìm kiếm 2025 + chính sách mới + input để tạo 5 điểm (1-10) + 5 mô tả ngắn (1 câu/mục):
-1. legalityScore – dựa trên *legal* + luật đất đai/chính sách BĐS mới nhất 2025
-2. liquidityScore – theo *laneWidth, facadeWidth* + xu hướng thị trường 2025
-3. locationScore – theo khu vực + tiện ích xung quanh + quy hoạch 2025
-4. evaluationScore – theo *marketData* + giá thị trường + chính sách thuế 2025
-5. dividendScore – tiềm năng cho thuê/bán + xu hướng đầu tư BĐS 2025
+Phân tích chi tiết từ marketData (giá trung bình, số giao dịch theo năm) + thông tin input để tạo 5 điểm (1-10) + 5 mô tả ngắn (1 câu/mục):
+
+1. **legalityScore** – Phân tích theo loại sổ:
+   - Sổ đỏ (red_book): 9-10 điểm (pháp lý hoàn hảo)
+   - Sổ hồng (pink_book): 7-8 điểm (pháp lý tốt, có thể chuyển đổi)
+   - Hợp đồng (contract): 4-6 điểm (rủi ro pháp lý cao)
+   - Sổ trắng (white_book): 2-4 điểm (không được công nhận)
+
+2. **liquidityScore** – Dựa trên marketData (số giao dịch/năm) + đặc điểm vật lý:
+   - Phân tích xu hướng giao dịch từ marketData
+   - Mặt tiền rộng ({{{facadeWidth}}}m) + đường rộng ({{{laneWidth}}}m) = thanh khoản cao
+   - Loại nhà phổ biến (lane_house, apartment) = dễ bán hơn villa, đất trống
+
+3. **locationScore** – Phân tích địa danh cụ thể:
+   - Tên đường/phố trong {{{address}}} (đường lớn = điểm cao)
+   - Phường {{{ward}}} + Quận {{{district}}} + TP {{{city}}} (trung tâm = điểm cao)
+   - Cấp hành chính {{{administrativeLevel}}} (0=TW cao nhất, 1=tỉnh thấp hơn)
+
+4. **evaluationScore** – Dựa trên marketData chi tiết:
+   - So sánh giá hiện tại với giá trung bình trong marketData
+   - Phân tích biến động giá theo loại BĐS ({{{type}}})
+   - Đánh giá độ chính xác định giá dựa trên số lượng giao dịch tham khảo
+
+5. **dividendScore** – Tiềm năng sinh lời từ marketData:
+   - Xu hướng tăng/giảm giá từ dữ liệu lịch sử trong marketData
+   - Tỷ suất cho thuê theo loại nhà và vị trí cụ thể
+   - Tiềm năng tăng giá dựa trên số giao dịch và thanh khoản thị trường
 
 Trả về object radarScore (5 score + descriptions). Tiếng Việt, súc tích.`,
 });

@@ -258,9 +258,9 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
 - Khoảng giá: ${minPrice.toFixed(0)} - ${maxPrice.toFixed(0)} triệu VND/m²
 - Xu hướng: ${trend} ${trendPercent}% so với ${data.length} tháng trước
 - Giá mới nhất (${latest.month}): ${latest.price} triệu VND/m²
-- Số lượng giao dịch trung bình: ${(data.reduce((sum: number, item: any) => sum + item.count, 0) / data.length).toFixed(0)} giao dịch/tháng
+- Số lượng giao dịch trung bình: ${(data.reduce((sum: number, item: any) => sum + (item.count ?? 0), 0) / data.length).toFixed(0)} giao dịch/tháng
 - Nguồn dữ liệu: API
-- Chi tiết từng tháng: ${data.map((item: any) => `${item.month}: ${item.price}M VND/m²`).join(', ')}
+- Chi tiết từng tháng: ${data.map((item: any) => `${item.month}: ${item.price}M VND/m² ( ${item.count ?? 'N/A'} giao dịch )`).join(', ')}
               `.trim();
             }
           }

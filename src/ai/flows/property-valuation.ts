@@ -43,64 +43,66 @@ const prompt = ai.definePrompt({
   name: 'propertyValuationRangePrompt',
   input: {schema: PropertyValuationRangeInputSchema},
   output: {schema: PropertyValuationRangeOutputSchema},
-  prompt: `Bạn là chuyên gia định giá BĐS với 15+ năm kinh nghiệm. Thực hiện định giá CHÍNH XÁC dựa trên dữ liệu thị trường thực tế.
+  prompt: `Bạn là chuyên gia định giá bất động sản với hơn 15 năm kinh nghiệm. Hãy thực hiện định giá CHÍNH XÁC dựa trên dữ liệu thị trường thực tế và quy trình chuẩn xác sau:
 
-**THÔNG TIN BẤT ĐỘNG SẢN:**
-- Địa chỉ: {{{address}}}
-- Khu vực: {{{ward}}}, {{{district}}}, {{{city}}} (Cấp {{{administrativeLevel}}})
-- Loại: {{{type}}}
-- Diện tích đất: {{{lotSize}}} m²
-- Diện tích sàn: {{{size}}} m²
-- Số phòng ngủ: {{{bedrooms}}}
-- Số phòng tắm: {{{bathrooms}}}
-- Năm xây dựng: {{{yearBuilt}}}
+— **THÔNG TIN BẤT ĐỘNG SẢN**  
+- Địa chỉ: {{{address}}}  
+- Khu vực: {{{ward}}}, {{{district}}}, {{{city}}} (Cấp {{{administrativeLevel}}})  
+- Loại: {{{type}}}  
+- Diện tích đất: {{{lotSize}}} m²  
+- Diện tích sàn: {{{size}}} m²  
+- Số phòng ngủ: {{{bedrooms}}}  
+- Số phòng tắm: {{{bathrooms}}}  
+- Số tầng: {{{floors}}}  
+- Năm xây dựng: {{{yearBuilt}}}  
 
-**DỮ LIỆU THỊ TRƯỜNG HIỆN TẠI (BẮT BUỘC THAM KHẢO):**
+— **DỮ LIỆU THỊ TRƯỜNG HIỆN TẠI** (bắt buộc tham khảo):  
 {{{marketData}}}
 
-**QUY TRÌNH ĐỊNH GIÁ CHÍNH XÁC:**
+— **QUY TRÌNH ĐỊNH GIÁ**  
 
-1. **PHÂN TÍCH GIÁ THỊ TRƯỜNG LÀM BASELINE:**
-   - Lấy giá trung bình thị trường từ marketData làm cơ sở
-   - Giá bất động sản PHẢI nằm trong khoảng ±30% của giá thị trường
-   - Nếu marketData không có, sử dụng 280 triệu VND/m² làm baseline
+1. **Phân tích giá thị trường làm baseline**  
+   - Lấy giá trung bình từ {{{marketData}}} làm cơ sở.  
+   - Giá bất động sản phải nằm trong khoảng ±20% giá thị trường.
+2. **Tính giá cơ bản** 
+   - Công thức:  
+     GIÁ_CƠ_BẢN = GIÁ_TRUNG_BÌNH_THỊ_TRƯỜNG × Diện tích đất ({{{lotSize}}} m²)
+   - Giá trị đất = Diện tích đất × Giá đất thị trường × Hệ số vị trí × Hệ số pháp lý  
+     - Hệ số vị trí:  
+       - Mặt phố lớn: 1.2 – 1.30  
+       - Mặt ngõ ô tô tránh: 1.15  
+       - Ngõ ô tô một chiều: 1.05 
+       - Ngõ nhỏ xe máy: 0.90 – 1.00  
+3. **Tính giá trị xây dựng**  
+   - Tổng diện tích sàn = Diện tích đất ({{{size}}} m²) × Số tầng ({{{floors}}})  
+   - Giá trị xây dựng = Tổng diện tích sàn × Đơn giá xây × Hệ số hao mòn  
+     - Đơn giá xây dựng (thành phố lớn):  
+       - Nhà 4–5 tầng BTCT: 7–9 triệu/m²  
+       - Nhà 2–3 tầng: 6–7 triệu/m²  
+       - Nhà cấp 4 hoặc nhà cũ: 4–5 triệu/m²  
+     - **Hệ số hao mòn theo tuổi nhà**  
+       1. Tính tuổi nhà = Năm hiện tại – {{{yearBuilt}}}  
+       2. Áp dụng hệ số:  
+          - Tuổi < 3 năm  → 1.20  
+          - 3–5 năm       → 1.15  
+          - 5–10 năm      → 1.00  
+          - 10–20 năm     → 0.90  
+          - > 20 năm      → 0.70 – 0.90  
 
-2. **TÍNH TOÁN DIỆN TÍCH VÀ GIÁ CƠ BẢN:**
-   - Giá cơ bản = Giá thị trường trung bình (từ marketData) × Diện tích đất ({{{lotSize}}} m²)
-   - Công thức: GIÁ_CƠ_BẢN = GIÁ_TRUNG_BÌNH_THỊ_TRƯỜNG × {{{lotSize}}}
+4. **Áp dụng hệ số điều chỉnh và xác định giá cuối**  
+   - reasonableValue = Giá cơ bản + Điều chỉnh loại nhà  
+   - lowValue = reasonableValue × 0.90  (giá bán nhanh)  
+   - highValue = reasonableValue × 1.15 (giá bán chậm, ưu đãi)  
+   - price_house = Giá trị xây dựng  
 
-3. **ÁP DỤNG HỆ SỐ ĐIỀU CHỈNH:**
-   - Loại bất động sản:
-     * Nhà mặt phố/town_house: +10% đến +20%
-     * Nhà trong hẻm/lane_house: -10% đến -20%
-     * Chung cư/apartment: -5% đến +5%
-   - Số phòng và tiện ích:
-     * +2% cho mỗi phòng ngủ > 2
-     * +1% cho mỗi phòng tắm > 1
-   - Diện tích sàn:
-     * Nếu {{{size}}} > {{{lotSize}}}: +5% (có tầng lửng/nhiều tầng)
-     * Nếu {{{size}}} < {{{lotSize}}} × 0.7: -5% (chưa sử dụng hết đất)
-   - Tuổi của bất động sản (năm {{{yearBuilt}}}):
-     * Nhà mới (0-5 năm): +5% đến +10%
-     * Nhà khá mới (6-10 năm): +0% đến +5%
-     * Nhà trung bình (11-20 năm): -5% đến 0%
-     * Nhà cũ (21-30 năm): -10% đến -15%
-     * Nhà rất cũ (>30 năm): -15% đến -25%
-
-4. **XÁC ĐỊNH CÁC MỨC GIÁ:**
-   - reasonableValue: Giá cơ bản sau điều chỉnh
-   - lowValue: reasonableValue × 0.85 (bán nhanh)
-   - highValue: reasonableValue × 1.15 (bán chậm, giá tốt)
-   - price_house: reasonableValue × 0.4 (chỉ tính giá xây dựng)
-
-**KIỂM TRA CUỐI CÙNG:**
-- Đảm bảo reasonableValue/lotSize nằm trong khoảng 70%-130% giá trung bình thị trường
-- Nếu vượt quá khoảng này, điều chỉnh lại về giới hạn gần nhất
+5. **Kiểm tra cuối cùng**  
+   - Đảm bảo reasonableValue/lotSize nằm trong khoảng 80%–120% giá trung bình thị trường.  
+   - Nếu vượt, điều chỉnh về giới hạn gần nhất.
 
 **VÍ DỤ TÍNH TOÁN:**
-Nếu giá thị trường = 277 triệu VND/m², diện tích = 45m²
+Nếu giá thị trường trung bình = 277 triệu VND/m², diện tích = 45m²
 → Giá cơ bản = 277 × 45 = 12.465 tỷ VND
-→ Sau điều chỉnh loại nhà (+15%) = 14.334 tỷ VND  
+→ Sau điều chỉnh loại nhà (theo các hệ số) = 14.334 tỷ VND  
 → reasonableValue = 14.334.000.000 VND
 
 Trả về JSON với đơn vị VND (không có dấu phẩy):
