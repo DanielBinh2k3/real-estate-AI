@@ -12,6 +12,7 @@ import { ComparableSales } from '@/components/comparable-sales';
 import { InteractiveMapSimple } from '@/components/interactive-map-simple';
 import { RightPanelValuation } from '@/components/right-panel-valuation';
 import { RightPanelRadarChart } from '@/components/right-panel-radar-chart';
+import { UtilitiesInteractiveMap } from '@/components/utilities-interactive-map';
 import { Header } from '@/components/ui/header';
 import type { CombinedResult } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -137,6 +138,35 @@ export default function Dashboard() {
                       summary={result.summary}
                       details={result.summaryDetails}
                     />
+                    
+                    {/* Thêm utilities map cho format cũ */}
+                    {(() => {
+                      let lat, lng;
+                      const anyResult = result as any;
+                      
+                      // Tìm coordinates từ result hoặc selectedLocation
+                      if (anyResult.valuation_payload?.geoLocation && anyResult.valuation_payload.geoLocation.length === 2) {
+                        lng = anyResult.valuation_payload.geoLocation[0];
+                        lat = anyResult.valuation_payload.geoLocation[1];
+                      } else if (selectedLocation) {
+                        lat = selectedLocation.latitude;
+                        lng = selectedLocation.longitude;
+                      } else {
+                        // Fallback
+                        lat = 21.0282993;
+                        lng = 105.8539963;
+                      }
+                      
+                      return (
+                        <UtilitiesInteractiveMap 
+                          latitude={lat} 
+                          longitude={lng}
+                          distance={5}
+                          size={5}
+                          utilities={anyResult.utilities}
+                        />
+                      );
+                    })()}
                   </>
                 )}
               </div>

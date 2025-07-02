@@ -22,6 +22,7 @@ const PropertyValuationRangeInputSchema = z.object({
   bedrooms: z.number().describe('Số phòng ngủ.'),
   bathrooms: z.number().describe('Số phòng tắm.'),
   lotSize: z.number().describe('Diện tích lô đất (m²).'),
+  yearBuilt: z.number().describe('Năm xây dựng bất động sản.'),
   marketData: z.string().describe('Dữ liệu thị trường hiện tại cho các bất động sản tương đương trong khu vực.'),
 });
 export type PropertyValuationRangeInput = z.infer<typeof PropertyValuationRangeInputSchema>;
@@ -52,6 +53,7 @@ const prompt = ai.definePrompt({
 - Diện tích sàn: {{{size}}} m²
 - Số phòng ngủ: {{{bedrooms}}}
 - Số phòng tắm: {{{bathrooms}}}
+- Năm xây dựng: {{{yearBuilt}}}
 
 **DỮ LIỆU THỊ TRƯỜNG HIỆN TẠI (BẮT BUỘC THAM KHẢO):**
 {{{marketData}}}
@@ -78,6 +80,12 @@ const prompt = ai.definePrompt({
    - Diện tích sàn:
      * Nếu {{{size}}} > {{{lotSize}}}: +5% (có tầng lửng/nhiều tầng)
      * Nếu {{{size}}} < {{{lotSize}}} × 0.7: -5% (chưa sử dụng hết đất)
+   - Tuổi của bất động sản (năm {{{yearBuilt}}}):
+     * Nhà mới (0-5 năm): +5% đến +10%
+     * Nhà khá mới (6-10 năm): +0% đến +5%
+     * Nhà trung bình (11-20 năm): -5% đến 0%
+     * Nhà cũ (21-30 năm): -10% đến -15%
+     * Nhà rất cũ (>30 năm): -15% đến -25%
 
 4. **XÁC ĐỊNH CÁC MỨC GIÁ:**
    - reasonableValue: Giá cơ bản sau điều chỉnh

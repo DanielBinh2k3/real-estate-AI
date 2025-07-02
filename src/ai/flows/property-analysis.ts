@@ -27,6 +27,7 @@ const PropertyAnalysisInputSchema = z.object({
   facadeWidth: z.number().describe('Chiều rộng mặt tiền (m).'),
   storyNumber: z.number().describe('Số tầng của bất động sản.'),
   legal: z.string().describe('Tình trạng pháp lý (sổ đỏ, hợp đồng, v.v.).'),
+  yearBuilt: z.number().describe('Năm xây dựng bất động sản.'),
   marketData: z.string().describe('Dữ liệu thị trường hiện tại cho các bất động sản tương đương trong khu vực.'),
 });
 export type PropertyAnalysisInput = z.infer<typeof PropertyAnalysisInputSchema>;
@@ -60,6 +61,7 @@ const prompt = ai.definePrompt({
 - Lộ giới/Mặt tiền: {{{laneWidth}}}m / {{{facadeWidth}}}m
 - Tầng: {{{storyNumber}}} | Phòng: {{{bedrooms}}}N-{{{bathrooms}}}T
 - Pháp lý: {{{legal}}}
+- Năm xây dựng: {{{yearBuilt}}}
 - Thị trường: {{{marketData}}}
 - Khu vực: {{{ward}}}, {{{district}}}, {{{city}}} (Cấp {{{administrativeLevel}}})
 

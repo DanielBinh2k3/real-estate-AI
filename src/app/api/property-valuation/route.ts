@@ -117,6 +117,7 @@ export async function POST(request: NextRequest) {
       bedRoom: 2,
       bathRoom: 2,
       legal: 'pink_book',
+      yearBuilt: 2015,
     };
 
     const mergedDetails = { ...defaultDetails, ...property_details };
@@ -203,6 +204,7 @@ export async function POST(request: NextRequest) {
       bedrooms: valuationPayload.bedRoom || 2,
       bathrooms: valuationPayload.bathRoom || 2,
       lotSize: valuationPayload.landArea || 45,
+      yearBuilt: mergedDetails.yearBuilt || 2015,
       marketData: marketData,
     };
 
@@ -242,6 +244,7 @@ export async function POST(request: NextRequest) {
           facade_width: valuationPayload.facadeWidth,
           story_number: valuationPayload.storyNumber,
           legal: valuationPayload.legal,
+          year_built: mergedDetails.yearBuilt,
         }
       },
       market_context: {

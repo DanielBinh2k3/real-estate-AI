@@ -116,6 +116,7 @@ export async function POST(request: NextRequest) {
       bedRoom: 2,
       bathRoom: 2,
       legal: 'pink_book',
+      yearBuilt: 2015,
     };
 
     const mergedDetails = { ...defaultDetails, ...property_details };
@@ -207,6 +208,7 @@ export async function POST(request: NextRequest) {
       facadeWidth: valuationPayload.facadeWidth || 3,
       storyNumber: valuationPayload.storyNumber || 3,
       legal: valuationPayload.legal || 'contract',
+      yearBuilt: mergedDetails.yearBuilt || 2015,
       marketData: marketData,
     };
 

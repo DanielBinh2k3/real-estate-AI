@@ -36,7 +36,8 @@ import {
   Bath,
   Bed,
   Square,
-  TreeDeciduous
+  TreeDeciduous,
+  Calendar
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { getDefaultAuthToken, getGeoapifyApiKey } from '@/lib/config';
@@ -56,6 +57,7 @@ const formSchema = z.object({
   legal: z.enum(['contract', 'white_book', 'pink_book', 'red_book'], {
     required_error: 'Vui lòng chọn tình trạng pháp lý.',
   }),
+  yearBuilt: z.coerce.number().min(1900, 'Năm xây dựng phải từ 1900 trở lên.').max(new Date().getFullYear(), `Năm xây dựng không thể lớn hơn ${new Date().getFullYear()}.`),
 });
 
 // Property type options with Vietnamese labels
@@ -130,6 +132,7 @@ export function PropertyInputForm({
       bedrooms: 3,
       bathrooms: 2,
       legal: 'contract',
+      yearBuilt: 2015,
     },
   });
 
@@ -261,6 +264,7 @@ export function PropertyInputForm({
           bedRoom: values.bedrooms,
           bathRoom: values.bathrooms,
           legal: values.legal,
+          yearBuilt: values.yearBuilt,
         },
         auth_token: authToken,
       };
@@ -589,6 +593,24 @@ export function PropertyInputForm({
                 )}
               />
             </div>
+
+            {/* Year Built */}
+            <FormField
+              control={form.control}
+              name="yearBuilt"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium">Năm xây dựng</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input type="number" placeholder="2015" {...field} className="h-10 pl-10" />
+                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </CardContent>
           
           <CardFooter className="pt-4">

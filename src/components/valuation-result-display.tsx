@@ -64,7 +64,17 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
       totalPrice: aiValuationData.reasonableValue,
       housePrice: aiValuationData.price_house,
       landArea: propertyInfo?.specifications?.land_area ?? 0,
-      type: propertyInfo?.specifications?.type ?? 'lane_house'
+      houseArea: propertyInfo?.specifications?.house_area ?? propertyInfo?.specifications?.land_area ?? 0,
+      type: propertyInfo?.specifications?.type ?? 'lane_house',
+      bedRoom: propertyInfo?.specifications?.bedrooms ?? 0,
+      bathRoom: propertyInfo?.specifications?.bathrooms ?? 0,
+      storyNumber: propertyInfo?.specifications?.story_number ?? 0,
+      facadeWidth: propertyInfo?.specifications?.facade_width ?? 0,
+      laneWidth: propertyInfo?.specifications?.lane_width ?? 0,
+      legal: propertyInfo?.specifications?.legal ?? 'contract',
+      year: propertyInfo?.specifications?.year_built ?? 2015,
+      // Use input coordinates for utilities map if geoLocation not available
+      geoLocation: data.input_data?.coordinates ?? [0, 0]
     };
 
     address = {
@@ -482,69 +492,124 @@ export function ValuationResultDisplay({ data }: ValuationResultProps) {
             <div className="professional-card p-4 text-center hover:shadow-md transition-all">
               <Building className="h-6 w-6 mx-auto mb-2 text-blue-600" />
               <p className="text-xs text-slate-600 mb-1">Loại hình</p>
-              <p className="text-lg font-semibold text-slate-800">{getPropertyType(result.type)}</p>
+              <p className="text-lg font-semibold text-slate-800">{getPropertyType(result.type || 'lane_house')}</p>
             </div>
             <div className="professional-card p-4 text-center hover:shadow-md transition-all">
               <Ruler className="h-6 w-6 mx-auto mb-2 text-emerald-600" />
               <p className="text-xs text-slate-600 mb-1">Diện tích đất</p>
-              <p className="text-lg font-semibold text-slate-800">{result.landArea}m²</p>
+              <p className="text-lg font-semibold text-slate-800">{result.landArea || '—'}m²</p>
             </div>
             <div className="professional-card p-4 text-center hover:shadow-md transition-all">
               <Home className="h-6 w-6 mx-auto mb-2 text-orange-600" />
               <p className="text-xs text-slate-600 mb-1">Diện tích nhà</p>
-              <p className="text-lg font-semibold text-slate-800">{result.houseArea}m²</p>
+              <p className="text-lg font-semibold text-slate-800">{result.houseArea || result.landArea || '—'}m²</p>
             </div>
             <div className="professional-card p-4 text-center hover:shadow-md transition-all">
               <Calendar className="h-6 w-6 mx-auto mb-2 text-purple-600" />
               <p className="text-xs text-slate-600 mb-1">Năm xây dựng</p>
-              <p className="text-lg font-semibold text-slate-800">{result.year}</p>
+              <p className="text-lg font-semibold text-slate-800">{result.year || result.builtYear || '—'}</p>
             </div>
-            <div className="professional-card p-4 text-center hover:shadow-md transition-all">
-              <Bed className="h-6 w-6 mx-auto mb-2 text-blue-600" />
-              <p className="text-xs text-slate-600 mb-1">Phòng ngủ</p>
-              <p className="text-lg font-semibold text-slate-800">{result.bedRoom}</p>
-            </div>
-            <div className="professional-card p-4 text-center hover:shadow-md transition-all">
-              <Bath className="h-6 w-6 mx-auto mb-2 text-emerald-600" />
-              <p className="text-xs text-slate-600 mb-1">Phòng tắm</p>
-              <p className="text-lg font-semibold text-slate-800">{result.bathRoom}</p>
-            </div>
-            <div className="professional-card p-4 text-center hover:shadow-md transition-all">
-              <Layers className="h-6 w-6 mx-auto mb-2 text-violet-600" />
-              <p className="text-xs text-slate-600 mb-1">Số tầng</p>
-              <p className="text-lg font-semibold text-slate-800">{result.storyNumber}</p>
-            </div>
-            <div className="professional-card p-4 text-center hover:shadow-md transition-all">
-              <Move className="h-6 w-6 mx-auto mb-2 text-amber-600" />
-              <p className="text-xs text-slate-600 mb-1">Mặt tiền</p>
-              <p className="text-lg font-semibold text-slate-800">{result.facadeWidth}m</p>
-            </div>
-            <div className="professional-card p-4 text-center hover:shadow-md transition-all">
-              <Car className="h-6 w-6 mx-auto mb-2 text-slate-600" />
-              <p className="text-xs text-slate-600 mb-1">Lề đường</p>
-              <p className="text-lg font-semibold text-slate-800">{result.laneWidth}m</p>
-            </div>
-            <div className="professional-card p-4 text-center hover:shadow-md transition-all">
-              <Shield className="h-6 w-6 mx-auto mb-2 text-red-600" />
-              <p className="text-xs text-slate-600 mb-1">Pháp lý</p>
-              <Badge variant="outline" className="text-xs border-red-200 text-red-700">
-                {result.legal === 'pink_book' ? 'Sổ hồng' : result.legal}
-              </Badge>
-            </div>
+            {(result.bedRoom || result.bedrooms) && (
+              <div className="professional-card p-4 text-center hover:shadow-md transition-all">
+                <Bed className="h-6 w-6 mx-auto mb-2 text-blue-600" />
+                <p className="text-xs text-slate-600 mb-1">Phòng ngủ</p>
+                <p className="text-lg font-semibold text-slate-800">{result.bedRoom || result.bedrooms}</p>
+              </div>
+            )}
+            {(result.bathRoom || result.bathrooms) && (
+              <div className="professional-card p-4 text-center hover:shadow-md transition-all">
+                <Bath className="h-6 w-6 mx-auto mb-2 text-emerald-600" />
+                <p className="text-xs text-slate-600 mb-1">Phòng tắm</p>
+                <p className="text-lg font-semibold text-slate-800">{result.bathRoom || result.bathrooms}</p>
+              </div>
+            )}
+            {result.storyNumber && (
+              <div className="professional-card p-4 text-center hover:shadow-md transition-all">
+                <Layers className="h-6 w-6 mx-auto mb-2 text-violet-600" />
+                <p className="text-xs text-slate-600 mb-1">Số tầng</p>
+                <p className="text-lg font-semibold text-slate-800">{result.storyNumber}</p>
+              </div>
+            )}
+            {result.facadeWidth && (
+              <div className="professional-card p-4 text-center hover:shadow-md transition-all">
+                <Move className="h-6 w-6 mx-auto mb-2 text-amber-600" />
+                <p className="text-xs text-slate-600 mb-1">Mặt tiền</p>
+                <p className="text-lg font-semibold text-slate-800">{result.facadeWidth}m</p>
+              </div>
+            )}
+            {result.laneWidth && (
+              <div className="professional-card p-4 text-center hover:shadow-md transition-all">
+                <Car className="h-6 w-6 mx-auto mb-2 text-slate-600" />
+                <p className="text-xs text-slate-600 mb-1">Lề đường</p>
+                <p className="text-lg font-semibold text-slate-800">{result.laneWidth}m</p>
+              </div>
+            )}
+            {result.legal && (
+              <div className="professional-card p-4 text-center hover:shadow-md transition-all">
+                <Shield className="h-6 w-6 mx-auto mb-2 text-red-600" />
+                <p className="text-xs text-slate-600 mb-1">Pháp lý</p>
+                <Badge variant="outline" className="text-xs border-red-200 text-red-700">
+                  {result.legal === 'pink_book' ? 'Sổ hồng' : 
+                   result.legal === 'red_book' ? 'Sổ đỏ' : 
+                   result.legal === 'white_book' ? 'Sổ trắng' : 
+                   result.legal === 'contract' ? 'Hợp đồng' : result.legal}
+                </Badge>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
 
       {/* Bản đồ tiện ích xung quanh - Phần cuối */}
-      {result.geoLocation && result.geoLocation.length === 2 && (
-        <UtilitiesInteractiveMap 
-          latitude={result.geoLocation[1]} 
-          longitude={result.geoLocation[0]}
-          distance={5}
-          size={5}
-          utilities={data.utilities}
-        />
-      )}
+      {(() => {
+        // Tìm coordinates từ nhiều nguồn
+        let lat, lng;
+        
+        // Debug log để kiểm tra data
+        console.log('Debug utilities map data:', {
+          result_geoLocation: result.geoLocation,
+          input_data_coordinates: data.input_data?.coordinates,
+          evaluation_geoLocation: data.valuation_result?.evaluation?.geoLocation,
+          valuation_payload_geoLocation: data.valuation_payload?.geoLocation,
+          utilities: data.utilities,
+          utilities_data_length: data.utilities?.data?.length
+        });
+        
+        // Thử tìm coordinates từ các nguồn khác nhau - với thứ tự ưu tiên
+        if (data.valuation_payload?.geoLocation && data.valuation_payload.geoLocation.length === 2) {
+          // API trả về geoLocation ở format [lng, lat]
+          lng = data.valuation_payload.geoLocation[0];
+          lat = data.valuation_payload.geoLocation[1];
+        } else if (data.input_data?.coordinates && data.input_data.coordinates.length === 2) {
+          lat = data.input_data.coordinates[0];
+          lng = data.input_data.coordinates[1];
+        } else if (result.geoLocation && result.geoLocation.length === 2) {
+          lat = result.geoLocation[1];
+          lng = result.geoLocation[0];
+        } else if (data.valuation_result?.evaluation?.geoLocation && data.valuation_result.evaluation.geoLocation.length === 2) {
+          lat = data.valuation_result.evaluation.geoLocation[1];
+          lng = data.valuation_result.evaluation.geoLocation[0];
+        }
+        
+        // Fallback coordinates cho Hà Nội nếu không có tọa độ
+        if (!lat || !lng) {
+          lat = 21.0282993;
+          lng = 105.8539963;
+        }
+        
+        console.log('Final coordinates for utilities map:', { lat, lng });
+        
+        // Hiển thị utilities map luôn
+        return (
+          <UtilitiesInteractiveMap 
+            latitude={lat} 
+            longitude={lng}
+            distance={5}
+            size={5}
+            utilities={data.utilities}
+          />
+        );
+      })()}
 
       <Card className="bg-gray-50">
         <CardContent className="pt-6">

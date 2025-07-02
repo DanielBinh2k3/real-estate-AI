@@ -93,11 +93,19 @@ export function UtilitiesInteractiveMap({
         setIsLoading(true);
         setError(null);
 
+        console.log('UtilitiesInteractiveMap received props:', {
+          latitude,
+          longitude,
+          utilitiesFromProps: utilitiesFromProps ? 'YES' : 'NO',
+          utilitiesDataLength: utilitiesFromProps?.data?.length
+        });
+
         // Nếu có utilities data từ props, sử dụng luôn
         if (utilitiesFromProps) {
           setUtilities(utilitiesFromProps.data || []);
           setGroupedUtilities(utilitiesFromProps.groupedData || {});
           setIsLoading(false);
+          console.log('Using utilities from props:', utilitiesFromProps.data?.length, 'items');
           return;
         }
 
@@ -109,14 +117,21 @@ export function UtilitiesInteractiveMap({
           size: size.toString(),
         });
 
+        console.log('Calling utilities API with params:', params.toString());
         const response = await fetch(`/api/utilities?${params}`);
         
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Không thể lấy dữ liệu tiện ích');
+          const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+          console.warn('Utilities API failed, continuing with empty data:', errorData.error);
+          // Không throw error, chỉ hiển thị map trống
+          setUtilities([]);
+          setGroupedUtilities({});
+          setIsLoading(false);
+          return;
         }
 
         const data = await response.json();
+        console.log('Utilities API response:', data);
         setUtilities(data.data || []);
         setGroupedUtilities(data.groupedData || {});
       } catch (err) {

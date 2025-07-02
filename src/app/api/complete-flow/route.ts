@@ -21,6 +21,7 @@ interface PropertyDetails {
   bedRoom?: number;
   bathRoom?: number;
   legal?: string;
+  yearBuilt?: number;
   utilities?: any;
   strengths?: any;
   weaknesses?: any;
@@ -100,37 +101,57 @@ export async function POST(request: NextRequest) {
       'user-agent': 'Dart/2.19 (dart:io)',
     };
 
-    const locationResponse = await fetch(`${locationUrl}?${locationParams}`, {
-      method: 'GET',
-      headers: locationHeaders,
-    });
+    let locationData;
+    try {
+      const locationResponse = await fetch(`${locationUrl}?${locationParams}`, {
+        method: 'GET',
+        headers: locationHeaders,
+      });
 
-    if (!locationResponse.ok) {
-      result.error = 'Cannot get location information from coordinates';
-      return NextResponse.json(result, { status: 500 });
+      if (locationResponse.ok) {
+        locationData = await locationResponse.json();
+        result.location_info = locationData;
+        console.log('✅ Location API successful');
+      } else {
+        console.log('⚠️  Location API failed, using fallback');
+        locationData = { features: [] }; // Empty features to trigger fallback
+        result.location_info = { error: `Location API failed with status ${locationResponse.status}` };
+      }
+    } catch (error) {
+      console.log('⚠️  Location API exception, using fallback:', error);
+      locationData = { features: [] }; // Empty features to trigger fallback
+      result.location_info = { error: `Location API exception: ${error}` };
     }
-
-    const locationData = await locationResponse.json();
-    result.location_info = locationData;
 
     // Step 2: Parse location information (Required for next steps)
     console.log('\n🔄 STEP 2: Parsing location information');
     const features = locationData?.features || [];
+    
+    let parsedAddress;
     if (!features.length) {
-      result.error = 'Cannot parse location information';
-      return NextResponse.json(result, { status: 404 });
+      console.log('⚠️  No features found, using fallback location data');
+      // Fallback với tọa độ Hà Nội
+      parsedAddress = {
+        city: 'ha_noi',
+        district: 'dong_da',
+        ward: 'phuong_trung_liet',
+        coordinates: [longitude, latitude],
+        formatted_address: `${latitude}, ${longitude}`,
+        polygon: [],
+        bounding_box: [],
+      };
+    } else {
+      const mainFeature = features[0];
+      parsedAddress = {
+        city: mainFeature?.c || 'ha_noi',
+        district: mainFeature?.d || 'dong_da',
+        ward: mainFeature?.w || 'phuong_trung_liet',
+        coordinates: mainFeature?.g || [longitude, latitude],
+        formatted_address: mainFeature?.dt || `${latitude}, ${longitude}`,
+        polygon: mainFeature?.polygon || [],
+        bounding_box: mainFeature?.bb || [],
+      };
     }
-
-    const mainFeature = features[0];
-    const parsedAddress = {
-      city: mainFeature?.c || '',
-      district: mainFeature?.d || '',
-      ward: mainFeature?.w || '',
-      coordinates: mainFeature?.g || [],
-      formatted_address: mainFeature?.dt || '',
-      polygon: mainFeature?.polygon || [],
-      bounding_box: mainFeature?.bb || [],
-    };
 
     result.parsed_address = parsedAddress;
     result.performance.step_times.location_and_parsing = Date.now() - step1Start;
@@ -152,6 +173,7 @@ export async function POST(request: NextRequest) {
       bedRoom: 2,
       bathRoom: 2,
       legal: 'pink_book',
+      yearBuilt: 2015,
     };
 
     const mergedDetails = { ...defaultDetails, ...property_details };
@@ -175,6 +197,7 @@ export async function POST(request: NextRequest) {
       legal: mergedDetails.legal,
       storyNumber: mergedDetails.storyNumber,
       type: mergedDetails.type,
+      yearBuilt: mergedDetails.yearBuilt,
     };
 
     result.valuation_payload = valuationPayload;
@@ -286,14 +309,16 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
       (async () => {
         console.log('🏪 [PARALLEL] Starting utilities API...');
         try {
-          const utilityTypes = ['hospital', 'school', 'shopping_mall', 'park', 'bank', 'gas_station'];
+          const utilityTypes = ['hospital', 'market', 'restaurant', 'cafe', 'supermarket', 'commercial_center'];
           const utilitiesUrl = `${request.nextUrl.origin}/api/utilities`;
           const utilitiesParams = new URLSearchParams({
             lat: latitude.toString(),
             lng: longitude.toString(),
-            distance: '3',
+            distance: '5',
             size: '10',
           });
+
+          console.log(`🏪 Calling utilities API: ${utilitiesUrl}?${utilitiesParams}`);
 
           const utilitiesResponse = await fetch(`${utilitiesUrl}?${utilitiesParams}`, {
             method: 'GET',
@@ -305,12 +330,14 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
 
           if (utilitiesResponse.ok) {
             const utilitiesResult = await utilitiesResponse.json();
+            console.log('🏪 Utilities raw response:', JSON.stringify(utilitiesResult, null, 2));
+            
             const groupedUtilities = utilityTypes.reduce((acc, type) => {
               acc[type] = utilitiesResult.data?.filter((utility: any) => utility.type === type) || [];
               return acc;
             }, {} as Record<string, any[]>);
 
-            console.log('✅ [PARALLEL] Utilities API completed');
+            console.log('✅ [PARALLEL] Utilities API completed with', utilitiesResult.data?.length || 0, 'items');
             return {
               type: 'utilities',
               data: {
@@ -321,12 +348,13 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
               success: true
             };
           } else {
-            console.log('⚠️  [PARALLEL] Utilities API failed');
-            return { type: 'utilities', data: null, success: false };
+            const errorText = await utilitiesResponse.text();
+            console.log('⚠️  [PARALLEL] Utilities API failed:', utilitiesResponse.status, errorText);
+            return { type: 'utilities', data: null, success: false, error: `Status ${utilitiesResponse.status}: ${errorText}` };
           }
         } catch (error) {
           console.error('❌ [PARALLEL] Utilities error:', error);
-          return { type: 'utilities', data: null, success: false };
+          return { type: 'utilities', data: null, success: false, error: `Exception: ${error}` };
         }
       })(),
 

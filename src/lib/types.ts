@@ -15,6 +15,7 @@ export type PropertyInputSchema = {
   bedrooms: number;
   bathrooms: number;
   legal: 'contract' | 'white_book' | 'pink_book' | 'red_book';
+  yearBuilt: number;
 };
 
 export type SummaryDetails = {
