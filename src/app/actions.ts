@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 import { propertyValuationRange } from '@/ai/flows/property-valuation';
-import { propertySummary } from '@/ai/flows/property-analysis';
+import { propertyAnalysis } from '@/ai/flows/property-analysis';
 import type { CombinedResult, PropertyInputSchema, ApiValuationResult } from '@/lib/types';
 import { config } from '@/lib/config';
 
@@ -23,65 +23,7 @@ const propertyInputSchema = z.object({
   }),
 });
 
-// Generate mock valuation data when API fails
-function generateMockValuation(payload: any) {
-  const basePricePerSqm = 65000000; // 65M VND per sqm (base price)
-  const locationMultiplier = Math.random() * 0.4 + 0.8; // 0.8 - 1.2
-  const housePrice = payload.houseArea * basePricePerSqm * locationMultiplier;
-  const landPrice = payload.landArea * basePricePerSqm * 0.7 * locationMultiplier;
-  const totalPrice = housePrice + landPrice;
 
-  return {
-    evaluation: {
-      address: {
-        type: 'NORMAL',
-        city: payload.address?.city || 'ha_noi',
-        district: payload.address?.district || 'dong_da',
-        ward: payload.address?.ward || 'lang_thuong',
-        administrativeLevel: 0,
-      },
-      bathRoom: payload.bathRoom || 2,
-      bedRoom: payload.bedRoom || 3,
-      builtYear: new Date().getFullYear() - 5,
-      cityCenterDistance: Math.random() * 20 + 5,
-      cityLevel: 1,
-      clusterPrices: [[], [], []],
-      createdDate: new Date().toISOString(),
-      districtCenterDistance: Math.random() * 5 + 0.5,
-      districtLevel: 1,
-      facadeWidth: payload.facadeWidth || 4,
-      geoLocation: payload.geoLocation || [105.8342, 21.0278],
-      hasGarden: payload.hasGarden || false,
-      homeQualityRemaining: 0,
-      houseArea: payload.houseArea || 45,
-      housePrice: housePrice,
-      landArea: payload.landArea || 60,
-      laneWidth: payload.laneWidth || 10,
-      legal: payload.legal || "pink_book",
-      modifiedDate: new Date().toISOString(),
-      ownerId: 44724,
-      price: 0,
-      radarScore: {
-        descriptions: [
-          'Bất động sản có vị trí khá thuận lợi với nhiều tiện ích xung quanh, phù hợp cho việc sinh sống và đầu tư.',
-          'Pháp lý rõ ràng với sổ đỏ chính chủ, đảm bảo quyền sở hữu cho người mua.',
-          'Khu vực có tiềm năng phát triển tốt trong tương lai nhờ các dự án hạ tầng.',
-          'Giá bán phù hợp với thị trường hiện tại, cạnh tranh với các bất động sản cùng khu vực.'
-        ],
-        dividendScore: Math.floor(Math.random() * 3) + 6, // 6-8
-        evaluationScore: Math.floor(Math.random() * 2) + 6.5, // 6.5-7.5
-        legalityScore: Math.floor(Math.random() * 2) + 8, // 8-9
-        liquidityScore: Math.floor(Math.random() * 3) + 5, // 5-7
-        locationScore: Math.floor(Math.random() * 3) + 6 // 6-8
-      },
-      storyNumber: payload.storyNumber || 3,
-      totalPrice: totalPrice,
-      transId: Date.now(),
-      type: payload.type || "town_house",
-      year: new Date().getFullYear()
-    }
-  };
-}
 
 // Real API valuation using Resta.vn
 export async function getRealApiValuation(
@@ -231,14 +173,12 @@ export async function getRealApiValuation(
         const errorText = await valuationResponse.text();
         console.error('API Error:', errorText);
         
-        // If token is invalid, return mock data instead of failing
+        // If token is invalid, return error
         if (valuationResponse.status === 401) {
-          console.log('🔄 Token expired, generating mock data...');
-          const mockValuation = generateMockValuation(payload);
-          result.valuation_result = mockValuation;
-          result.success = true;
-          result.error = 'Using mock data due to API authentication issue';
-          return { success: true, data: result };
+          console.log('❌ Token expired, authentication failed');
+          result.success = false;
+          result.error = 'Lỗi xác thực: Phiên đăng nhập đã hết hạn. Vui lòng liên hệ quản trị viên.';
+          return { success: false, error: result.error };
         }
         
         throw new Error(`Valuation failed with status ${valuationResponse.status}: ${errorText}`);
@@ -253,13 +193,11 @@ export async function getRealApiValuation(
     } catch (apiError) {
       console.error('Valuation API Error:', apiError);
       
-      // Fallback to mock data if API fails
-      console.log('🔄 API failed, generating mock data...');
-      const mockValuation = generateMockValuation(payload);
-      result.valuation_result = mockValuation;
-      result.success = true;
-      result.error = 'Using mock data due to API issue';
-      return { success: true, data: result };
+      // Return error if API fails
+      console.log('❌ API failed, no valuation data available');
+      result.success = false;
+      result.error = 'Không thể kết nối đến dịch vụ định giá. Vui lòng thử lại sau.';
+      return { success: false, error: result.error };
     }
   } catch (error) {
     console.error('Real API Valuation Error:', error);
@@ -288,10 +226,22 @@ export async function getValuationAndSummary(
 
     const valuationPromise = propertyValuationRange({
       address: validatedFields.data.address,
-      size: validatedFields.data.houseArea, // Map houseArea to size for AI flow compatibility
+      city: 'ha_noi', // Default city
+      district: 'dong_da', // Default district  
+      ward: 'unknown', // Default ward
+      administrativeLevel: 0, // Default administrative level
+      type: validatedFields.data.type,
+      size: validatedFields.data.houseArea,
+      lotSize: validatedFields.data.landArea,
+      landArea: validatedFields.data.landArea,
+      houseArea: validatedFields.data.houseArea,
+      laneWidth: validatedFields.data.laneWidth,
+      facadeWidth: validatedFields.data.facadeWidth,
+      storyNumber: validatedFields.data.storyNumber,
       bedrooms: validatedFields.data.bedrooms,
       bathrooms: validatedFields.data.bathrooms,
-      lotSize: validatedFields.data.landArea, // Map landArea to lotSize for AI flow compatibility
+      amenities: [], // Empty amenities array
+      yearBuilt: new Date().getFullYear() - 5, // Default to 5 years old
       marketData,
     });
 
@@ -323,17 +273,26 @@ export async function getValuationAndSummary(
       },
     };
 
-    const summaryPromise = propertySummary({
-      locationScore: summaryDetails.location.score,
-      locationDetails: summaryDetails.location.details,
-      utilitiesScore: summaryDetails.utilities.score,
-      utilitiesDetails: summaryDetails.utilities.details,
-      planningScore: summaryDetails.planning.score,
-      planningDetails: summaryDetails.planning.details,
-      legalScore: summaryDetails.legal.score,
-      legalDetails: summaryDetails.legal.details,
-      qualityScore: summaryDetails.quality.score,
-      qualityDetails: summaryDetails.quality.details,
+    const summaryPromise = propertyAnalysis({
+      address: validatedFields.data.address,
+      city: 'ha_noi', // Default city
+      district: 'dong_da', // Default district
+      ward: 'unknown', // Default ward
+      administrativeLevel: 0, // Default administrative level
+      type: validatedFields.data.type,
+      size: validatedFields.data.houseArea,
+      lotSize: validatedFields.data.landArea,
+      landArea: validatedFields.data.landArea,
+      houseArea: validatedFields.data.houseArea,
+      laneWidth: validatedFields.data.laneWidth,
+      facadeWidth: validatedFields.data.facadeWidth,
+      bedrooms: validatedFields.data.bedrooms,
+      bathrooms: validatedFields.data.bathrooms,
+      amenities: [], // Empty amenities array
+      storyNumber: validatedFields.data.storyNumber,
+      legal: validatedFields.data.legal,
+      yearBuilt: new Date().getFullYear() - 5, // Default to 5 years old
+      marketData,
     });
 
     const [valuation, summary] = await Promise.all([

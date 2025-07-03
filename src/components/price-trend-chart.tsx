@@ -14,9 +14,9 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { Skeleton } from './ui/skeleton';
-import { AlertTriangle, TrendingUp } from 'lucide-react';
+import { AlertTriangle, TrendingUp, BarChart3 } from 'lucide-react';
 
-// Default mock data for backward compatibility
+// Default mock data for backward compatibility - không sử dụng làm fallback nữa
 const defaultChartData = [
     { month: 'T1', price: 65 },
     { month: 'T2', price: 66 },
@@ -67,10 +67,10 @@ export function PriceTrendChart({
   className = ''
 }: PriceTrendChartProps) {
   const [isMounted, setIsMounted] = useState(false);
-  const [chartData, setChartData] = useState(data || defaultChartData);
+  const [chartData, setChartData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(!data);
   const [error, setError] = useState<string | null>(null);
-  const [dataSource, setDataSource] = useState<'api' | 'mock' | 'props'>('props');
+  const [hasRealData, setHasRealData] = useState(false);
   const [hoveredData, setHoveredData] = useState<any>(null);
 
   useEffect(() => {
@@ -79,9 +79,17 @@ export function PriceTrendChart({
 
   useEffect(() => {
     // If data is provided as props, use it
-    if (data) {
+    if (data && data.length > 0) {
       setChartData(data);
-      setDataSource('props');
+      setHasRealData(true);
+      setIsLoading(false);
+      return;
+    }
+
+    // If data is explicitly undefined or empty, don't show chart
+    if (data !== undefined) {
+      setChartData([]);
+      setHasRealData(false);
       setIsLoading(false);
       return;
     }
@@ -104,24 +112,25 @@ export function PriceTrendChart({
         const response = await fetch(`/api/price-trend?${params}`);
         const result = await response.json();
         
-        if (result.success && result.data) {
+        if (result.success && result.data && result.data.length > 0) {
           setChartData(result.data);
-          setDataSource(result.source || 'api');
+          setHasRealData(true);
           
           // Handle fallback information
           if (result.fallback && result.fallbackInfo) {
             setError(`${result.fallbackInfo}`);
-          } else if (result.error) {
-            setError(result.error);
           }
         } else {
-          throw new Error('Invalid response format');
+          // Không có dữ liệu thật
+          setChartData([]);
+          setHasRealData(false);
+          setError('Không có dữ liệu xu hướng giá cho khu vực này');
         }
       } catch (err) {
         console.error('Error fetching trend data:', err);
         setError('Không thể tải dữ liệu xu hướng giá');
-        setChartData(defaultChartData);
-        setDataSource('mock');
+        setChartData([]);
+        setHasRealData(false);
       } finally {
         setIsLoading(false);
       }
@@ -167,7 +176,7 @@ export function PriceTrendChart({
 
   // Calculate trend percentage
   const calculateTrend = () => {
-    if (chartData.length < 2) return null;
+    if (!hasRealData || chartData.length < 2) return null;
     const firstPrice = chartData[0].price;
     const lastPrice = chartData[chartData.length - 1].price;
     const trend = ((lastPrice - firstPrice) / firstPrice) * 100;
@@ -178,6 +187,8 @@ export function PriceTrendChart({
 
   // Get summary statistics based on hovered data or overall data (all prices are per m²)
   const getSummaryStats = () => {
+    if (!hasRealData || chartData.length === 0) return null;
+    
     if (hoveredData) {
       // Show data for the hovered month - all values are per m²
       return {
@@ -202,6 +213,21 @@ export function PriceTrendChart({
 
   const stats = getSummaryStats();
 
+  // Empty state component
+  const EmptyState = () => (
+    <div className="flex flex-col items-center justify-center py-16 text-center">
+      <div className="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+        <BarChart3 className="h-8 w-8 text-gray-400" />
+      </div>
+      <h3 className="text-lg font-medium text-gray-900 mb-2">
+        Không có xu hướng giá
+      </h3>
+      <p className="text-sm text-gray-500 max-w-sm">
+        Chưa có đủ dữ liệu giao dịch để hiển thị xu hướng giá cho khu vực {getLocationName(city, district)}
+      </p>
+    </div>
+  );
+
   return (
     <Card className={`bg-gradient-to-br from-slate-50 via-white to-blue-50 border-blue-200 ${className}`}>
       <CardHeader className="pb-4">
@@ -217,8 +243,8 @@ export function PriceTrendChart({
           </div>
         </CardTitle>
         
-        {/* Trend indicator */}
-        {trend !== null && (
+        {/* Trend indicator - only show when has real data */}
+        {trend !== null && hasRealData && (
           <div className="flex items-center gap-2 mt-2">
             <div className={`flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${
               trend >= 0 
@@ -233,31 +259,17 @@ export function PriceTrendChart({
             <span className="text-xs text-slate-500">
               so với {chartData.length} tháng trước
             </span>
-            {dataSource === 'mock' && (
-              <span className="text-amber-600 text-xs font-medium">• Dữ liệu mẫu</span>
-            )}
           </div>
         )}
       </CardHeader>
       <CardContent>
         {/* Error/Fallback notification */}
-        {error && (
-          <div className={`border rounded-lg p-3 mb-4 ${
-            dataSource === 'mock' 
-              ? 'bg-amber-50 border-amber-200' 
-              : 'bg-blue-50 border-blue-200'
-          }`}>
+        {error && hasRealData && (
+          <div className="bg-blue-50 border-blue-200 border rounded-lg p-3 mb-4">
             <div className="flex items-center gap-2">
-              <AlertTriangle className={`h-4 w-4 ${
-                dataSource === 'mock' ? 'text-amber-600' : 'text-blue-600'
-              }`} />
-              <p className={`text-sm ${
-                dataSource === 'mock' ? 'text-amber-800' : 'text-blue-800'
-              }`}>
-                {dataSource === 'mock' 
-                  ? `${error}. Hiển thị dữ liệu mẫu.`
-                  : `${error}. Hiển thị dữ liệu tương tự từ khu vực.`
-                }
+              <AlertTriangle className="h-4 w-4 text-blue-600" />
+              <p className="text-sm text-blue-800">
+                {error}. Hiển thị dữ liệu tương tự từ khu vực.
               </p>
             </div>
           </div>
@@ -265,6 +277,8 @@ export function PriceTrendChart({
 
         {!isMounted || isLoading ? (
           <Skeleton className="h-64 w-full" />
+        ) : !hasRealData ? (
+          <EmptyState />
         ) : (
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -357,8 +371,8 @@ export function PriceTrendChart({
           </div>
         )}
 
-        {/* Interactive summary statistics */}
-        {!isLoading && chartData.length > 0 && (
+        {/* Interactive summary statistics - only show when has real data */}
+        {!isLoading && hasRealData && chartData.length > 0 && stats && (
           <div className="mt-4 pt-4 border-t border-slate-200">
             {/* Header for interactive stats */}
             <div className="text-center mb-3">

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDistanceAnalysis } from '@/lib/distance-utils';
+import { mergeDetailsWithUtilities } from '@/lib/utils';
 
 // Helper function to format currency
 function formatCurrency(value: number) {
@@ -223,53 +224,11 @@ export async function POST(request: NextRequest) {
 
     // Define all parallel tasks
     const parallelTasks = [
-      // Task 1: AI Valuation API (Internal)
+      // Task 1: AI Combined API (Valuation + Analysis in PARALLEL)
       (async () => {
-        console.log('🤖 [PARALLEL] Starting AI valuation API...');
+        console.log('🤖🔥 [PARALLEL] Starting AI Combined API (Valuation + Analysis)...');
         try {
-          // First get price trend data for market data
-          const trendParams = new URLSearchParams({
-            city: parsedAddress.city,
-            district: parsedAddress.district,
-            category: mapPropertyTypeToCategory(mergedDetails.type || 'town_house')
-          });
-          
-          const trendResponse = await fetch(`${request.nextUrl.origin}/api/price-trend?${trendParams}`, {
-            method: 'GET',
-            headers: { 'Accept': 'application/json' },
-          });
-
-          let marketData = "Dữ liệu thị trường không khả dụng. Sử dụng ước tính trung bình 280-320 triệu VND/m².";
-          
-          if (trendResponse.ok) {
-            const trendResult = await trendResponse.json();
-            if (trendResult.success && trendResult.data && Array.isArray(trendResult.data)) {
-              const data = trendResult.data;
-              const latest = data[data.length - 1];
-              const earliest = data[0];
-              
-              const avgPrice = data.reduce((sum: number, item: any) => sum + item.price, 0) / data.length;
-              const minPrice = Math.min(...data.map((item: any) => item.minPrice || item.price * 0.7));
-              const maxPrice = Math.max(...data.map((item: any) => item.maxPrice || item.price * 1.3));
-              
-              const trend = latest.price > earliest.price ? "tăng" : "giảm";
-              const trendPercent = Math.abs(((latest.price - earliest.price) / earliest.price) * 100).toFixed(1);
-
-              marketData = `
-Dữ liệu thị trường bất động sản (${data.length} tháng gần nhất):
-- Giá trung bình: ${avgPrice.toFixed(0)} triệu VND/m²
-- Khoảng giá: ${minPrice.toFixed(0)} - ${maxPrice.toFixed(0)} triệu VND/m²
-- Xu hướng: ${trend} ${trendPercent}% so với ${data.length} tháng trước
-- Giá mới nhất (${latest.month}): ${latest.price} triệu VND/m²
-- Số lượng giao dịch trung bình: ${(data.reduce((sum: number, item: any) => sum + (item.count ?? 0), 0) / data.length).toFixed(0)} giao dịch/tháng
-- Nguồn dữ liệu: API
-- Chi tiết từng tháng: ${data.map((item: any) => `${item.month}: ${item.price}M VND/m² ( ${item.count ?? 'N/A'} giao dịch )`).join(', ')}
-              `.trim();
-            }
-          }
-
-          // Now call AI valuation API
-          const aiValuationResponse = await fetch(`${request.nextUrl.origin}/api/property-valuation`, {
+          const aiCombinedResponse = await fetch(`${request.nextUrl.origin}/api/ai-combined`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -283,27 +242,36 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
             }),
           });
 
-          if (aiValuationResponse.ok) {
-            const aiValuationData = await aiValuationResponse.json();
-            console.log('✅ [PARALLEL] AI Valuation API completed');
-            return { type: 'ai_valuation', data: aiValuationData, success: true };
-          } else {
-            const errorText = await aiValuationResponse.text();
-            console.error('❌ [PARALLEL] AI Valuation API failed:', aiValuationResponse.status, errorText);
+          if (aiCombinedResponse.ok) {
+            const aiCombinedData = await aiCombinedResponse.json();
+            console.log('✅ [PARALLEL] AI Combined API completed');
+            
+            // Extract both results from combined response
             return { 
-              type: 'ai_valuation', 
+              type: 'ai_combined', 
+              data: aiCombinedData, 
+              success: true,
+              // Extract individual results for backward compatibility
+              ai_valuation: aiCombinedData.results?.valuation,
+              ai_analysis: aiCombinedData.results?.analysis,
+            };
+          } else {
+            const errorText = await aiCombinedResponse.text();
+            console.error('❌ [PARALLEL] AI Combined API failed:', aiCombinedResponse.status, errorText);
+            return { 
+              type: 'ai_combined', 
               data: null, 
               success: false, 
-              error: `AI Valuation failed: ${aiValuationResponse.status} - ${errorText}` 
+              error: `AI Combined failed: ${aiCombinedResponse.status} - ${errorText}` 
             };
           }
         } catch (error) {
-          console.error('❌ [PARALLEL] AI Valuation error:', error);
+          console.error('❌ [PARALLEL] AI Combined error:', error);
           return { 
-            type: 'ai_valuation', 
+            type: 'ai_combined', 
             data: null, 
             success: false, 
-            error: `AI Valuation error: ${error instanceof Error ? error.message : 'Unknown error'}` 
+            error: `AI Combined error: ${error instanceof Error ? error.message : 'Unknown error'}` 
           };
         }
       })(),
@@ -409,48 +377,7 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
       })(),
 
 
-      // Task 4: AI Analysis API
-      (async () => {
-        console.log('🧠 [PARALLEL] Starting AI analysis API...');
-        try {
-          const aiAnalysisResponse = await fetch(`${request.nextUrl.origin}/api/property-analysis`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-              latitude,
-              longitude,
-              property_details: mergedDetails,
-              auth_token
-            }),
-          });
 
-          if (aiAnalysisResponse.ok) {
-            const aiAnalysisData = await aiAnalysisResponse.json();
-            console.log('✅ [PARALLEL] AI Analysis API completed');
-            return { type: 'ai_analysis', data: aiAnalysisData, success: true };
-          } else {
-            const errorText = await aiAnalysisResponse.text();
-            console.error('❌ [PARALLEL] AI Analysis API failed:', aiAnalysisResponse.status, errorText);
-            return { 
-              type: 'ai_analysis', 
-              data: null, 
-              success: false, 
-              error: `AI Analysis failed: ${aiAnalysisResponse.status} - ${errorText}` 
-            };
-          }
-        } catch (error) {
-          console.error('❌ [PARALLEL] AI Analysis error:', error);
-          return { 
-            type: 'ai_analysis', 
-            data: null, 
-            success: false, 
-            error: `AI Analysis error: ${error instanceof Error ? error.message : 'Unknown error'}` 
-          };
-        }
-      })(),
 
       // Task 5: Distance Analysis
       (async () => {
@@ -499,6 +426,29 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
         const error = 'error' in taskValue ? taskValue.error : undefined;
         
         switch (type) {
+          case 'ai_combined':
+            // Handle combined AI result and extract individual parts
+            if (success && 'ai_valuation' in taskValue && taskValue.ai_valuation) {
+              result.ai_valuation = taskValue.ai_valuation;
+              console.log(`✅ AI Valuation (from combined): Success`);
+            } else {
+              result.ai_valuation = null;
+              console.log(`❌ AI Valuation (from combined): Failed`);
+            }
+            
+            if (success && 'ai_analysis' in taskValue && taskValue.ai_analysis) {
+              result.ai_analysis = taskValue.ai_analysis;
+              console.log(`✅ AI Analysis (from combined): Success`);
+            } else {
+              result.ai_analysis = null;
+              console.log(`❌ AI Analysis (from combined): Failed`);
+            }
+            
+            if (!success && error) {
+              result.error = error;
+            }
+            console.log(`✅ AI Combined: ${success ? 'Success' : 'Failed'}`);
+            break;
           case 'ai_valuation':
             result.ai_valuation = data;
             if (!success && error) {
@@ -527,6 +477,110 @@ Dữ liệu thị trường bất động sản (${data.length} tháng gần nh�
         console.error(`❌ Task ${index} failed:`, taskResult.reason);
       }
     });
+
+    // Step 7: Re-run AI functions with enhanced details (if utilities data is available)
+    if (result.utilities && result.utilities.data && result.utilities.data.length > 0) {
+      console.log('\n🔄 STEP 7: Re-running AI functions with amenities data...');
+      const enhancedStart = Date.now();
+      
+      // Merge utilities into property details
+      const enhancedDetails = mergeDetailsWithUtilities(mergedDetails, result.utilities);
+      console.log(`🔄 Enhanced details with ${enhancedDetails.amenities?.length || 0} amenities from utilities:`, enhancedDetails.amenities);
+      
+      // Re-run AI functions with enhanced details in parallel
+      const enhancedTasks = [
+        // Enhanced AI Valuation
+        (async () => {
+          console.log('🤖 [ENHANCED] Re-running AI valuation with amenities...');
+          try {
+            const aiValuationResponse = await fetch(`${request.nextUrl.origin}/api/property-valuation`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+              },
+              body: JSON.stringify({
+                latitude,
+                longitude,
+                property_details: enhancedDetails, // Using enhanced details with amenities
+                auth_token
+              }),
+            });
+
+            if (aiValuationResponse.ok) {
+              const aiValuationData = await aiValuationResponse.json();
+              console.log('✅ [ENHANCED] AI Valuation with amenities completed');
+              return { type: 'enhanced_ai_valuation', data: aiValuationData, success: true };
+            } else {
+              console.log('⚠️  [ENHANCED] AI Valuation failed, keeping original result');
+              return { type: 'enhanced_ai_valuation', data: null, success: false };
+            }
+          } catch (error) {
+            console.log('⚠️  [ENHANCED] AI Valuation error, keeping original result:', error);
+            return { type: 'enhanced_ai_valuation', data: null, success: false };
+          }
+        })(),
+
+        // Enhanced AI Analysis
+        (async () => {
+          console.log('🧠 [ENHANCED] Re-running AI analysis with amenities...');
+          try {
+            const aiAnalysisResponse = await fetch(`${request.nextUrl.origin}/api/property-analysis`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+              },
+              body: JSON.stringify({
+                latitude,
+                longitude,
+                property_details: enhancedDetails, // Using enhanced details with amenities
+                auth_token
+              }),
+            });
+
+            if (aiAnalysisResponse.ok) {
+              const aiAnalysisData = await aiAnalysisResponse.json();
+              console.log('✅ [ENHANCED] AI Analysis with amenities completed');
+              return { type: 'enhanced_ai_analysis', data: aiAnalysisData, success: true };
+            } else {
+              console.log('⚠️  [ENHANCED] AI Analysis failed, keeping original result');
+              return { type: 'enhanced_ai_analysis', data: null, success: false };
+            }
+          } catch (error) {
+            console.log('⚠️  [ENHANCED] AI Analysis error, keeping original result:', error);
+            return { type: 'enhanced_ai_analysis', data: null, success: false };
+          }
+        })(),
+      ];
+
+      // Execute enhanced tasks
+      const enhancedResults = await Promise.allSettled(enhancedTasks);
+      
+      // Update results with enhanced data if successful
+      enhancedResults.forEach((taskResult) => {
+        if (taskResult.status === 'fulfilled') {
+          const taskValue = taskResult.value;
+          const { type, data, success } = taskValue;
+          
+          if (success && data) {
+            switch (type) {
+              case 'enhanced_ai_valuation':
+                result.ai_valuation = data;
+                console.log('🔄 Updated AI Valuation with amenities data');
+                break;
+              case 'enhanced_ai_analysis':
+                result.ai_analysis = data;
+                console.log('🔄 Updated AI Analysis with amenities data');
+                break;
+            }
+          }
+        }
+      });
+
+      result.performance.step_times.enhanced_execution = Date.now() - enhancedStart;
+      console.log(`✅ Enhanced execution completed in ${result.performance.step_times.enhanced_execution}ms`);
+    }
 
     // Note: AI valuation and analysis are now handled by separate endpoints
     // This endpoint provides core property data for other services

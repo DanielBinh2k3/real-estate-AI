@@ -7,6 +7,7 @@ import {
   ScrollText,
   ShieldCheck,
   Construction,
+  FileText,
 } from 'lucide-react';
 import type { SummaryDetails, SummaryResult } from '@/lib/types';
 
@@ -44,16 +45,38 @@ const criteriaConfig = [
 ] as const;
 
 export function DetailedInfoGrid({ summary, details }: DetailedInfoGridProps) {
+  // Check if we have valid data - SummaryResult has radarScore.descriptions
+  if (!summary || !details || !summary.radarScore || !summary.radarScore.descriptions || summary.radarScore.descriptions.length === 0) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="font-headline">Tổng hợp từ AI</CardTitle>
+        </CardHeader>
+        <CardContent className="text-center py-8">
+          <FileText className="h-12 w-12 text-gray-400 mx-auto mb-3" />
+          <p className="text-gray-600 font-medium">Chưa có phân tích chi tiết</p>
+          <p className="text-sm text-gray-500 mt-1">Vui lòng thực hiện định giá để xem thông tin chi tiết</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="font-headline">Tổng hợp từ AI</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-muted-foreground mb-6">{summary.summary}</p>
+        {/* Use the first description as summary text */}
+        <p className="text-muted-foreground mb-6">
+          {summary.radarScore.descriptions.join(' ')}
+        </p>
         <div className="grid grid-cols-1 gap-4">
           {criteriaConfig.map((item) => {
             const detailItem = details[item.key];
+            // Skip if this detail item doesn't exist
+            if (!detailItem) return null;
+            
             return (
               <div key={item.key} className="flex items-start gap-4">
                 <div className="bg-primary/10 text-primary p-2 rounded-lg">

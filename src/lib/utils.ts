@@ -1,8 +1,93 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { Utility, UtilityType } from "./types"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+/**
+ * Convert utilities data from API to amenities list for AI flows
+ * @param utilities - Utilities data from utilities API
+ * @returns Array of amenity descriptions for AI processing
+ */
+export function convertUtilitiesToAmenities(utilities?: {
+  total: number;
+  data: Utility[];
+  groupedData: Record<UtilityType, Utility[]>;
+}): string[] {
+  if (!utilities || !utilities.data || utilities.data.length === 0) {
+    return [];
+  }
+
+  const amenities: string[] = [];
+  const { groupedData } = utilities;
+
+  // Map utility types to Vietnamese descriptions with counts
+  const typeMap: Record<UtilityType, string> = {
+    hospital: "bệnh viện",
+    market: "chợ/siêu thị",
+    restaurant: "nhà hàng",
+    cafe: "quán cafe",
+    supermarket: "siêu thị",
+    commercial_center: "trung tâm thương mại"
+  };
+
+  // Convert each utility type to amenity description
+  Object.entries(groupedData).forEach(([type, utilitiesList]) => {
+    if (utilitiesList && utilitiesList.length > 0) {
+      const typeName = typeMap[type as UtilityType];
+      const count = utilitiesList.length;
+      const closestDistance = Math.min(...utilitiesList.map(u => u.distance));
+      
+      // Create descriptive amenity text
+      if (count === 1) {
+        amenities.push(`${typeName} (cách ${closestDistance.toFixed(1)}km)`);
+      } else {
+        amenities.push(`${count} ${typeName} (gần nhất cách ${closestDistance.toFixed(1)}km)`);
+      }
+    }
+  });
+
+  // Add general convenience descriptions based on total utilities count
+  const totalCount = utilities.total;
+  if (totalCount >= 10) {
+    amenities.push("khu vực có nhiều tiện ích xung quanh");
+  } else if (totalCount >= 5) {
+    amenities.push("khu vực có đầy đủ tiện ích cơ bản");
+  } else if (totalCount >= 1) {
+    amenities.push("khu vực có một số tiện ích");
+  }
+
+  return amenities;
+}
+
+/**
+ * Enhanced mergeDetails function with utilities integration
+ * @param originalDetails - Original property details
+ * @param utilitiesData - Utilities data from API
+ * @returns Enhanced merged details with amenities from utilities
+ */
+export function mergeDetailsWithUtilities(
+  originalDetails: any,
+  utilitiesData?: {
+    total: number;
+    data: Utility[];
+    groupedData: Record<UtilityType, Utility[]>;
+  }
+) {
+  const amenities = convertUtilitiesToAmenities(utilitiesData);
+  
+  return {
+    ...originalDetails,
+    amenities,
+    utilities: utilitiesData || null,
+    // Keep existing amenities if they exist, merge with new ones
+    combinedAmenities: [
+      ...(originalDetails.amenities || []),
+      ...amenities
+    ].filter((item, index, self) => self.indexOf(item) === index) // Remove duplicates
+  };
 }
 
 // Helper function to extract AI data and transform it to match component expectations

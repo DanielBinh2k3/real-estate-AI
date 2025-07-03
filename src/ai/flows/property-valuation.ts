@@ -19,9 +19,18 @@ const PropertyValuationRangeInputSchema = z.object({
   administrativeLevel: z.number().describe('Cấp hành chính.'),
   type: z.string().describe('Loại bất động sản (ví dụ: lane_house, NORMAL, v.v.).'),
   size: z.number().describe('Diện tích sàn (m²).'),
-  bedrooms: z.number().describe('Số phòng ngủ.'),
-  bathrooms: z.number().describe('Số phòng tắm.'),
   lotSize: z.number().describe('Diện tích lô đất (m²).'),
+
+
+  
+  landArea: z.number().describe('Diện tích đất (m²).'),
+  houseArea: z.number().describe('Diện tích sàn xây dựng (m²).'),
+  laneWidth: z.number().describe('Chiều rộng hẻm/đường vào (m).'),
+  facadeWidth: z.number().describe('Chiều rộng mặt tiền (m).'),
+  storyNumber: z.number().describe('Số tầng.').optional(),
+  bedrooms: z.number().describe('Số phòng ngủ.').optional(),
+  bathrooms: z.number().describe('Số phòng tắm.').optional(),
+  amenities: z.array(z.string()).describe('Danh sách tiện ích xung quanh (trường học, bệnh viện, trung tâm thương mại, công viên, giao thông công cộng, v.v.).'),
   yearBuilt: z.number().describe('Năm xây dựng bất động sản.'),
   marketData: z.string().describe('Dữ liệu thị trường hiện tại cho các bất động sản tương đương trong khu vực.'),
   searchData: z.string().describe('Dữ liệu search được từ internet về bất động sản trong khu vực.').optional(),
@@ -44,59 +53,70 @@ const prompt = ai.definePrompt({
   name: 'propertyValuationRangePrompt',
   input: {schema: PropertyValuationRangeInputSchema},
   output: {schema: PropertyValuationRangeOutputSchema},
-  prompt: `Bạn là chuyên gia định giá bất động sản với hơn 15 năm kinh nghiệm. Hãy thực hiện định giá CHÍNH XÁC dựa trên dữ liệu thị trường thực tế, thông tin search từ internet và quy trình chuẩn xác sau:
-
+  prompt: `NHIỆM VỤ: TÍNH TOÁN KHOẢNG GIÁ BẤT ĐỘNG SẢN, kết quả trả ra ngắn gọn không dài dòng, chỉ thực hiện các phép toán
 — **THÔNG TIN BẤT ĐỘNG SẢN**  
+**Thông tin bất động sản:**
 - Địa chỉ: {{{address}}}  
 - Khu vực: {{{ward}}}, {{{district}}}, {{{city}}} (Cấp {{{administrativeLevel}}})  
 - Loại: {{{type}}}  
-- Diện tích đất: {{{lotSize}}} m²  
-- Diện tích sàn: {{{size}}} m²  
-- Số phòng ngủ: {{{bedrooms}}}  
-- Số phòng tắm: {{{bathrooms}}}  
-- Số tầng: {{{floors}}}  
-- Năm xây dựng: {{{yearBuilt}}}  
+- Diện tích: Đất {{{landArea}}}m² / Lô {{{lotSize}}}m² / Sàn XD {{{houseArea}}}m² / Sử dụng {{{size}}}m²
+- Kích thước: Lộ giới {{{laneWidth}}}m / Mặt tiền {{{facadeWidth}}}m
+- Thiết kế: {{{storyNumber}}} tầng | {{{bedrooms}}} phòng ngủ | {{{bathrooms}}} phòng tắm
+- Năm xây dựng: {{{yearBuilt}}}
+- Tiện ích xung quanh: {{{amenities}}}  
 
 — **DỮ LIỆU THỊ TRƯỜNG HIỆN TẠI** (bắt buộc tham khảo):  
 {{{marketData}}}
 
-— **DỮ LIỆU SEARCH ĐƯỢC TỪ INTERNET**:
+— **DỮ LIỆU SEARCH THÔNG TIN BẤT ĐỘNG SẢN** (nếu có):  
 {{{searchData}}}
 
 — **QUY TRÌNH ĐỊNH GIÁ**  
-
 1. **Phân tích giá thị trường làm baseline**  
-   - Lấy giá trung bình từ {{{marketData}}} làm cơ sở.  
+   - Lấy giá mới nhất từ {{{marketData}}} làm cơ sở.  
    - Giá bất động sản phải nằm trong khoảng ±20% giá thị trường.
-2. **Tính giá cơ bản** 
+2. **Tính giá trị reasonableValue** 
    - Công thức:  
      GIÁ_CƠ_BẢN = GIÁ_TRUNG_BÌNH_THỊ_TRƯỜNG × Diện tích đất ({{{lotSize}}} m²)
-   - Giá trị đất = Diện tích đất × Giá đất thị trường × Hệ số vị trí × Hệ số pháp lý  
-     - Hệ số vị trí:  
-       - Mặt phố lớn: 1.2 – 1.30  
-       - Mặt ngõ ô tô tránh: 1.15  
-       - Ngõ ô tô một chiều: 1.05 
-       - Ngõ nhỏ xe máy: 0.90 – 1.00  
+   - Giá trị = Diện tích × Giá thị trường × Hệ số vị trí 1 x Hệ số vị trí 2 × Hệ số pháp lý x hệ số tiện ích
+     - Hệ số vị trí 1:   
+       - Cách trung tâm thành phố lớn khoảng 4km: 1,1
+       - Cách trung tâm thành phố lớn khoảng 4-15 km: 1,08
+       - Cách trung tâm thành phố lớn khoảng  hơn 15: 1,04
+       - Đất ở nông thôn, tỉnh lẻ, không ở thành phố: 1
+     - Hệ số vị trí 2, dựa trên {{{laneWidth}}}m (lộ giới) và {{{facadeWidth}}}m (mặt tiền):
+       - Mặt phố lớn (laneWidth ≥ 15m): 1.2
+       - Mặt ngõ ô tô tránh (laneWidth 8-15m): 1.1
+       - Ngõ ô tô một chiều (laneWidth 4-8m): 1.05 
+       - Ngõ nhỏ xe máy (laneWidth < 4m): 0.97
+       - Bonus mặt tiền rộng: +0.02 cho mỗi m nếu facadeWidth ≥ 5m
+     - Hệ số pháp lý:
+      - Sổ đỏ/ sổ hồng chính chủ: 1.0
+      - Đồng sở hữu: 0.8
+      - Giấy viết tay: 0.55
+      - Tranh chấp hoặc quy hoạch: 0.45
+     - Hệ số tiện ích:
+      - Có nhiều hơn 3 tiện ích xung quanh: 1.05
+      - Có khoảng 1-2 tiện ích xung quanh: 1.02
 3. **Tính giá trị xây dựng**  
-   - Tổng diện tích sàn = Diện tích đất ({{{size}}} m²) × Số tầng ({{{floors}}})  
+   - Tổng diện tích sàn = Diện tích đất ({{{size}}} m²) × Số tầng ({{{storyNumber}}})  
    - Giá trị xây dựng = Tổng diện tích sàn × Đơn giá xây × Hệ số hao mòn  
      - Đơn giá xây dựng (thành phố lớn):  
-       - Nhà 4–5 tầng BTCT: 7–9 triệu/m²  
-       - Nhà 2–3 tầng: 6–7 triệu/m²  
-       - Nhà cấp 4 hoặc nhà cũ: 4–5 triệu/m²  
+       - Nhà 4–5 tầng BTCT: 7 triệu/m²  
+       - Nhà 2–3 tầng: 6.5 triệu/m²  
+       - Nhà cấp 4 hoặc nhà cũ: 4.5 triệu/m²  
      - **Hệ số hao mòn theo tuổi nhà**  
        1. Tính tuổi nhà = Năm hiện tại – {{{yearBuilt}}}  
        2. Áp dụng hệ số:  
-          - Tuổi < 3 năm  → 1.20  
-          - 3–5 năm       → 1.15  
+          - Tuổi < 3 năm  → 1.17  
+          - 3–5 năm       → 1.13
           - 5–10 năm      → 1.00  
           - 10–20 năm     → 0.90  
-          - > 20 năm      → 0.70 – 0.90  
+          - lớn hơn 20 năm      → 0.8
 
 4. **Áp dụng hệ số điều chỉnh và xác định giá cuối**  
-   - reasonableValue = Giá cơ bản + Điều chỉnh loại nhà  
    - lowValue = reasonableValue × 0.90  (giá bán nhanh)  
-   - highValue = reasonableValue × 1.15 (giá bán chậm, ưu đãi)  
+   - highValue = reasonableValue × 1.1 (giá bán chậm, ưu đãi)  
    - price_house = Giá trị xây dựng  
 
 5. **Kiểm tra cuối cùng**  
@@ -115,7 +135,8 @@ Trả về JSON với đơn vị VND (không có dấu phẩy):
   "reasonableValue": [số nguyên VND], 
   "highValue": [số nguyên VND],
   "price_house": [số nguyên VND]
-}`,
+}
+`,
 });
 
 const propertyValuationRangeFlow = ai.defineFlow(

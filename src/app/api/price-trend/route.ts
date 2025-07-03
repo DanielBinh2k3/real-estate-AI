@@ -90,29 +90,27 @@ export async function GET(request: NextRequest) {
         }
       }
       
-      // If all attempts fail, return mock data
-      console.log('🔄 All attempts failed, using mock data');
-      const mockData = generateMockTrendData();
+      // If all attempts fail, return no data
+      console.log('❌ All attempts failed, no data available');
       return NextResponse.json({
-        success: true,
-        data: mockData,
-        source: 'mock',
+        success: false,
+        data: [],
+        source: 'none',
         category: category,
-        fallback: true,
-        error: `All API attempts failed. Using mock data.`
+        fallback: false,
+        error: `Không có dữ liệu thị trường cho ${category} tại ${district}, ${city}.`
       });
     }
 
   } catch (error) {
     console.error('❌ Error in price trend API:', error);
     
-    // Return mock data on error
-    const mockData = generateMockTrendData();
+    // Return no data on error
     return NextResponse.json({
-      success: true,
-      data: mockData,
-      source: 'mock',
-      error: `Error occurred: ${error}. Using mock data.`
+      success: false,
+      data: [],
+      source: 'none',
+      error: `Lỗi khi lấy dữ liệu thị trường: ${error}`
     });
   }
 }
@@ -156,28 +154,4 @@ function processTrendData(apiResponse: any, category: string) {
   return chartData;
 }
 
-// Generate mock data as fallback (price per m²)
-function generateMockTrendData() {
-  const months = [
-    'T7/24', 'T8/24', 'T9/24', 'T10/24', 'T11/24', 'T12/24',
-    'T1/25', 'T2/25', 'T3/25', 'T4/25', 'T5/25', 'T6/25'
-  ];
-
-  return months.map((month, index) => {
-    // Base price per m² - realistic values for Vietnam market
-    const basePricePerSqm = 290; // Base price per m² in millions VND (290M VND/m²)
-    const variation = (Math.random() - 0.5) * 40; // ±20M VND/m² variation
-    const trendIncrease = index * 2; // Gradual increase trend of 2M VND/m² per month
-    const finalPricePerSqm = Math.round(basePricePerSqm + variation + trendIncrease);
-    
-    return {
-      month,
-      price: finalPricePerSqm, // Price per m² in millions VND
-      priceRaw: finalPricePerSqm * 1000000, // Price per m² in VND
-      count: Math.floor(Math.random() * 50) + 20,
-      minPrice: finalPricePerSqm * 0.7 * 1000000, // Min price per m² in VND
-      maxPrice: finalPricePerSqm * 1.3 * 1000000, // Max price per m² in VND
-      date: `2024-${(index % 12) + 1}-01T00:00:00`
-    };
-  });
-} 
+ 

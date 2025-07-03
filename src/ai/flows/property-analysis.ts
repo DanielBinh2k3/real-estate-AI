@@ -7,8 +7,8 @@
  * - PropertyAnalysisOutput - The return type for the propertyAnalysis function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const PropertyAnalysisInputSchema = z.object({
   address: z.string().describe('Địa chỉ chi tiết của bất động sản (có thể để trống nếu đã cung cấp city/district/ward).').optional(),
@@ -18,13 +18,14 @@ const PropertyAnalysisInputSchema = z.object({
   administrativeLevel: z.number().describe('Cấp hành chính (0: đô thị trung ương, 1: tỉnh, ...).'),
   type: z.string().describe('Loại bất động sản (ví dụ: lane_house, apartment, NORMAL, v.v.).'),
   size: z.number().describe('Diện tích sàn (m²).'),
-  bedrooms: z.number().describe('Số lượng phòng ngủ.'),
-  bathrooms: z.number().describe('Số lượng phòng tắm.'),
   lotSize: z.number().describe('Diện tích lô đất (m²).'),
   landArea: z.number().describe('Diện tích đất (m²).'),
   houseArea: z.number().describe('Diện tích sàn xây dựng (m²).'),
   laneWidth: z.number().describe('Chiều rộng hẻm/đường vào (m).'),
   facadeWidth: z.number().describe('Chiều rộng mặt tiền (m).'),
+  bedrooms: z.number().describe('Số phòng ngủ.').optional(),
+  bathrooms: z.number().describe('Số phòng tắm.').optional(),
+  amenities: z.array(z.string()).describe('Danh sách tiện ích xung quanh (trường học, bệnh viện, trung tâm thương mại, công viên, giao thông công cộng, v.v.).'),
   storyNumber: z.number().describe('Số tầng của bất động sản.'),
   legal: z.string().describe('Tình trạng pháp lý (sổ đỏ, hợp đồng, v.v.).'),
   yearBuilt: z.number().describe('Năm xây dựng bất động sản.'),
@@ -40,7 +41,7 @@ const PropertyAnalysisOutputSchema = z.object({
     locationScore: z.number().describe('Điểm vị trí của bất động sản (1-10).'),
     evaluationScore: z.number().describe('Điểm thẩm định giá của bất động sản (1-10).'),
     dividendScore: z.number().describe('Điểm lợi nhuận/sinh lời của bất động sản (1-10).'),
-    descriptions: z.array(z.string()).describe('5 mô tả chi tiết tương ứng với từng điểm số: pháp lý, thanh khoản, vị trí, thẩm định giá, lợi nhuận.'),
+    descriptions: z.array(z.string()).describe('5 mô tả ngắn tương ứng với từng tiêu chí: pháp lý, thanh khoản, vị trí, thẩm định giá, lợi nhuận.'),
   }),
 });
 export type PropertyAnalysisOutput = z.infer<typeof PropertyAnalysisOutputSchema>;
@@ -58,13 +59,16 @@ const prompt = ai.definePrompt({
 **Thông tin từ input:**
 - Loại: {{{type}}}
 - Địa chỉ: {{{address}}}
-- Đất/Nhà: {{{landArea}}}m² / {{{houseArea}}}m²
-- Lộ giới/Mặt tiền: {{{laneWidth}}}m / {{{facadeWidth}}}m
-- Tầng: {{{storyNumber}}} | Phòng: {{{bedrooms}}}N-{{{bathrooms}}}T
+- Diện tích: Đất {{{landArea}}}m² / Sàn {{{houseArea}}}m² / Lô {{{lotSize}}}m² / Sử dụng {{{size}}}m²
+- Kích thước: Lộ giới {{{laneWidth}}}m / Mặt tiền {{{facadeWidth}}}m
+- Thiết kế: {{{storyNumber}}} tầng | {{{bedrooms}}} phòng ngủ | {{{bathrooms}}} phòng tắm
 - Pháp lý: {{{legal}}}
 - Năm xây dựng: {{{yearBuilt}}}
-- Thị trường: {{{marketData}}}
+- Tiện ích: {{{amenities}}}
 - Khu vực: {{{ward}}}, {{{district}}}, {{{city}}} (Cấp {{{administrativeLevel}}})
+
+**Dữ liệu thị trường:**
+{{{marketData}}}
 
 **Dữ liệu search được:**
 {{{searchData}}}
@@ -97,8 +101,7 @@ Phân tích chi tiết từ marketData (giá trung bình, số giao dịch theo 
    - Xu hướng tăng/giảm giá từ dữ liệu lịch sử trong marketData
    - Tỷ suất cho thuê theo loại nhà và vị trí cụ thể
    - Tiềm năng tăng giá dựa trên số giao dịch và thanh khoản thị trường
-
-Trả về object radarScore (5 score + descriptions). Tiếng Việt, súc tích.`,
+Trả về object radarScore gồm 5 score và descriptions. Tiếng Việt, ngắn gọn và súc tích.`,
 });
 
 const propertyAnalysisFlow = ai.defineFlow(

@@ -5,7 +5,7 @@ import { searchRealEstateData } from '@/lib/search-utils';
 // Helper function to format market data for AI prompt
 function formatMarketDataForAI(priceTrendData: any): string {
   if (!priceTrendData?.data || !Array.isArray(priceTrendData.data)) {
-    return "Dữ liệu thị trường không khả dụng. Sử dụng ước tính trung bình 280-320 triệu VND/m² cho khu vực Hà Nội.";
+    return "Dữ liệu thị trường không khả dụng.";
   }
 
   const data = priceTrendData.data;
@@ -178,14 +178,21 @@ export async function POST(request: NextRequest) {
       headers: { 'Accept': 'application/json' },
     });
 
-    let marketData = "Dữ liệu thị trường không khả dụng";
+    let marketData = "Không có dữ liệu thị trường cho khu vực này.";
     if (priceTrendResponse.ok) {
       const priceTrendData = await priceTrendResponse.json();
-      marketData = formatMarketDataForAI(priceTrendData);
-      console.log('✅ Market data received');
-      console.log('📊 Market data summary:', priceTrendData);
+      // Check if price trend API actually has data
+      if (priceTrendData.success && priceTrendData.data && priceTrendData.data.length > 0) {
+        marketData = formatMarketDataForAI(priceTrendData);
+        console.log('✅ Market data received');
+        console.log('📊 Market data summary:', priceTrendData);
+      } else {
+        console.log('⚠️  Price trend API returned no data');
+        marketData = "Không có dữ liệu thị trường cho khu vực này.";
+      }
     } else {
-      console.log('⚠️  Using fallback market data');
+      console.log('⚠️  Price trend API failed');
+      marketData = "Không có dữ liệu thị trường cho khu vực này.";
     }
 
     console.log(`⏱️  Step 2 time: ${Date.now() - step2Start}ms`);
@@ -216,6 +223,9 @@ export async function POST(request: NextRequest) {
     console.log('\n🤖 STEP 3: Preparing AI valuation input...');
     const step3Start = Date.now();
 
+    // Get amenities from mergedDetails (if coming from complete-flow with utilities)
+    const amenities = mergedDetails.amenities || mergedDetails.combinedAmenities || [];
+
     const aiInput = {
       address: parsedAddress.formatted_address || '',
       city: parsedAddress.city || 'ha_noi',
@@ -224,9 +234,16 @@ export async function POST(request: NextRequest) {
       administrativeLevel: 0,
       type: valuationPayload.type || 'NORMAL',
       size: valuationPayload.houseArea || 45,
+      lotSize: valuationPayload.landArea || 45,
+      landArea: valuationPayload.landArea || 45,
+      houseArea: valuationPayload.houseArea || 45,
+      laneWidth: valuationPayload.laneWidth || 3,
+      facadeWidth: valuationPayload.facadeWidth || 3,
+      storyNumber: valuationPayload.storyNumber || 3,
       bedrooms: valuationPayload.bedRoom || 2,
       bathrooms: valuationPayload.bathRoom || 2,
-      lotSize: valuationPayload.landArea || 45,
+      legal: valuationPayload.legal || 'contract',
+      amenities: amenities, // Use amenities from utilities data
       yearBuilt: mergedDetails.yearBuilt || 2015,
       marketData: marketData,
       searchData: searchData,
