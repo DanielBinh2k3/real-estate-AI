@@ -67,3 +67,29 @@ export const getJinaApiKey = () => {
   }
   return apiKey;
 };
+
+// Guland Server Configuration
+export const GULAND_CONFIG = {
+  SERVER_URL: process.env.NEXT_PUBLIC_GULAND_SERVER_URL || 'http://localhost:8000',
+  ENDPOINTS: {
+    GET_PLANNING_DATA: '/get-planning-data',
+    GEOCODING: '/geocoding',
+    CHECK_PLAN: '/check-plan',
+    ROAD_POINTS: '/road-points',
+    GEOCODING_POST: '/geocoding-post',
+    REFRESH_TOKEN: '/refresh-token',
+    HEALTH: '/health'
+  },
+  PROXY_ENDPOINTS: {
+    HEALTH: '/api/guland-proxy/health',
+    PLANNING: '/api/guland-proxy/planning',
+    GEOCODING: '/api/guland-proxy/geocoding',
+    CHECK_PLAN: '/api/guland-proxy/check-plan',
+    ROAD_POINTS: '/api/guland-proxy/road-points',
+    REFRESH_TOKEN: '/api/guland-proxy/refresh-token',
+    PRICING: '/api/guland-proxy/pricing'
+  },
+  TIMEOUT: 30000, // 30 seconds
+  RETRY_ATTEMPTS: 3,
+  RETRY_DELAY: 1000 // 1 second
+};

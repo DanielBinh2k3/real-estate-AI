@@ -123,12 +123,6 @@ const prompt = ai.definePrompt({
    - Đảm bảo reasonableValue/lotSize nằm trong khoảng 80%–120% giá trung bình thị trường.  
    - Nếu vượt, điều chỉnh về giới hạn gần nhất.
 
-**VÍ DỤ TÍNH TOÁN:**
-Nếu giá thị trường trung bình = 277 triệu VND/m², diện tích = 45m²
-→ Giá cơ bản = 277 × 45 = 12.465 tỷ VND
-→ Sau điều chỉnh loại nhà (theo các hệ số) = 14.334 tỷ VND  
-→ reasonableValue = 14.334.000.000 VND
-
 Trả về JSON với đơn vị VND (không có dấu phẩy):
 {
   "lowValue": [số nguyên VND],

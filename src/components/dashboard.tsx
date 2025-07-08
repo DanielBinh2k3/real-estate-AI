@@ -271,6 +271,69 @@ export default function Dashboard() {
             )}
           </aside>
         </div>
+
+        {/* Demo Links Section */}
+        <Card className="professional-card border-purple-200 bg-gradient-to-r from-purple-50 to-indigo-50 mt-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-700 rounded-lg shadow-sm">
+                <Search className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-slate-800">Demo & Thử nghiệm</h3>
+                <p className="text-sm text-slate-600 font-normal">Các tính năng demo</p>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <a 
+                href="/demo-hanoi-planning" 
+                className="block p-4 bg-white rounded-lg border border-purple-200 hover:border-purple-300 hover:shadow-md transition-all duration-200 group"
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg group-hover:scale-110 transition-transform">
+                    <MapPin className="h-4 w-4 text-white" />
+                  </div>
+                  <h4 className="font-semibold text-slate-800 group-hover:text-purple-700">Bản đồ Hà Nội</h4>
+                </div>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Bản đồ quy hoạch Hà Nội 2030 với layer đất đai
+                </p>
+              </a>
+              
+              <a 
+                href="/demo-ai" 
+                className="block p-4 bg-white rounded-lg border border-purple-200 hover:border-purple-300 hover:shadow-md transition-all duration-200 group"
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg group-hover:scale-110 transition-transform">
+                    <TrendingUp className="h-4 w-4 text-white" />
+                  </div>
+                  <h4 className="font-semibold text-slate-800 group-hover:text-purple-700">AI Demo</h4>
+                </div>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Thử nghiệm tính năng AI phân tích bất động sản
+                </p>
+              </a>
+              
+              <a 
+                href="/demo-guland" 
+                className="block p-4 bg-white rounded-lg border border-purple-200 hover:border-purple-300 hover:shadow-md transition-all duration-200 group"
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg group-hover:scale-110 transition-transform">
+                    <Home className="h-4 w-4 text-white" />
+                  </div>
+                  <h4 className="font-semibold text-slate-800 group-hover:text-purple-700">Guland Demo</h4>
+                </div>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Demo tích hợp API Guland
+                </p>
+              </a>
+            </div>
+          </CardContent>
+        </Card>
       </main>
     </div>
   );

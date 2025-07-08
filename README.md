@@ -59,6 +59,14 @@ Dedicated page showcasing the interactive map features with detailed controls an
 ### 5. Distance Analysis Demo (`/demo-distance`) (NEW!)
 Interactive demo for testing the distance analysis feature with preset locations and custom coordinates.
 
+### 6. Guland API Demo (`/demo-guland`) (NEW!)
+Interactive demo for testing the Guland API integration:
+- **Direct API Client**: Test Guland FastAPI server directly
+- **NextJS Proxy**: Test through NextJS proxy endpoints
+- **Health Check**: Test server connectivity
+- **Planning Data**: Get property planning information
+- **Geocoding**: Address/coordinate conversion
+
 ## Getting Started
 
 ### Prerequisites
@@ -84,6 +92,9 @@ Create `.env.local` file with:
 ```env
 # Add your API keys here if needed
 NEXT_PUBLIC_GEOAPIFY_API_KEY=your_geoapify_key
+
+# Guland FastAPI Server Configuration (optional)
+NEXT_PUBLIC_GULAND_SERVER_URL=http://localhost:8000
 ```
 
 4. Run the development server:
@@ -109,6 +120,45 @@ Test each API endpoint separately through the API demo interface:
 2. **Create Payload**: Generate valuation payload from location data
 3. **Perform Valuation**: Execute property valuation with auth token
 
+### Using Guland API Integration (NEW!)
+
+#### Prerequisites
+1. Run the Guland FastAPI server (provided separately)
+2. Configure `NEXT_PUBLIC_GULAND_SERVER_URL` in your environment
+
+#### Direct API Client Usage
+```typescript
+import { gulandApiClient } from '@/lib/guland-api-client';
+
+// Health check
+const health = await gulandApiClient.healthCheck();
+
+// Get planning data
+const planning = await gulandApiClient.getPlanningData({
+  marker_lat: 10.779783071564157,
+  marker_lng: 106.69747857570651,
+  province_id: 79
+});
+
+// Geocoding
+const geocoding = await gulandApiClient.geocoding({
+  lat: 21.0277644,
+  lng: 105.8341598,
+  path: 'soi-quy-hoach/ha-noi'
+});
+```
+
+#### NextJS Proxy Endpoints
+- `/api/guland-proxy/health` - Health check (GET)
+- `/api/guland-proxy/planning` - Planning data (POST)
+- `/api/guland-proxy/geocoding` - Geocoding (GET/POST)
+- `/api/guland-proxy/check-plan` - Check planning data (GET)
+- `/api/guland-proxy/road-points` - Road points data (GET)
+- `/api/guland-proxy/refresh-token` - Refresh CSRF token (POST)
+
+#### Interactive Testing
+Navigate to `/demo-guland` to test all Guland API features through an interactive interface.
+
 ## Technology Stack
 
 - **Frontend**: Next.js 14, React 18, TypeScript
@@ -116,7 +166,9 @@ Test each API endpoint separately through the API demo interface:
 - **Maps**: Geoapify (Static Maps, Geocoding, Place Details)
 - **Charts**: Recharts for data visualization
 - **Backend**: Next.js API Routes
-- **External APIs**: Resta.vn Real Estate APIs
+- **External APIs**: 
+  - Resta.vn Real Estate APIs
+  - Guland.vn Planning Data APIs (via FastAPI proxy)
 
 ## Map Features Powered by Geoapify
 
@@ -131,19 +183,23 @@ Test each API endpoint separately through the API demo interface:
 ```
 src/
 ├── app/
-│   ├── api/           # API routes for property valuation
-│   ├── demo/          # Static demo page
-│   ├── demo-api/      # Interactive API testing
-│   ├── map-demo/      # Map feature showcase
-│   └── page.tsx       # Main dashboard
+│   ├── api/
+│   │   ├── guland-proxy/    # Guland API proxy endpoints
+│   │   └── ...              # Other API routes
+│   ├── demo/                # Static demo page
+│   ├── demo-api/            # Interactive API testing
+│   ├── demo-guland/         # Guland API demo (NEW!)
+│   ├── map-demo/            # Map feature showcase
+│   └── page.tsx             # Main dashboard
 ├── components/
 │   ├── interactive-map-simple.tsx  # Map component
 │   ├── property-input-form.tsx     # Property input
 │   ├── valuation-display.tsx       # Results display
-│   └── ui/            # UI components (shadcn/ui)
+│   └── ui/                  # UI components (shadcn/ui)
 └── lib/
-    ├── types.ts       # TypeScript definitions
-    └── utils.ts       # Utility functions
+    ├── guland-api-client.ts # Guland API client (NEW!)
+    ├── types.ts             # TypeScript definitions
+    └── utils.ts             # Utility functions
 ```
 
 ## API Endpoints

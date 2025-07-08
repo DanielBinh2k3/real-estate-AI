@@ -99,7 +99,7 @@ export function InteractiveMapSimple({
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
   
   // Debounce search input để tránh gọi API quá nhiều
-  const debouncedSearchAddress = useDebounce(searchAddress, 500);
+  const debouncedSearchAddress = useDebounce(searchAddress, 1000);
   const [mapCenter, setMapCenter] = useState<[number, number]>([initialLocation.lat, initialLocation.lng]);
   const [mapZoom, setMapZoom] = useState(15);
   const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(null);
